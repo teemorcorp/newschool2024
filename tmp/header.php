@@ -240,11 +240,11 @@ global $menuid, $goal, $current, $pct, $userid;
 
                 if(empty($imagepath)){
                     ?>
-                    <img class="header_img" src="img/portraits/NoPhoto.jpg" alt="" /> <div style="margin-top: 10px; margin-left: 10px;"><?php echo $fullname; ?></div>
+                    <img class="header_img" style="margin-top: 5px;" src="img/portraits/NoPhoto.jpg" alt="" /> <div style="margin-top: 15px; margin-left: 10px;"><?php echo $fullname; ?></div>
                     <?php
                 }else{
                     ?>
-                    <img class="header_img" src="img/portraits/<?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 10px; margin-left: 10px;"><?php echo $fullname; ?></div>
+                    <img class="header_img" style="margin-top: 5px;" src="img/portraits/<?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 15px; margin-left: 10px;"><?php echo $fullname; ?></div>
                     <?php
                 }
                 ?>
