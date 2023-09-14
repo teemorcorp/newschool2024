@@ -256,17 +256,11 @@ global $menuid, $goal, $current, $pct, $userid;
                         }
                         ?>
                         <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            <?php echo $mailcnt; ?>
+                            < ?php echo $mailcnt; ?>
                             <span class="visually-hidden">unread Mail</span>
                         </span> -->
                         </a>
                     </div>
-                    <!-- <div class="menu_icons">
-                        <a onClick="Javascript:window.location.href = 'notifications.php';"><i class='bx bx-bell'></i><span style="font-size: 18px;"> Notifications</span></a>
-                    </div>
-                    <div class="menu_icons">
-                        <a onClick="Javascript:window.location.href = 'studentmail.php';"><i class='bx bx-envelope'></i><span style="font-size: 18px;"> Mail</span></a>
-                    </div> -->
                     <?php
                 }else{
                     ?>
@@ -281,11 +275,11 @@ global $menuid, $goal, $current, $pct, $userid;
 
                 if(empty($imagepath)){
                     ?>
-                    <img class="header_img" style="margin-top: 5px;" src="img/portraits/NoPhoto.jpg" alt="" /> <div style="margin-top: 15px; margin-left: 10px;"><?php echo $fullname; ?></div>
+                    <img class="header_img" style="margin-top: 2px;" src="img/portraits/NoPhoto.jpg" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
                     <?php
                 }else{
                     ?>
-                    <img class="header_img" style="margin-top: 5px;" src="img/portraits/<?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 15px; margin-left: 10px;"><?php echo $fullname; ?></div>
+                    <img class="header_img" style="margin-top: 2px;" src="img/portraits/<?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
                     <?php
                 }
                 ?>
