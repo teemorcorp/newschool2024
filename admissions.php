@@ -27,7 +27,7 @@ function main_form() {
     global $courses_tablename, $courseid, $cprogid , $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
 
     information_modal();
-    $menuid = 4;
+    $menuid = 5;
     testadmin();
     ?>
     <div class="height-100">

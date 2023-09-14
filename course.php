@@ -17,7 +17,7 @@ include "tmp/header.php";
 
     information_modal();
 
-    $menuid = 2;
+    $menuid = 4;
 
     testadmin();
 
