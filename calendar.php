@@ -37,8 +37,7 @@ testadmin();
         </div>
     </div>
 
-    <div id="boxed" style="margin-bottom: 50px;">&nbsp;
-                <div id="datepicker"></div> </div>
+    <div id="boxed" style="margin-bottom: 50px;">&nbsp;</div>
 </div>
 <?php
 include "tmp/footer.php";
