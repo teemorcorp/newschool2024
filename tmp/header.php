@@ -50,6 +50,9 @@ global $menuid, $goal, $current, $pct, $userid;
         }
         // End attempt select query execution
 
+        // echo "imagepath: ".$imagepath."<br>";
+        // exit;
+
 
         // // Attempt select query execution
         // // $sql = "SELECT * FROM $users_tablename WHERE userid = '$userid'";
@@ -234,7 +237,16 @@ global $menuid, $goal, $current, $pct, $userid;
                     </div>
                     <?php
                 }
+
+                if(empty($imagepath)){
+                    ?>
+                    <img class="header_img" src="img/portraits/NoPhoto.jpg" alt="" /> <div style="margin-top: 10px; margin-left: 10px;"><?php echo $fullname; ?></div>
+                    <?php
+                }else{
+                    ?>
+                    <img class="header_img" src="img/portraits/<?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 10px; margin-left: 10px;"><?php echo $fullname; ?></div>
+                    <?php
+                }
                 ?>
-                <img class="header_img" src="img/portraits/<?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 10px; margin-left: 10px;"><?php echo $fullname; ?></div>
             </div>
         </header>
