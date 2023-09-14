@@ -143,6 +143,47 @@ global $menuid, $goal, $current, $pct, $userid;
             });
         </script>
 
+        <!-- ********************************************************************************************************
+        *******  MODAL
+        ***********************************************************************************************************--> 
+        <script>
+            $(function(){
+                $("#dialog").dialog({
+                    autoOpen: false,
+                    show:{
+                        effect: "blind",
+                        duration: 1000
+                    },
+                    hide:{
+                        effect: "explode",
+                        duration: 1000
+                    }
+                });
+            
+                $("#opener").on("click", function(){
+                    $("#dialog").dialog("open");
+                });
+
+                $(".selector").dialog({
+                    width: 800
+                });
+
+                $(".selector").dialog({
+                    buttons: [{
+                        text: "Ok",
+                        icon: "ui-icon-heart",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    
+                        // Uncommenting the following line would hide the text,
+                        // resulting in the label being used as a tooltip
+                        //showText: false
+                    }]
+                });
+            });
+        </script>
+
         <link href="css/styles.css" rel="stylesheet" />
         
         <style>

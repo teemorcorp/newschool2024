@@ -69,7 +69,7 @@ function main_form() {
                     <?php
                     if(empty($_SESSION['userid'])){
                         ?>
-                        <font size="+3"><strong>AWelcome to the Dashboard, Visitor!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <font size="+3"><strong>Welcome to the Dashboard, Visitor!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
                         <?php
                     }else{
                         ?>
@@ -77,8 +77,10 @@ function main_form() {
                         <?php
                     }
                     ?>
-                    <button type="button" id="btnrounded" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#information_modal">Update as of <?php echo date('m/d/Y'); ?></button>
+                    <!-- <button type="button" id="btnrounded" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#information_modal">Update as of <?php echo date('m/d/Y'); ?></button> -->
                     <br>
+                    <button type="button" class="btn btn-warning" id="opener">Update as of <?php echo date('m/d/Y'); ?></button>
+                    <br><br>
                     <script src="//myradiostream.com/embed/ihnbible"></script>
                 </div>
             </div>
@@ -428,6 +430,10 @@ function main_form() {
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="dialog" class="selector" title="Latest News">
+        <?php echo $news; ?>
     </div>
 
     <?php
