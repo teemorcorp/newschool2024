@@ -37,7 +37,7 @@ function main_form() {
         <div class="row ml-12 mr-12 clearfix">
             <form action="<?php echo $PHP_SELF; ?>" method="post">
                 <p class="text-center"><span style="font-size: 32px;">Join Us In Prayer</span></p>
-                    <p><?php echo $msg."<br>"; ?></p>
+                    <!-- <p>< ?php echo $_SESSION['msg']."<br>"; ?></p> -->
                 <div class="col-sm-2"></div>
                 <div class="col-sm-4 text-center">
                     <button name="action" type="submit" class="btn btn-primary" value="add_prayer">Add Prayer Request</button>
@@ -148,13 +148,21 @@ function main_form() {
                                     <td><?php echo $prayee; ?></td>
                                     <td><?php echo $prayer_request; ?></td>
                                     <td>
-                                        <?php
-                                        if($answered){
-                                            echo "<button class='btn btn-success' style='width; 100%;'>ANSWERED</button>";
-                                        }else{
-                                            echo "<button class='btn btn-warning' style='width; 100%;'>NOT ANSWERED</button>";
-                                        }
-                                        ?>
+                                        <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                            <?php
+                                            if($answered){
+                                                ?>
+                                                <input type="hidden" name="answeredid" value="<?php echo $prayerid; ?>">
+                                                <button name="action" type="submit" class="btn btn-success" style="width; 100%;" value="answered">ANSWERED</button>
+                                                <?php
+                                            }else{
+                                                ?>
+                                                <input type="hidden" name="answeredid" value="<?php echo $prayerid; ?>">
+                                                <button name="action" type="submit" class="btn btn-warning" style="width; 100%;" value="not_answered">NOT ANSWERED</button>
+                                                <?php
+                                            }
+                                            ?>
+                                        </form>
                                     </td>
                                 <tr>
                                 <?php
@@ -214,6 +222,8 @@ function add_prayer() {
 //******************   ADD REQUEST   ********************
 //*******************************************************
 function add_request() {
+	global $PHP_SELF, $mysqli, $perpage;
+    global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
     include 'tmp/globals.php';
     session_start();
     dbconnect();
@@ -222,14 +232,11 @@ function add_request() {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-	global $PHP_SELF, $mysqli, $msg, $result;
-    global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
-
     $prayee = $_POST['prayee'];
     $prayer_request = $_POST['prayer'];
 
     if(empty($prayee)){
-        $msg = "<div class='alert alert-danger' role='alert'>
+        $_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>
         <button type='button' class='close' data-bs-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
         <strong>ERROR!</strong> You must enter a name to pray for.
         </div>";
@@ -238,7 +245,7 @@ function add_request() {
     }
 
     if(empty($prayer_request)){
-        $msg = "<div class='alert alert-danger' role='alert'>
+        $_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>
         <button type='button' class='close' data-bs-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
         <strong>ERROR!</strong> You must enter a prayer request.
         </div>";
@@ -247,25 +254,22 @@ function add_request() {
     }
 
     // Attempt select query execution
-    $sql = "INSERT INTO $prayers_tablename (prayerid, prayee, prayer_request, answered) VALUES(NULL, '$prayee', '$prayer_request', '0')";
-echo "Line #251<br>";
-    if($result = mysqli_query($mysqli, $sql)){
-echo "Line #253<br>";
+    $sql = "INSERT INTO $prayers_tablename VALUES (NULL, '$prayee', '$prayer_request', '0')";
+    if ($mysqli->query($sql) === TRUE) {
         $msg = "<div class='alert alert-success' role='alert'>
         <button type='button' class='close' data-bs-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
         <strong>SUCCESS!</strong> Prayer added successfully!
         </div>";
-    } else{
-echo "Line #259<br>";
+        //exit;
+    } else {
         $msg = "<div class='alert alert-danger' role='alert'>
         <button type='button' class='close' data-bs-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
         <strong>ERROR!</strong> Error adding prayer: " . $mysqli->error . "
         </div>";
     }
     // End attempt select query execution
-    
-echo "Line #267<br>";
-    main_form();
+
+    header('Location: prayerlist.php');
 }
 
 //*******************************************************
@@ -287,11 +291,87 @@ function per_page() {
 }
 
 //*******************************************************
+//*******************   ANSWERED   **********************
+//*******************************************************
+function answered() {
+	global $PHP_SELF, $mysqli, $perpage;
+    global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
+    include 'tmp/globals.php';
+    session_start();
+    dbconnect();
+
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    $prayerid = $_POST['answeredid'];
+
+    // Attempt select query execution
+    $sql = "UPDATE $prayers_tablename SET answered = '0' WHERE prayerid = '$prayerid'";
+    if ($mysqli->query($sql) === TRUE) {
+        $_SESSION['msg'] = "<div class='alert alert-success' role='alert'>
+        <button type='button' class='close' data-bs-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+        <strong>SUCCESS!</strong> Changed answered to not answered!
+        </div>";
+        //exit;
+    } else {
+        $_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>
+        <button type='button' class='close' data-bs-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+        <strong>ERROR!</strong> Error updating answer: " . $mysqli->error . "
+        </div>";
+    }
+    // End attempt select query execution
+
+    header('Location: prayerlist.php');
+}
+
+//*******************************************************
+//*****************   NOT ANSWERED   ********************
+//*******************************************************
+function not_answered() {
+	global $PHP_SELF, $mysqli, $perpage;
+    global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
+    include 'tmp/globals.php';
+    session_start();
+    dbconnect();
+
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    $prayerid = $_POST['answeredid'];
+
+    // Attempt select query execution
+    $sql = "UPDATE $prayers_tablename SET answered = '1' WHERE prayerid = '$prayerid'";
+    if ($mysqli->query($sql) === TRUE) {
+        $msg = "<div class='alert alert-success' role='alert'>
+        <button type='button' class='close' data-bs-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+        <strong>SUCCESS!</strong> Changed not answered to answered!
+        </div>";
+        //exit;
+    } else {
+        $msg = "<div class='alert alert-danger' role='alert'>
+        <button type='button' class='close' data-bs-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+        <strong>ERROR!</strong> Error updating answer: " . $mysqli->error . "
+        </div>";
+    }
+    // End attempt select query execution
+
+    header('Location: prayerlist.php');
+}
+
+//*******************************************************
 //**********************  SWITCH  ***********************
 //*******************************************************
 switch($action) {
     case "GO":
         per_page();
+    break;
+    case "answered":
+        answered();
+    break;
+    case "not_answered":
+        not_answered();
     break;
     case "add_prayer":
         add_prayer();
