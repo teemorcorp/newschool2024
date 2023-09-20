@@ -12,10 +12,10 @@ if (!$mysqli) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-global $PHP_SELF, $mysqli, $msg, $notice, $notice_header, $notice_body, $fullname;
+global $PHP_SELF, $mysqli, $msg, $menuid, $fullname;
 global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
 global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $goalamt, $curgoal;
-global $menuid, $goal, $current, $pct, $userid;
+global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
     
     include "functions.php";
     

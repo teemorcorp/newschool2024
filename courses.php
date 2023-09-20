@@ -1,4 +1,10 @@
 <?php
+/****************************************************
+****   IHN Bible College
+****   Designed by: Tom Moore
+****   Written by: Tom Moore
+****   (c) 2001 - 2021 TEEMOR eBusiness Solutions
+****************************************************/
 include "tmp/header.php";
 
 global $PHP_SELF, $mysqli, $msg, $notice, $notice_header, $notice_body, $fullname;
@@ -19,8 +25,21 @@ testadmin();
     <div id="boxed">
         <div class="row ml-12 mr-12 clearfix">
             <div class="col" align="center">
-                <font size="+3"><strong>Welcome to our courses, <?php echo $userfname; ?>!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" id="btnrounded" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#information_modal">Update as of <?php echo date('m/d/Y'); ?></button>
+                    <?php
+                    if(empty($_SESSION['userid'])){
+                        ?>
+                        <font size="+3"><strong>Welcome to Our Courses, Visitor!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php
+                    }else{
+                        ?>
+                        <font size="+3"><strong>Welcome to Your Courses, <?php echo $userfname; ?>!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php
+                    }
+                    ?>
+                    <!-- <button type="button" id="btnrounded" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#information_modal">Update as of <?php echo date('m/d/Y'); ?></button> -->
+                    <br>
+                    <button type="button" class="btn btn-warning" id="opener">Update as of <?php echo date('m/d/Y'); ?></button>
+                    <br><br>
             </div>
         </div>
     </div>
@@ -585,6 +604,10 @@ testadmin();
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="dialog" class="selector" title="Latest News">
+        <?php echo $news; ?>
     </div>
 
     <div id="boxed" style="margin-bottom: 50px;">&nbsp;</div>

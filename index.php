@@ -226,104 +226,101 @@ function main_form() {
                 </div>
             </div>
             
-            <!-- <div id="boxed" class="text-center"> -->
-                <div class="card spacing">
-                    <div class="card-header">
-                        My Courses
-                    </div>
-                    <div class="card-body">
-                        <?php
-                        global $enrollments_tablename, $enrollid, $euserid , $eprogid, $ecourseid, $examscore, $passed, $compdate, $rating;
-                        global $courses_tablename, $courseid, $cprogid , $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
-                        $totalcr = 0;
-                        ?>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                <th scope="col">Course</th>
-                                <th scope="col">Course Status</th>
-                                <th scope="col">Credits</th>
-                                <th scope="col">Completion Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                // Attempt select query execution
-                                if ($result = $mysqli->query("SELECT eprogid, ecourseid, passed, compdate FROM $enrollments_tablename WHERE euserid = '$userid'")) {
-                                    if(mysqli_num_rows($result) > 0){
-                                        while($row = mysqli_fetch_array($result)){
-                                            $eprogid = $row['eprogid'];
-                                            $ecourseid = $row['ecourseid'];
-                                            $psd = $row['passed'];
-                                            $compdate = $row['compdate'];
-                                            // Attempt select query execution
-                                            if ($resultb = $mysqli->query("SELECT courseid, coursecode, coursename, credits FROM $courses_tablename WHERE courseid = '$ecourseid'")) {
-                                                if(mysqli_num_rows($resultb) > 0){
-                                                    $rowb = mysqli_fetch_array($resultb);
-                                                    $courseid = $rowb['courseid'];
-                                                    $coursecode = $rowb['coursecode'];
-                                                    $coursename = addslashes($rowb['coursename']);
-                                                    $credits = $rowb['credits'];
-                                                    $totalcr += $credits;
+            <!-- <div class="card spacing">
+                <div class="card-header">
+                    My Courses
+                </div>
+                <div class="card-body">
+                    < ?php
+                    global $enrollments_tablename, $enrollid, $euserid , $eprogid, $ecourseid, $examscore, $passed, $compdate, $rating;
+                    global $courses_tablename, $courseid, $cprogid , $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
+                    $totalcr = 0;
+                    ?>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">Course</th>
+                            <th scope="col">Course Status</th>
+                            <th scope="col">Credits</th>
+                            <th scope="col">Completion Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            < ?php
+                            // Attempt select query execution
+                            if ($result = $mysqli->query("SELECT eprogid, ecourseid, passed, compdate FROM $enrollments_tablename WHERE euserid = '$userid'")) {
+                                if(mysqli_num_rows($result) > 0){
+                                    while($row = mysqli_fetch_array($result)){
+                                        $eprogid = $row['eprogid'];
+                                        $ecourseid = $row['ecourseid'];
+                                        $psd = $row['passed'];
+                                        $compdate = $row['compdate'];
+                                        // Attempt select query execution
+                                        if ($resultb = $mysqli->query("SELECT courseid, coursecode, coursename, credits FROM $courses_tablename WHERE courseid = '$ecourseid'")) {
+                                            if(mysqli_num_rows($resultb) > 0){
+                                                $rowb = mysqli_fetch_array($resultb);
+                                                $courseid = $rowb['courseid'];
+                                                $coursecode = $rowb['coursecode'];
+                                                $coursename = addslashes($rowb['coursename']);
+                                                $credits = $rowb['credits'];
+                                                $totalcr += $credits;
+                                                if($psd){
+                                                    $passed = "<a href='course.php?coursename=".$coursename."&courseid=".$courseid."' class='btn btn-success' style='width: 200px;'><span style='font-size: 18px;'>COMPLETED</span></a>";
+                                                }else{
+                                                    $passed = "<a href='course.php?coursename=".$coursename."' class='btn btn-success' style='width: 200px;'><span style='font-size: 18px;'>INCOMPLETE</span></a>";
+                                                }
+                                                ?>
+                                                <tr>
+                                                    < ?php
                                                     if($psd){
-                                                        $passed = "<a href='course.php?coursename=".$coursename."&courseid=".$courseid."' class='btn btn-success' style='width: 200px;'><span style='font-size: 18px;'>COMPLETED</span></a>";
+                                                        ?>
+                                                        <td>< ?php echo $coursecode; ?> - < ?php echo $coursename; ?></td>
+                                                        < ?php
                                                     }else{
-                                                        $passed = "<a href='course.php?coursename=".$coursename."' class='btn btn-success' style='width: 200px;'><span style='font-size: 18px;'>INCOMPLETE</span></a>";
+                                                        ?>
+                                                        <td><a href="#">< ?php echo $coursecode; ?> - < ?php echo $coursename; ?></a></td>
+                                                        < ?php
                                                     }
                                                     ?>
-                                                    <tr>
-                                                        <?php
-                                                        if($psd){
-                                                            ?>
-                                                            <td><?php echo $coursecode; ?> - <?php echo $coursename; ?></td>
-                                                            <?php
-                                                        }else{
-                                                            ?>
-                                                            <td><a href="#"><?php echo $coursecode; ?> - <?php echo $coursename; ?></a></td>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                        <!-- <td>< ?php echo $coursecode; ?> - < ?php echo $coursename; ?></td> -->
-                                                        <td><?php echo $passed; ?></td>
-                                                        <td><?php echo $credits; ?></td>
-                                                        <td><?php echo $compdate; ?></td>
-                                                    </tr>
-                                                    <?php
-                                                    // Free result set
-                                                    // mysqli_free_result($result);
-                                                } else{
-                                                    $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
-                                                    main_form();
-                                                    exit;
-                                                }
+                                                    <td>< ?php echo $passed; ?></td>
+                                                    <td>< ?php echo $credits; ?></td>
+                                                    <td>< ?php echo $compdate; ?></td>
+                                                </tr>
+                                                < ?php
+                                                // Free result set
+                                                // mysqli_free_result($result);
                                             } else{
-                                                echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
+                                                $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
+                                                main_form();
+                                                exit;
                                             }
-                                            // End attempt select query execution
+                                        } else{
+                                            echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
                                         }
-                                        // Free result set
-                                        mysqli_free_result($result);
-                                    } else{
-                                        $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
-                                        main_form();
-                                        exit;
+                                        // End attempt select query execution
                                     }
+                                    // Free result set
+                                    mysqli_free_result($result);
                                 } else{
-                                    echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
+                                    $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
+                                    main_form();
+                                    exit;
                                 }
-                                // End attempt select query execution
-                                ?>
-                                <tr>
-                                    <td></td>
-                                    <td><?php echo "Total Credits: ".$totalcr; ?></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            } else{
+                                echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
+                            }
+                            // End attempt select query execution
+                            ?>
+                            <tr>
+                                <td></td>
+                                <td>< ?php echo "Total Credits: ".$totalcr; ?></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            <!-- </div> -->
+            </div> -->
             <?php
         }
         ?>

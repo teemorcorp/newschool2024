@@ -2,22 +2,23 @@
 global $dbhost, $dbusername, $dbpassword, $dbname, $mysqli;
 
 // SERVER
-// $dbhost = 'localhost';
-// $dbusername = 'teemorco_school2';
-// $dbpassword = 'TestSch00l2';
-// $dbname = 'teemorco_school2';
+$dbhost = 'localhost';
+$dbusername = 'teemorco_school2';
+$dbpassword = 'TestSch00l2';
+$dbname = 'teemorco_school2';
 
 // LOCALHOST
-$dbhost = 'localhost';
-$dbusername = 'school2';
-$dbpassword = '1nh15nam3';
-$dbname = 'school2';
+// $dbhost = 'localhost';
+// $dbusername = 'school2';
+// $dbpassword = '1nh15nam3';
+// $dbname = 'school2';
 
 $users_tablename = 'users';
 $answers_tablename = 'answers';
 $courses_tablename = 'courses';
 $enrollments_tablename = 'enrollments';
 $exams_tablename = 'exams';
+$prayers_tablename = 'prayers';
 $programs_tablename = 'programs';
 $progenroll_tablename = 'progenroll';
 $prog_det_tablename = 'prog_det';
