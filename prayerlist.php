@@ -35,18 +35,30 @@ function main_form() {
     <br>
     <div id="boxed">
         <div class="row ml-12 mr-12 clearfix">
-            <form action="<?php echo $PHP_SELF; ?>" method="post">
                 <p class="text-center"><span style="font-size: 32px;">Join Us In Prayer</span></p>
                     <!-- <p>< ?php echo $_SESSION['msg']."<br>"; ?></p> -->
                 <div class="col-sm-2"></div>
-                <div class="col-sm-4 text-center">
-                    <button name="action" type="submit" class="btn btn-primary" value="add_prayer">Add Prayer Request</button>
+                <div class="col-sm-2 text-center">
+                    <form action="<?php echo $PHP_SELF; ?>" method="post">
+                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">Add Prayer Request</button>
+                    </form>
                 </div>
-                <div class="col-sm-4 text-center">
-                    <a href="#"></a>
+                <div class="col-sm-2 text-center">
+                    <form action="<?php echo $PHP_SELF; ?>" method="post">
+                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View Answered Only</button>
+                    </form>
+                </div>
+                <div class="col-sm-2 text-center">
+                    <form action="<?php echo $PHP_SELF; ?>" method="post">
+                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View Unanswered Only</button>
+                    </form>
+                </div>
+                <div class="col-sm-2 text-center">
+                    <form action="<?php echo $PHP_SELF; ?>" method="post">
+                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View All Requests</button>
+                    </form>
                 </div>
                 <div class="col-sm-2"></div>
-            </form>
         </div>
 
         <div class="row" style="margin-top: 20px;">
@@ -153,12 +165,12 @@ function main_form() {
                                             if($answered){
                                                 ?>
                                                 <input type="hidden" name="answeredid" value="<?php echo $prayerid; ?>">
-                                                <button name="action" type="submit" class="btn btn-success" style="width; 100%;" value="answered">ANSWERED</button>
+                                                <button name="action" type="submit" class="btn btn-success btn-sm" style="width; 100%;" value="answered">ANSWERED</button>
                                                 <?php
                                             }else{
                                                 ?>
                                                 <input type="hidden" name="answeredid" value="<?php echo $prayerid; ?>">
-                                                <button name="action" type="submit" class="btn btn-warning" style="width; 100%;" value="not_answered">NOT ANSWERED</button>
+                                                <button name="action" type="submit" class="btn btn-warning btn-sm" style="width; 100%;" value="not_answered">NOT ANSWERED</button>
                                                 <?php
                                             }
                                             ?>
