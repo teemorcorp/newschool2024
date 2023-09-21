@@ -49,19 +49,19 @@ testadmin();
                 
         <div class="row ml-12 mr-12 clearfix">
             <div class="col-sm-4" align="center">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoOne">
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoOne">
                     Watch this Introduction video!
-                </button>
+                </button> -->
             </div>
             <div class="col-sm-4" align="center">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoTwo">
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoTwo">
                     How to use this site
-                </button>
+                </button> -->
             </div>
             <div class="col-sm-4" align="center">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoThree">
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoThree">
                     How to enroll into a degree program
-                </button>
+                </button> -->
             </div>
             <!--div class="col-sm-2" align="center">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoOne">
@@ -572,9 +572,9 @@ testadmin();
             <div class="modal-content" style="margin-top: 80px;">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">How to Use This Site</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <!-- <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>
+                    </button> -->
                 </div>
                 <div class="modal-body" align="center">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/nTL5gtP0nyg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -591,10 +591,10 @@ testadmin();
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="margin-top: 80px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">How to Enroll</h5>
+                    <!-- <h5 class="modal-title" id="exampleModalLabel">How to Enroll</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>
+                    </button> -->
                 </div>
                 <div class="modal-body" align="center">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/D7Ef4kM5BLg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

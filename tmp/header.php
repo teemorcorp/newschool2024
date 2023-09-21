@@ -17,73 +17,40 @@ global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfna
 global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $goalamt, $curgoal;
 global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
     
-    include "functions.php";
-    
-    if(!empty($_SESSION['userid'])){
-        $userid = $_SESSION['userid'];
+include "functions.php";
 
-        // Attempt select query execution
-        $sqla = "SELECT * FROM $users_tablename WHERE userid = '$userid'";
-        if ($resulta = mysqli_query($mysqli, $sqla)) {
-            if (mysqli_num_rows($resulta) > 0) {
-                $rowa = mysqli_fetch_array($resulta);
-                $isadmin = $rowa['isadmin'];
-                $userfname = $rowa['userfname'];
-                $userlname = $rowa['userlname'];
-                $imagepath = $rowa['imagepath'];
-                $fullname = $userfname." ".$userlname;
-                // $uid = $rowa['userid'];
-                // $email = $rowa['useremail'];
-                // Free result set
-                mysqli_free_result($resulta);
-            } else {
-                $msg = "<div class='alert alert-danger' role='alert'>
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-                <strong>ERROR!</strong> UserID Not Found!
-                </div>";
-            }
+if(!empty($_SESSION['userid'])){
+    $userid = $_SESSION['userid'];
+
+    // Attempt select query execution
+    $sqla = "SELECT * FROM $users_tablename WHERE userid = '$userid'";
+    if ($resulta = mysqli_query($mysqli, $sqla)) {
+        if (mysqli_num_rows($resulta) > 0) {
+            $rowa = mysqli_fetch_array($resulta);
+            $isadmin = $rowa['isadmin'];
+            $userfname = $rowa['userfname'];
+            $userlname = $rowa['userlname'];
+            $imagepath = $rowa['imagepath'];
+            $fullname = $userfname." ".$userlname;
+            // Free result set
+            mysqli_free_result($resulta);
         } else {
             $msg = "<div class='alert alert-danger' role='alert'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-            <strong>ERROR!</strong> Error updating record: " . $mysqli->error . "
+            <strong>ERROR!</strong> UserID Not Found!
             </div>";
         }
-        // End attempt select query execution
-
-        // echo "imagepath: ".$imagepath."<br>";
-        // exit;
-
-
-        // // Attempt select query execution
-        // // $sql = "SELECT * FROM $users_tablename WHERE userid = '$userid'";
-        // echo "Line #24 Header<br>";
-        // if ($result = $mysqli->query("SELECT * FROM $users_tablename WHERE userid = '$userid'")) {
-        //     echo "Line #26 Header<br>";
-        //     if(mysqli_num_rows($result) > 0){
-        //         echo "Line #28 Header<br>";
-        //         $row = mysqli_fetch_array($result);
-        //         $isadmin = $row['isadmin'];
-        //         $userfname = $row['userfname'];
-        //         $userlname = $row['userlname'];
-        //         $imagepath = $row['imagepath'];
-        //         $fullname = $userfname." ".$userlname;
-        //         // Free result set
-        //         mysqli_free_result($result);
-        //     } else{
-        //         echo "Line #37 Header<br>";
-        //         $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
-        //         main_form();
-        //         exit;
-        //     }
-        // } else{
-        //     echo "Line #43 Header<br>";
-        //     echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
-        // }
-        // // End attempt select query execution
-    }else{
-        $imagepath = "NoPhoto.jpg";
-        $fullname = 'Visitor';
+    } else {
+        $msg = "<div class='alert alert-danger' role='alert'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+        <strong>ERROR!</strong> Error updating record: " . $mysqli->error . "
+        </div>";
     }
+    // End attempt select query execution
+}else{
+    $imagepath = "NoPhoto.jpg";
+    $fullname = 'Visitor';
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -114,10 +81,22 @@ global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
         *******  DATE PICKER / CALENDAR
         ***********************************************************************************************************-->
         <script>
+            $(function(){
+                $("#datepicker").datepicker();
+            });
+        </script>
+
+        <!-- ********************************************************************************************************
+        *******  SIDE MENU
+        ***********************************************************************************************************-->
+        <script>
             $( function() {
-                $( "#datepicker" ).datepicker();
+                $( "#menu" ).menu();
             } );
         </script>
+        <style>
+            .ui-menu { width: 100%; }
+        </style>
 
         <!-- ********************************************************************************************************
         *******  ACCORDIAN
@@ -203,13 +182,104 @@ global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
             }
         </style>
     </head>
-    <body class="main" id="body-pd">
-        <header class="header" id="header">
-            <div class="header_toggle">
-                <i class="bx bx-menu" id="header-toggle"></i>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary header">
+            <div class="container-fluid d-flex">
+                <a class="navbar-brand text-white" href="#">Navbar</a>
+                <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon text-white"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                    </li> -->
+                </ul>
+                <span class="navbar-text d-flex text-white">
+                    <?php
+                    $msgcnt = 0;
+                    $mailcnt = 0;
+                    if(!empty($_SESSION['userid'])){
+                        ?>
+                        <div class="menu_icons">
+                            <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'notifications.php';">
+                            <i class='bx bx-bell'></i>
+                            <?php
+                            if($msgcnt >= 1){
+                                ?>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    <?php
+                                        if($msgcnt >= 100){
+                                            echo "99+";
+                                        }else{
+                                            echo $msgcnt;
+                                        }
+                                    ?>
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
+                                <?php
+                            }
+                            ?>
+                            </a>
+                        </div>
+
+                        <div class="menu_icons">
+                            <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'studentmail.php';">
+                            <i class='bx bx-envelope'></i>
+                            <?php
+                            if($mailcnt >= 1){
+                                ?>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    <?php
+                                        if($mailcnt >= 100){
+                                            echo "99+";
+                                        }else{
+                                            echo $mailcnt;
+                                        }
+                                    ?>
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
+                                <?php
+                            }
+                            ?>
+                            </a>
+                        </div>
+                        <?php
+                    }else{
+                        ?>
+                        <div class="menu_icons">
+                            <a onClick="Javascript:window.location.href = 'admissions.php';"><i class='bx bxs-school nav_icon'></i><span style="font-size: 18px;"> Enroll Now</span></a>
+                        </div>
+                        <div class="menu_icons">
+                            <a onClick="Javascript:window.location.href = 'login.php';"><i class='bx bx-log-in nav_icon'></i><span style="font-size: 18px;"> Student Login</span></a>
+                        </div>
+                        <?php
+                    }
+
+                    if(empty($imagepath)){
+                        ?>
+                        <img class="header_img" style="margin-top: 2px;" src="img/portraits/NoPhoto.jpg" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
+                        <?php
+                    }else{
+                        ?>
+                        <img class="header_img" style="margin-top: 2px;" src="img/portraits/<?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
+                        <?php
+                    }
+                    ?>
+                </span>
+                </div>
             </div>
+        </nav>
+
+        <!-- <header class="header">
             <div class="text-white d-flex">
-                <?php
+                < ?php
                 $msgcnt = 0;
                 $mailcnt = 0;
                 if(!empty($_SESSION['userid'])){
@@ -217,11 +287,11 @@ global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
                     <div class="menu_icons">
                         <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'notifications.php';">
                         <i class='bx bx-bell'></i>
-                        <?php
+                        < ?php
                         if($msgcnt >= 1){
                             ?>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                <?php
+                                < ?php
                                     if($msgcnt >= 100){
                                         echo "99+";
                                     }else{
@@ -230,7 +300,7 @@ global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
                                 ?>
                                 <span class="visually-hidden">unread messages</span>
                             </span>
-                            <?php
+                            < ?php
                         }
                         ?>
                         </a>
@@ -239,11 +309,11 @@ global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
                     <div class="menu_icons">
                         <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'studentmail.php';">
                         <i class='bx bx-envelope'></i>
-                        <?php
+                        < ?php
                         if($mailcnt >= 1){
                             ?>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                <?php
+                                < ?php
                                     if($mailcnt >= 100){
                                         echo "99+";
                                     }else{
@@ -252,16 +322,12 @@ global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
                                 ?>
                                 <span class="visually-hidden">unread messages</span>
                             </span>
-                            <?php
+                            < ?php
                         }
                         ?>
-                        <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            < ?php echo $mailcnt; ?>
-                            <span class="visually-hidden">unread Mail</span>
-                        </span> -->
                         </a>
                     </div>
-                    <?php
+                    < ?php
                 }else{
                     ?>
                     <div class="menu_icons">
@@ -270,18 +336,18 @@ global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
                     <div class="menu_icons">
                         <a onClick="Javascript:window.location.href = 'login.php';"><i class='bx bx-log-in nav_icon'></i><span style="font-size: 18px;"> Student Login</span></a>
                     </div>
-                    <?php
+                    < ?php
                 }
 
                 if(empty($imagepath)){
                     ?>
                     <img class="header_img" style="margin-top: 2px;" src="img/portraits/NoPhoto.jpg" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
-                    <?php
+                    < ?php
                 }else{
                     ?>
-                    <img class="header_img" style="margin-top: 2px;" src="img/portraits/<?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
-                    <?php
+                    <img class="header_img" style="margin-top: 2px;" src="img/portraits/< ?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 13px; margin-left: 10px;">< ?php echo $fullname; ?></div>
+                    < ?php
                 }
                 ?>
             </div>
-        </header>
+        </header> -->

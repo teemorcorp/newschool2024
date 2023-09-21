@@ -44,19 +44,19 @@ function main_form() {
                     </form>
                 </div>
                 <div class="col-sm-2 text-center">
-                    <form action="<?php echo $PHP_SELF; ?>" method="post">
+                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
                         <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View Answered Only</button>
-                    </form>
+                    </form> -->
                 </div>
                 <div class="col-sm-2 text-center">
-                    <form action="<?php echo $PHP_SELF; ?>" method="post">
+                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
                         <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View Unanswered Only</button>
-                    </form>
+                    </form> -->
                 </div>
                 <div class="col-sm-2 text-center">
-                    <form action="<?php echo $PHP_SELF; ?>" method="post">
+                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
                         <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View All Requests</button>
-                    </form>
+                    </form> -->
                 </div>
                 <div class="col-sm-2"></div>
         </div>
@@ -120,7 +120,7 @@ function main_form() {
                     } else {
                         echo "<a href='$PHP_SELF?page=".$prevpage."&userid=".$userid."&username=".$username."&userfname=".$userfname."'>PREVIOUS</a>";
                     }
-                ?>
+                    ?>
                     Page &nbsp;<?php echo $page; ?> of &nbsp;<?php echo $total_pages; ?>
                     <?php 
                     $nextpage = ($page + 1);
@@ -128,7 +128,7 @@ function main_form() {
                     } else {
                         echo "<a href='$PHP_SELF?page=".$nextpage."&userid=".$userid."&username=".$username."&userfname=".$userfname."'>NEXT</a>";
                     }
-                ?>
+                    ?>
                 </form>
                 </center>
             </div>

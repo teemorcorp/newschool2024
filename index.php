@@ -46,7 +46,7 @@ function main_form() {
         $userid = $_SESSION['userid'];
     }
 
-    testadmin();
+    // testadmin();
 
     $g = $goalamt;
     $c = $curgoal;
@@ -61,234 +61,250 @@ function main_form() {
     $width = number_format(($current / $goal) * 100, 2, '.', '');
     ?>
     <div class="height-100">
-        <!-- <h4>Dashboard</h4> -->
-        <br>
-        <div id="boxed">
-            <div class="row ml-12 mr-12 clearfix">
-                <div class="col" align="center">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2"><?php menu(); ?></div>
+                <div class="col-sm-10">
+                    <!-- <h4>Dashboard</h4> -->
+                    <br>
+                    <div id="boxed">
+                        <div class="row ml-12 mr-12 clearfix">
+                            <div class="col" align="center">
+                                <?php
+                                if(empty($_SESSION['userid'])){
+                                    ?>
+                                    <font size="+3"><strong>Welcome to the Dashboard, Visitor!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <?php
+                                }else{
+                                    ?>
+                                    <font size="+3"><strong>Welcome to your Dashboard, <?php echo $userfname; ?>!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <?php
+                                }
+                                ?>
+                                <!-- <button type="button" id="btnrounded" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#information_modal">Update as of <?php echo date('m/d/Y'); ?></button> -->
+                                <br>
+                                <button type="button" class="btn btn-warning" id="opener">Update as of <?php echo date('m/d/Y'); ?></button>
+                                <br><br>
+                                <script src="//myradiostream.com/embed/ihnbible"></script>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="boxed" class="text-center">
+                        <p><span style="font-size: 32px;">Get familiar with our online campus!</span></p>
+                                
+                        <div class="row ml-12 mr-12 clearfix">
+                            <div class="col-sm-4" align="center">
+                                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoOne">
+                                    Watch this Introduction video!
+                                </button> -->
+                            </div>
+                            <div class="col-sm-4" align="center">
+                                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoTwo">
+                                    How to use this site
+                                </button> -->
+                            </div>
+                            <div class="col-sm-4" align="center">
+                                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoThree">
+                                    How to enroll into a degree program
+                                </button> -->
+                            </div>
+                            <!--div class="col-sm-2" align="center">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoOne">
+                                    Coming Soon . . .
+                                </button>
+                            </div-->
+                            <div class="col-sm-2" align="center"></div>
+                        </div>
+                    </div>
+
+                    <div id="boxed" class="text-center">
+                        <p style="font-size: 28px;">Our current financial goal is <?php echo $g; ?>, which supports hundreds of students by providing satelite communications to receive education classes in remote areas. Can you pay it forward and help us reach our goal?</p>
+                        <p><span style="font-size: 32px;">We have received </span><span style="font-size: 40px; font-weight: bold;"><?php echo $c; ?></span> <span style="font-size: 32px;">of our</span> <span style="font-size: 40px; font-weight: bold;"><?php echo $g; ?></span> <span style="font-size: 32px;">goal!</span></p>
+                        
+                        <div class="progress" style="height: 40px;">
+                        <?php
+                        if($width >= 100){
+                            ?>
+                            <div class="progress-bar bg-success" role="progressbar" aria-label="20px high" style="width: <?php echo $width; ?>%"></div>
+                            <?php
+                        }else{
+                            ?>
+                            <div class="progress-bar bg-info" role="progressbar" aria-label="20px high" style="width: <?php echo $width; ?>%"></div>
+                            <?php
+                        }
+                        ?>
+                            <!-- <div class="progress-bar bg-info" role="progressbar" aria-label="20px high" style="width: <?php echo $width; ?>%"></div> -->
+                            <div style="font-size: 24px; font-weight: bold; padding-top: 4px;"><?php echo $width; ?>%</div>
+                        </div>
+
+                        <a href="#" class="btn btn-danger btn-lg" style="margin-top: 20px; margin-bottom: 20px;"><i class='bx bxs-heart'></i> I want to help - donate now</a>
+
+                        <p>A huge thank you to all our current supporters who make this opportunity possible by faithfully supporting this generosity-driven education.</p>
+                    </div>
+
                     <?php
                     if(empty($_SESSION['userid'])){
                         ?>
-                        <font size="+3"><strong>Welcome to the Dashboard, Visitor!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div id="boxed" class="text-center">
+                            <div class="row ml-12 mr-12 clearfix">
+                                <div class="col-sm-4" align="center">
+                                    <div class="card" style="width: 18rem;">
+                                        <img src="img/card_1.jpg" style="width: 100%;" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <span class="card-title">Apply For Enrollment</span>
+                                            <p class="card-text">Fill out the admissions application below and start your Biblical education today!</p>
+                                        </div>
+                                        <div class="modal-footer card-btn">
+                                            <a href="admissions.php" class="btn btn-primary">Apply Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4" align="center">
+                                    <div class="card" style="width: 18rem;">
+                                        <img src="img/card_2.jpg" style="width: 100%;" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Become a Volunteer</h5>
+                                            <p class="card-text">We need educators, administrators, writers, web developers, and so much more.</p>
+                                        </div>
+                                        <div class="modal-footer card-btn">
+                                            <a href="volunteer.php" class="btn btn-primary">Join our team!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4" align="center">
+                                    <div class="card" style="width: 18rem;">
+                                        <img src="img/card_3.jpg" style="width: 100%;" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Join Our Prayer Warriors</h5>
+                                            <p class="card-text">View our prayer list and pray over the issues and concerns. Join with others and witness God's power.</p>
+                                        </div>
+                                        <div class="modal-footer card-btn">
+                                            <a href="prayerlist.php" class="btn btn-primary">Let Us Pray</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <?php
                     }else{
                         ?>
-                        <font size="+3"><strong>Welcome to your Dashboard, <?php echo $userfname; ?>!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <?php
-                    }
-                    ?>
-                    <!-- <button type="button" id="btnrounded" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#information_modal">Update as of <?php echo date('m/d/Y'); ?></button> -->
-                    <br>
-                    <button type="button" class="btn btn-warning" id="opener">Update as of <?php echo date('m/d/Y'); ?></button>
-                    <br><br>
-                    <script src="//myradiostream.com/embed/ihnbible"></script>
-                </div>
-            </div>
-        </div>
-
-        <div id="boxed" class="text-center">
-            <p><span style="font-size: 32px;">Get familiar with our online campus!</span></p>
-                    
-            <div class="row ml-12 mr-12 clearfix">
-                <div class="col-sm-4" align="center">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoOne">
-                        Watch this Introduction video!
-                    </button>
-                </div>
-                <div class="col-sm-4" align="center">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoTwo">
-                        How to use this site
-                    </button>
-                </div>
-                <div class="col-sm-4" align="center">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoThree">
-                        How to enroll into a degree program
-                    </button>
-                </div>
-                <!--div class="col-sm-2" align="center">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoOne">
-                        Coming Soon . . .
-                    </button>
-                </div-->
-                <div class="col-sm-2" align="center"></div>
-            </div>
-        </div>
-
-        <div id="boxed" class="text-center">
-            <p style="font-size: 28px;">Our current financial goal is <?php echo $g; ?>, which supports hundreds of students by providing satelite communications to receive education classes in remote areas. Can you pay it forward and help us reach our goal?</p>
-            <p><span style="font-size: 32px;">We have received </span><span style="font-size: 40px; font-weight: bold;"><?php echo $c; ?></span> <span style="font-size: 32px;">of our</span> <span style="font-size: 40px; font-weight: bold;"><?php echo $g; ?></span> <span style="font-size: 32px;">goal!</span></p>
-            
-            <div class="progress" style="height: 40px;">
-            <?php
-            if($width >= 100){
-                ?>
-                <div class="progress-bar bg-success" role="progressbar" aria-label="20px high" style="width: <?php echo $width; ?>%"></div>
-                <?php
-            }else{
-                ?>
-                <div class="progress-bar bg-info" role="progressbar" aria-label="20px high" style="width: <?php echo $width; ?>%"></div>
-                <?php
-            }
-            ?>
-                <!-- <div class="progress-bar bg-info" role="progressbar" aria-label="20px high" style="width: <?php echo $width; ?>%"></div> -->
-                <div style="font-size: 24px; font-weight: bold; padding-top: 4px;"><?php echo $width; ?>%</div>
-            </div>
-
-            <a href="#" class="btn btn-danger btn-lg" style="margin-top: 20px; margin-bottom: 20px;"><i class='bx bxs-heart'></i> I want to help - donate now</a>
-
-            <p>A huge thank you to all our current supporters who make this opportunity possible by faithfully supporting this generosity-driven education.</p>
-        </div>
-
-        <?php
-        if(empty($_SESSION['userid'])){
-            ?>
-            <div id="boxed" class="text-center">
-                <div class="row ml-12 mr-12 clearfix">
-                    <div class="col-sm-4" align="center">
-                        <div class="card" style="width: 18rem;">
-                            <img src="img/card_1.jpg" style="width: 100%;" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <span class="card-title">Apply For Enrollment</span>
-                                <p class="card-text">Fill out the admissions application below and start your Biblical education today!</p>
-                            </div>
-                            <div class="modal-footer card-btn">
-                                <a href="admissions.php" class="btn btn-primary">Apply Now</a>
+                        <div id="boxed" class="text-center">
+                            <div class="row ml-12 mr-12 clearfix">
+                                <div class="col-sm-4" align="center">
+                                    <div class="card" style="width: 18rem;">
+                                        <img src="img/card_1.jpg" style="width: 100%;" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <span class="card-title">Apply For Enrollment</span>
+                                            <p class="card-text">Fill out the admissions application below and start your Biblical education today!</p>
+                                        </div>
+                                        <div class="modal-footer card-btn">
+                                            <a href="admissions.php" class="btn btn-primary">Apply Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4" align="center">
+                                    <div class="card" style="width: 18rem;">
+                                        <img src="img/card_2.jpg" style="width: 100%;" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Become a Volunteer</h5>
+                                            <p class="card-text">We need educators, administrators, writers, web developers, and so much more. Join our team!</p>
+                                        </div>
+                                        <div class="modal-footer card-btn">
+                                            <a href="volunteer.php" class="btn btn-primary">Learn More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4" align="center">
+                                    <div class="card" style="width: 18rem;">
+                                        <img src="img/card_3.jpg" style="width: 100%;" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Join Our Prayer Warriors</h5>
+                                            <p class="card-text">View our prayer list and pray over the issues and concerns. Join with others and witness God's power.</p>
+                                        </div>
+                                        <div class="modal-footer card-btn">
+                                            <a href="prayerlist.php" class="btn btn-primary">Join Us</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4" align="center">
-                        <div class="card" style="width: 18rem;">
-                            <img src="img/card_2.jpg" style="width: 100%;" class="card-img-top" alt="...">
+                        
+                        <!-- <div class="card spacing">
+                            <div class="card-header">
+                                My Courses
+                            </div>
                             <div class="card-body">
-                                <h5 class="card-title">Become a Volunteer</h5>
-                                <p class="card-text">We need educators, administrators, writers, web developers, and so much more.</p>
-                            </div>
-                            <div class="modal-footer card-btn">
-                                <a href="volunteer.php" class="btn btn-primary">Join our team!</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4" align="center">
-                        <div class="card" style="width: 18rem;">
-                            <img src="img/card_3.jpg" style="width: 100%;" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Join Our Prayer Warriors</h5>
-                                <p class="card-text">View our prayer list and pray over the issues and concerns. Join with others and witness God's power.</p>
-                            </div>
-                            <div class="modal-footer card-btn">
-                                <a href="prayerlist.php" class="btn btn-primary">Let Us Pray</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php
-        }else{
-            ?>
-            <div id="boxed" class="text-center">
-                <div class="row ml-12 mr-12 clearfix">
-                    <div class="col-sm-4" align="center">
-                        <div class="card" style="width: 18rem;">
-                            <img src="img/card_1.jpg" style="width: 100%;" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <span class="card-title">Apply For Enrollment</span>
-                                <p class="card-text">Fill out the admissions application below and start your Biblical education today!</p>
-                            </div>
-                            <div class="modal-footer card-btn">
-                                <a href="admissions.php" class="btn btn-primary">Apply Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4" align="center">
-                        <div class="card" style="width: 18rem;">
-                            <img src="img/card_2.jpg" style="width: 100%;" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Become a Volunteer</h5>
-                                <p class="card-text">We need educators, administrators, writers, web developers, and so much more. Join our team!</p>
-                            </div>
-                            <div class="modal-footer card-btn">
-                                <a href="volunteer.php" class="btn btn-primary">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4" align="center">
-                        <div class="card" style="width: 18rem;">
-                            <img src="img/card_3.jpg" style="width: 100%;" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Join Our Prayer Warriors</h5>
-                                <p class="card-text">View our prayer list and pray over the issues and concerns. Join with others and witness God's power.</p>
-                            </div>
-                            <div class="modal-footer card-btn">
-                                <a href="prayerlist.php" class="btn btn-primary">Join Us</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- <div class="card spacing">
-                <div class="card-header">
-                    My Courses
-                </div>
-                <div class="card-body">
-                    < ?php
-                    global $enrollments_tablename, $enrollid, $euserid , $eprogid, $ecourseid, $examscore, $passed, $compdate, $rating;
-                    global $courses_tablename, $courseid, $cprogid , $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
-                    $totalcr = 0;
-                    ?>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                            <th scope="col">Course</th>
-                            <th scope="col">Course Status</th>
-                            <th scope="col">Credits</th>
-                            <th scope="col">Completion Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            < ?php
-                            // Attempt select query execution
-                            if ($result = $mysqli->query("SELECT eprogid, ecourseid, passed, compdate FROM $enrollments_tablename WHERE euserid = '$userid'")) {
-                                if(mysqli_num_rows($result) > 0){
-                                    while($row = mysqli_fetch_array($result)){
-                                        $eprogid = $row['eprogid'];
-                                        $ecourseid = $row['ecourseid'];
-                                        $psd = $row['passed'];
-                                        $compdate = $row['compdate'];
+                                < ?php
+                                global $enrollments_tablename, $enrollid, $euserid , $eprogid, $ecourseid, $examscore, $passed, $compdate, $rating;
+                                global $courses_tablename, $courseid, $cprogid , $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
+                                $totalcr = 0;
+                                ?>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">Course</th>
+                                        <th scope="col">Course Status</th>
+                                        <th scope="col">Credits</th>
+                                        <th scope="col">Completion Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        < ?php
                                         // Attempt select query execution
-                                        if ($resultb = $mysqli->query("SELECT courseid, coursecode, coursename, credits FROM $courses_tablename WHERE courseid = '$ecourseid'")) {
-                                            if(mysqli_num_rows($resultb) > 0){
-                                                $rowb = mysqli_fetch_array($resultb);
-                                                $courseid = $rowb['courseid'];
-                                                $coursecode = $rowb['coursecode'];
-                                                $coursename = addslashes($rowb['coursename']);
-                                                $credits = $rowb['credits'];
-                                                $totalcr += $credits;
-                                                if($psd){
-                                                    $passed = "<a href='course.php?coursename=".$coursename."&courseid=".$courseid."' class='btn btn-success' style='width: 200px;'><span style='font-size: 18px;'>COMPLETED</span></a>";
-                                                }else{
-                                                    $passed = "<a href='course.php?coursename=".$coursename."' class='btn btn-success' style='width: 200px;'><span style='font-size: 18px;'>INCOMPLETE</span></a>";
-                                                }
-                                                ?>
-                                                <tr>
-                                                    < ?php
-                                                    if($psd){
-                                                        ?>
-                                                        <td>< ?php echo $coursecode; ?> - < ?php echo $coursename; ?></td>
-                                                        < ?php
-                                                    }else{
-                                                        ?>
-                                                        <td><a href="#">< ?php echo $coursecode; ?> - < ?php echo $coursename; ?></a></td>
-                                                        < ?php
+                                        if ($result = $mysqli->query("SELECT eprogid, ecourseid, passed, compdate FROM $enrollments_tablename WHERE euserid = '$userid'")) {
+                                            if(mysqli_num_rows($result) > 0){
+                                                while($row = mysqli_fetch_array($result)){
+                                                    $eprogid = $row['eprogid'];
+                                                    $ecourseid = $row['ecourseid'];
+                                                    $psd = $row['passed'];
+                                                    $compdate = $row['compdate'];
+                                                    // Attempt select query execution
+                                                    if ($resultb = $mysqli->query("SELECT courseid, coursecode, coursename, credits FROM $courses_tablename WHERE courseid = '$ecourseid'")) {
+                                                        if(mysqli_num_rows($resultb) > 0){
+                                                            $rowb = mysqli_fetch_array($resultb);
+                                                            $courseid = $rowb['courseid'];
+                                                            $coursecode = $rowb['coursecode'];
+                                                            $coursename = addslashes($rowb['coursename']);
+                                                            $credits = $rowb['credits'];
+                                                            $totalcr += $credits;
+                                                            if($psd){
+                                                                $passed = "<a href='course.php?coursename=".$coursename."&courseid=".$courseid."' class='btn btn-success' style='width: 200px;'><span style='font-size: 18px;'>COMPLETED</span></a>";
+                                                            }else{
+                                                                $passed = "<a href='course.php?coursename=".$coursename."' class='btn btn-success' style='width: 200px;'><span style='font-size: 18px;'>INCOMPLETE</span></a>";
+                                                            }
+                                                            ?>
+                                                            <tr>
+                                                                < ?php
+                                                                if($psd){
+                                                                    ?>
+                                                                    <td>< ?php echo $coursecode; ?> - < ?php echo $coursename; ?></td>
+                                                                    < ?php
+                                                                }else{
+                                                                    ?>
+                                                                    <td><a href="#">< ?php echo $coursecode; ?> - < ?php echo $coursename; ?></a></td>
+                                                                    < ?php
+                                                                }
+                                                                ?>
+                                                                <td>< ?php echo $passed; ?></td>
+                                                                <td>< ?php echo $credits; ?></td>
+                                                                <td>< ?php echo $compdate; ?></td>
+                                                            </tr>
+                                                            < ?php
+                                                            // Free result set
+                                                            // mysqli_free_result($result);
+                                                        } else{
+                                                            $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
+                                                            main_form();
+                                                            exit;
+                                                        }
+                                                    } else{
+                                                        echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
                                                     }
-                                                    ?>
-                                                    <td>< ?php echo $passed; ?></td>
-                                                    <td>< ?php echo $credits; ?></td>
-                                                    <td>< ?php echo $compdate; ?></td>
-                                                </tr>
-                                                < ?php
+                                                    // End attempt select query execution
+                                                }
                                                 // Free result set
-                                                // mysqli_free_result($result);
+                                                mysqli_free_result($result);
                                             } else{
                                                 $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
                                                 main_form();
@@ -298,34 +314,26 @@ function main_form() {
                                             echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
                                         }
                                         // End attempt select query execution
-                                    }
-                                    // Free result set
-                                    mysqli_free_result($result);
-                                } else{
-                                    $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
-                                    main_form();
-                                    exit;
-                                }
-                            } else{
-                                echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
-                            }
-                            // End attempt select query execution
-                            ?>
-                            <tr>
-                                <td></td>
-                                <td>< ?php echo "Total Credits: ".$totalcr; ?></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        ?>
+                                        <tr>
+                                            <td></td>
+                                            <td>< ?php echo "Total Credits: ".$totalcr; ?></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+                        <?php
+                    }
+                    ?>
+                    
+                    <div id="boxed" style="margin-bottom: 50px;">&nbsp;</div>
+                    
                 </div>
-            </div> -->
-            <?php
-        }
-        ?>
-        
-        <div id="boxed" style="margin-bottom: 50px;">&nbsp;</div>
+            </div>
+        </div>
     </div>
 
 
@@ -394,10 +402,10 @@ function main_form() {
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="margin-top: 80px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">How to Use This Site</h5>
+                    <!-- <h5 class="modal-title" id="exampleModalLabel">How to Use This Site</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>
+                    </button> -->
                 </div>
                 <div class="modal-body" align="center">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/nTL5gtP0nyg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -414,10 +422,10 @@ function main_form() {
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="margin-top: 80px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">How to Enroll</h5>
+                    <!-- <h5 class="modal-title" id="exampleModalLabel">How to Enroll</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>
+                    </button> -->
                 </div>
                 <div class="modal-body" align="center">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/D7Ef4kM5BLg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
