@@ -72,6 +72,13 @@ function menu(){
     ?>
     <div class="card" style="width: 100%; padding-left: 0px; margin-top: 20px;">
         <ul id="menu">
+            <?php
+            if($_SESSION['isadmin']){
+                ?>
+                <li class="list-group-item"><a class="nav-link" href="admin.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Administration</a></li>
+                <?php
+            }
+            ?>
             <li class="list-group-item"><a class="nav-link" href="index.php"><i class='bx bx-grid-alt nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li>
             <li class="list-group-item"><a class="nav-link" href="about.php"><i class='bx bx-universal-access nav_icon'></i>&nbsp;&nbsp;About</a></li>
             <li class="list-group-item"><a class="nav-link" href="calendar.php"><i class='bx bx-calendar nav_icon' title="Calendar"></i>&nbsp;&nbsp;Calendar</a></li>

@@ -16,10 +16,9 @@ include "tmp/header.php";
     global $menuid, $goal, $current, $pct, $userid;
 
     information_modal();
-
-    $menuid = 4;
-
-    testadmin();
+    if(!empty($_SESSION['userid'])){
+        $userid = $_SESSION['userid'];
+    }
 
     $course = $_GET['coursename'];
     $courseid = $_GET['courseid'];
@@ -63,49 +62,53 @@ include "tmp/header.php";
     // End attempt select query execution
     ?>
     <div class="height-100">
-        <br>
-        <div id="boxed">
-            <p class="text-center"><span style="font-size: 32px;"><?php echo $course; ?></span></p>
-                    
+        <div class="container-fluid">
             <div class="row">
-                <!-- <div class="col-sm-2"></div> -->
+                <div class="col-sm-2"><?php menu(); ?></div>
                 <div class="col-sm-10">
+                    <p class="text-center"><span style="font-size: 32px;"><?php echo $course; ?></span></p>
+                            
                     <div class="row">
-                        <div class="col-sm-3" style="padding-left: 50px;">
-                            <img src="img/school_books/<?php echo $course_photo; ?>" alt="" style="width: 250px;">
+                        <!-- <div class="col-sm-2"></div> -->
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-3" style="padding-left: 50px;">
+                                    <img src="img/school_books/<?php echo $course_photo; ?>" alt="" style="width: 250px;">
+                                </div>
+                                <div class="col-sm-5">
+                                    <p><span style="font-size: 16px; font-weight: bold;">Course ID:</span> <?php echo $courseid; ?></p>
+                                    <p><span style="font-size: 16px; font-weight: bold;">Course Code:</span> <?php echo $coursecode; ?></p>
+                                    <p><span style="font-size: 16px; font-weight: bold;">Course Name:</span> <?php echo $coursename; ?></p>
+                                    <p><span style="font-size: 16px; font-weight: bold;">Credits:</span> <?php echo $credits; ?></p>
+                                    <p><span style="font-size: 16px; font-weight: bold;">Course Description:</span><br><?php echo $coursedesc; ?></p>
+                                    <!-- <p>File Name: <?php echo $filename; ?></p> -->
+                                </div>
+                                <div class="col-sm-4">
+                                    <p><span style="font-size: 16px; font-weight: bold;">Brief Description:</span><br><?php echo $brief_desc; ?></p>
+                                    <p><span style="font-size: 16px; font-weight: bold;">Course Overview:</span><br><?php echo $overview; ?></p>
+                                </div>
+                            </div>
+                            <!-- <p>Is Course Valid: <?php echo $validcourse; ?></p> -->
+                            <!-- <p>Course Cost: <?php echo $course_cost; ?></p>
+                            <p>Course Discount: <?php echo $course_discount; ?></p>
+                            <p>Hours: <?php echo $hours; ?></p>
+                            <p>Videos: <?php echo $videos; ?></p>
+                            <p>Content #1: <?php echo $cont_one; ?></p>
+                            <p>Content #1 Description: <?php echo $cont_one_desc; ?></p>
+                            <p>Content #2: <?php echo $cont_two; ?></p>
+                            <p>Content #2 Description: <?php echo $cont_two_desc; ?></p>
+                            <p>Content #3: <?php echo $cont_three; ?></p>
+                            <p>Content #3 Description: <?php echo $cont_three_desc; ?></p>
+                            <p>Head Photo: <?php echo $head_photo; ?></p>
+                            <p>Top Course: <?php echo $top_course; ?></p> -->
                         </div>
-                        <div class="col-sm-5">
-                            <p><span style="font-size: 16px; font-weight: bold;">Course ID:</span> <?php echo $courseid; ?></p>
-                            <p><span style="font-size: 16px; font-weight: bold;">Course Code:</span> <?php echo $coursecode; ?></p>
-                            <p><span style="font-size: 16px; font-weight: bold;">Course Name:</span> <?php echo $coursename; ?></p>
-                            <p><span style="font-size: 16px; font-weight: bold;">Credits:</span> <?php echo $credits; ?></p>
-                            <p><span style="font-size: 16px; font-weight: bold;">Course Description:</span><br><?php echo $coursedesc; ?></p>
-                            <!-- <p>File Name: <?php echo $filename; ?></p> -->
-                        </div>
-                        <div class="col-sm-4">
-                            <p><span style="font-size: 16px; font-weight: bold;">Brief Description:</span><br><?php echo $brief_desc; ?></p>
-                            <p><span style="font-size: 16px; font-weight: bold;">Course Overview:</span><br><?php echo $overview; ?></p>
-                        </div>
+                        <!-- <div class="col-sm-2"></div> -->
                     </div>
-                    <!-- <p>Is Course Valid: <?php echo $validcourse; ?></p> -->
-                    <!-- <p>Course Cost: <?php echo $course_cost; ?></p>
-                    <p>Course Discount: <?php echo $course_discount; ?></p>
-                    <p>Hours: <?php echo $hours; ?></p>
-                    <p>Videos: <?php echo $videos; ?></p>
-                    <p>Content #1: <?php echo $cont_one; ?></p>
-                    <p>Content #1 Description: <?php echo $cont_one_desc; ?></p>
-                    <p>Content #2: <?php echo $cont_two; ?></p>
-                    <p>Content #2 Description: <?php echo $cont_two_desc; ?></p>
-                    <p>Content #3: <?php echo $cont_three; ?></p>
-                    <p>Content #3 Description: <?php echo $cont_three_desc; ?></p>
-                    <p>Head Photo: <?php echo $head_photo; ?></p>
-                    <p>Top Course: <?php echo $top_course; ?></p> -->
                 </div>
-                <!-- <div class="col-sm-2"></div> -->
+
+                <div id="boxed" style="margin-bottom: 50px;">&nbsp;</div>
             </div>
         </div>
-
-        <div id="boxed" style="margin-bottom: 50px;">&nbsp;</div>
     </div>
     <?php
     include "tmp/footer.php";

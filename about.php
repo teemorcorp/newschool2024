@@ -1,34 +1,28 @@
 <?php
+/****************************************************
+****   IHN Bible College
+****   Designed by: Tom Moore
+****   Written by: Tom Moore
+****   (c) 2001 - 2021 TEEMOR eBusiness Solutions
+****************************************************/
 include "tmp/header.php";
 
 global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $goalamt, $curgoal;
 global $menuid, $goal, $current, $pct, $userid;
 
 information_modal();
-
-$menuid = 2;
-
-testadmin();
+if(!empty($_SESSION['userid'])){
+    $userid = $_SESSION['userid'];
+}
 
 ?>
 <div class="height-100">
-    <!-- <h4>Courses</h4> -->
-    <br>
-    <!-- <div id="boxed">
-        <div class="row ml-12 mr-12 clearfix">
-            <div class="col" align="center">
-                <font size="+3"><strong>About IHN Bible</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" id="btnrounded" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#information_modal">Update as of <?php echo date('m/d/Y'); ?></button>
-            </div>
-        </div>
-    </div> -->
-
     <div id="boxed">
-        <p class="text-center"><span style="font-size: 32px;">About IHN Bible</span></p>
                 
         <div class="row">
-            <div class="col-sm-2"></div>
+            <div class="col-sm-2"><?php menu(); ?></div>
             <div class="col-sm-8">
+                <p class="text-center"><span style="font-size: 32px;">About IHN Bible</span></p>
                 <p>IHN Bible College is not as exclusive as a traditional Bible College or University because it eliminates materials not directly related to spiritual growth and productivity. We are not in competition with the traditional Bible Institution structure but our training is for lay men and women who do not have opportunities, educationally and/or financially, for such training.</p>
 
                 <p>IHN Bible College equips students with creative Bible study skills to enable continued study of Scriptures following basic course training. But the primary focus of our college training is teaching what Jesus taught . . . to move men from observation of the power of God to demonstration of the power of God.</p>

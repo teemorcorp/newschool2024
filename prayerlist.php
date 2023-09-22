@@ -22,182 +22,187 @@ function main_form() {
     global $menuid, $goal, $current, $pct, $userid;
     include "tmp/header.php";
     information_modal();
-
-    $menuid = 3;
     if(!empty($_SESSION['userid'])){
         $userid = $_SESSION['userid'];
     }
 
-    testadmin();
-
     ?>
-<div class="height-100">
-    <br>
-    <div id="boxed">
-        <div class="row ml-12 mr-12 clearfix">
-                <p class="text-center"><span style="font-size: 32px;">Join Us In Prayer</span></p>
-                    <!-- <p>< ?php echo $_SESSION['msg']."<br>"; ?></p> -->
-                <div class="col-sm-2"></div>
-                <div class="col-sm-2 text-center">
-                    <form action="<?php echo $PHP_SELF; ?>" method="post">
-                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">Add Prayer Request</button>
-                    </form>
-                </div>
-                <div class="col-sm-2 text-center">
-                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
-                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View Answered Only</button>
-                    </form> -->
-                </div>
-                <div class="col-sm-2 text-center">
-                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
-                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View Unanswered Only</button>
-                    </form> -->
-                </div>
-                <div class="col-sm-2 text-center">
-                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
-                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View All Requests</button>
-                    </form> -->
-                </div>
-                <div class="col-sm-2"></div>
-        </div>
+    <div class="height-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2"><?php menu(); ?></div>
+                <div class="col-sm-10">
+                    <!-- <h4>Dashboard</h4> -->
+                    <br>
+                    <div id="boxed">
+                        <div class="row ml-12 mr-12 clearfix">
+                                <p class="text-center"><span style="font-size: 32px;">Join Us In Prayer</span></p>
+                                    <!-- <p>< ?php echo $_SESSION['msg']."<br>"; ?></p> -->
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-2 text-center">
+                                    <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">Add Prayer Request</button>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View Answered Only</button>
+                                    </form> -->
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View Unanswered Only</button>
+                                    </form> -->
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View All Requests</button>
+                                    </form> -->
+                                </div>
+                                <div class="col-sm-2"></div>
+                        </div>
 
-        <div class="row" style="margin-top: 20px;">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-6 text-center">
-                <?php
-                if(!isset($_SESSION['pages'])) {
-                    $_SESSION['pages'] = 25;
-                }
-                
-                if ($_SESSION['pages'] <= 1) {
-                    $_SESSION['pages'] = 25;
-                }
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6 text-center">
+                                <?php
+                                if(!isset($_SESSION['pages'])) {
+                                    $_SESSION['pages'] = 25;
+                                }
+                                
+                                if ($_SESSION['pages'] <= 1) {
+                                    $_SESSION['pages'] = 25;
+                                }
 
-                if(!isset($_SESSION['perpage'])) {
-                    $perpage = 25;
-                    $_SESSION['perpage'] = $perpage;
-                } else {
-                    $perpage = $_SESSION['perpage'];
-                }
-                
-                if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; }; 
-                $start_from = ($page-1) * $perpage; 
-                
-                // Attempt select query execution
-                $sql = "SELECT COUNT(*) AS 'TotalItems' FROM $prayers_tablename";
-                if($result = mysqli_query($mysqli, $sql)){
-                    if(mysqli_num_rows($result) > 0){
-                        $row = mysqli_fetch_array($result);
-                        $total_records = $row['TotalItems'];
-                        // Free result set
-                        mysqli_free_result($result);
-                    } else{
-                        $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
-                        main_form();
-                        exit;
-                    }
-                } else{
-                    echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
-                }
-                // End attempt select query execution
+                                if(!isset($_SESSION['perpage'])) {
+                                    $perpage = 25;
+                                    $_SESSION['perpage'] = $perpage;
+                                } else {
+                                    $perpage = $_SESSION['perpage'];
+                                }
+                                
+                                if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; }; 
+                                $start_from = ($page-1) * $perpage; 
+                                
+                                // Attempt select query execution
+                                $sql = "SELECT COUNT(*) AS 'TotalItems' FROM $prayers_tablename";
+                                if($result = mysqli_query($mysqli, $sql)){
+                                    if(mysqli_num_rows($result) > 0){
+                                        $row = mysqli_fetch_array($result);
+                                        $total_records = $row['TotalItems'];
+                                        // Free result set
+                                        mysqli_free_result($result);
+                                    } else{
+                                        $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+                                        main_form();
+                                        exit;
+                                    }
+                                } else{
+                                    echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+                                }
+                                // End attempt select query execution
 
-                $total_pages = ceil($total_records / $perpage);
-                ?>
-                <center>
-                <form method="post" action="<?php echo $PHP_SELF ?>">
-                    Records Per Page
-                    <select name="perpage" >
-                        <option value="10" selected="">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    <input type="submit" value="GO" name="action">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Items: &nbsp;<?php echo $total_records; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <?php 
-                    $prevpage = ($page - 1);
-                    if ($prevpage < 1) {
-                    } else {
-                        echo "<a href='$PHP_SELF?page=".$prevpage."&userid=".$userid."&username=".$username."&userfname=".$userfname."'>PREVIOUS</a>";
-                    }
-                    ?>
-                    Page &nbsp;<?php echo $page; ?> of &nbsp;<?php echo $total_pages; ?>
-                    <?php 
-                    $nextpage = ($page + 1);
-                    if ($nextpage > $total_pages) {
-                    } else {
-                        echo "<a href='$PHP_SELF?page=".$nextpage."&userid=".$userid."&username=".$username."&userfname=".$userfname."'>NEXT</a>";
-                    }
-                    ?>
-                </form>
-                </center>
-            </div>
-            <div class="col-sm-3"></div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-8">
-                <table class="table">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Person in Need</th>
-                        <th scope="col">Request</th>
-                        <th scope="col">Answered?</th>
-                    </tr>
-                    <?php
-                    // Attempt select query execution
-                    if ($result = $mysqli->query("SELECT * FROM $prayers_tablename")) {
-                        if(mysqli_num_rows($result) > 0){
-                            while($row = mysqli_fetch_array($result)){
-                                $prayerid = $row['prayerid'];
-                                $prayee = $row['prayee'];
-                                $prayer_request = $row['prayer_request'];
-                                $answered = $row['answered'];
+                                $total_pages = ceil($total_records / $perpage);
                                 ?>
-                                <tr>
-                                    <td><?php echo $prayerid; ?></td>
-                                    <td><?php echo $prayee; ?></td>
-                                    <td><?php echo $prayer_request; ?></td>
-                                    <td>
-                                        <form action="<?php echo $PHP_SELF; ?>" method="post">
-                                            <?php
-                                            if($answered){
+                                <center>
+                                <form method="post" action="<?php echo $PHP_SELF ?>">
+                                    Records Per Page
+                                    <select name="perpage" >
+                                        <option value="10" selected="">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                    <input type="submit" value="GO" name="action">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Items: &nbsp;<?php echo $total_records; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <?php 
+                                    $prevpage = ($page - 1);
+                                    if ($prevpage < 1) {
+                                    } else {
+                                        echo "<a href='$PHP_SELF?page=".$prevpage."&userid=".$userid."&username=".$username."&userfname=".$userfname."'>PREVIOUS</a>";
+                                    }
+                                    ?>
+                                    Page &nbsp;<?php echo $page; ?> of &nbsp;<?php echo $total_pages; ?>
+                                    <?php 
+                                    $nextpage = ($page + 1);
+                                    if ($nextpage > $total_pages) {
+                                    } else {
+                                        echo "<a href='$PHP_SELF?page=".$nextpage."&userid=".$userid."&username=".$username."&userfname=".$userfname."'>NEXT</a>";
+                                    }
+                                    ?>
+                                </form>
+                                </center>
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8">
+                                <table class="table">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Person in Need</th>
+                                        <th scope="col">Request</th>
+                                        <th scope="col">Answered?</th>
+                                    </tr>
+                                    <?php
+                                    // Attempt select query execution
+                                    if ($result = $mysqli->query("SELECT * FROM $prayers_tablename")) {
+                                        if(mysqli_num_rows($result) > 0){
+                                            while($row = mysqli_fetch_array($result)){
+                                                $prayerid = $row['prayerid'];
+                                                $prayee = $row['prayee'];
+                                                $prayer_request = $row['prayer_request'];
+                                                $answered = $row['answered'];
                                                 ?>
-                                                <input type="hidden" name="answeredid" value="<?php echo $prayerid; ?>">
-                                                <button name="action" type="submit" class="btn btn-success btn-sm" style="width; 100%;" value="answered">ANSWERED</button>
-                                                <?php
-                                            }else{
-                                                ?>
-                                                <input type="hidden" name="answeredid" value="<?php echo $prayerid; ?>">
-                                                <button name="action" type="submit" class="btn btn-warning btn-sm" style="width; 100%;" value="not_answered">NOT ANSWERED</button>
+                                                <tr>
+                                                    <td><?php echo $prayerid; ?></td>
+                                                    <td><?php echo $prayee; ?></td>
+                                                    <td><?php echo $prayer_request; ?></td>
+                                                    <td>
+                                                        <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                                            <?php
+                                                            if($answered){
+                                                                ?>
+                                                                <input type="hidden" name="answeredid" value="<?php echo $prayerid; ?>">
+                                                                <button name="action" type="submit" class="btn btn-success btn-sm" style="width; 100%;" value="answered">ANSWERED</button>
+                                                                <?php
+                                                            }else{
+                                                                ?>
+                                                                <input type="hidden" name="answeredid" value="<?php echo $prayerid; ?>">
+                                                                <button name="action" type="submit" class="btn btn-warning btn-sm" style="width; 100%;" value="not_answered">NOT ANSWERED</button>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </form>
+                                                    </td>
+                                                <tr>
                                                 <?php
                                             }
-                                            ?>
-                                        </form>
-                                    </td>
-                                <tr>
-                                <?php
-                            }
-                            // Free result set
-                            mysqli_free_result($result);
-                        } else{
-                            echo "<font color='#FF0000'><strong>No record found!</strong></font>";
-                            // main_form();
-                            // exit;
-                        }
-                    } else{
-                        echo "ERROR: Was not able to execute Query on line #51. " . mysqli_error($mysqli);
-                    }
-                    // End attempt select query execution
-                ?>
-                </table>
+                                            // Free result set
+                                            mysqli_free_result($result);
+                                        } else{
+                                            echo "<font color='#FF0000'><strong>No record found!</strong></font>";
+                                            // main_form();
+                                            // exit;
+                                        }
+                                    } else{
+                                        echo "ERROR: Was not able to execute Query on line #51. " . mysqli_error($mysqli);
+                                    }
+                                    // End attempt select query execution
+                                ?>
+                                </table>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-2"></div>
         </div>
     </div>
 
-    <div id="boxed" style="margin-bottom: 50px;">&nbsp;</div>
+    <!-- <div id="boxed" style="margin-bottom: 50px;">&nbsp;</div> -->
 </div>
 <?php
 include "tmp/footer.php";

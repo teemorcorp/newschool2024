@@ -1,5 +1,10 @@
 <?php
-
+/****************************************************
+****   IHN Bible College
+****   Designed by: Tom Moore
+****   Written by: Tom Moore
+****   (c) 2001 - 2021 TEEMOR eBusiness Solutions
+****************************************************/
 
 // Grab action
 if (isset($_POST['action'])) {
@@ -51,8 +56,9 @@ function main_form() {
     }
     // End attempt select query execution
 
-    $menuid = 0;
-    testadmin();
+    if(!empty($_SESSION['userid'])){
+        $userid = $_SESSION['userid'];
+    }
 
     $g = $goalamt;
     $c = $curgoal;
@@ -113,295 +119,293 @@ function main_form() {
     // *******************************************************************************************
     ?>
     <div class="height-100">
-        <!-- <h4>Dashboard</h4> -->
-        <br>
-        <div class="d-flex">
-            <div id="boxed">
-                <div class="card-group">
-                    <div class="card card_margins text-bg-light mb-3">
-                        <!-- <img src="..." class="card-img-top" alt="..."> -->
-                        <form action="<?php echo $PHP_SELF ?>" method="post">
-                            <div class="card-body card-body-height">
-                                <h4 class="card-title">Financial Goal Settings</h4>
-                                <div class="mb-3 row">
-                                    <label for="totalGoalAmt" class="col-sm-6 col-form-label">Goal Amount</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" name="goal" class="form-control" id="totalGoalAmt" value="<?php echo $g; ?>">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="amtCollected" class="col-sm-6 col-form-label">Amount Collected</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" name="current" class="form-control" id="amtCollected" value="<?php echo $c; ?>">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="pctCollected" class="col-sm-6 col-form-label">Percentage Collected</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $pct."%"; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="d-grid gap-2">
-                                    <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Save Goals">Save Goals</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="card card_margins text-bg-light mb-3">
-                        <form action="<?php echo $PHP_SELF ?>" method="post">
-                            <div class="card-body card-body-height">
-                                <h4 class="card-title">Volunteers</h4>
-                                <div class="mb-3 row">
-                                    <label for="totalGoalAmt" class="col-sm-6 col-form-label">Positions Available</label>
-                                    <div class="col-sm-6">
-                                        <?php echo $totalpos; ?>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="amtCollected" class="col-sm-6 col-form-label">Positions Filled</label>
-                                    <div class="col-sm-6">
-                                        <?php echo $totalv; ?>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="pctCollected" class="col-sm-6 col-form-label">Percentage Filled</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $vpercent."%"; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="d-grid gap-2">
-                                    <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Volunteers</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="card card_margins text-bg-light mb-3">
-                        <form action="<?php echo $PHP_SELF ?>" method="post">
-                            <div class="card-body card-body-height">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="d-grid gap-2">
-                                    <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Go somewhere</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="card card_margins text-bg-light mb-3">
-                        <!-- <img src="..." class="card-img-top" alt="..."> -->
-                        <form action="<?php echo $PHP_SELF ?>" method="post">
-                            <div class="card-body card-body-height">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="d-grid gap-2">
-                                    <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Go somewhere</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- <br>
-        <div class="d-flex">
-            <div id="boxed">
-                <div class="card-group">
-
-                    <div class="card card_margins text-bg-light mb-3" style="width: 100%;">
-                        <form action="<?php echo $PHP_SELF ?>" method="post">
-                            <div class="card-body release-body-height">
-                                <h4 class="card-title">Add Notes</h4>
-                                <textarea name="relnotes" id="relnotes" style="width: 100%; height: 400px;"></textarea>
-                            </div>
-                            <div class="card-footer">
-                                <div class="d-grid gap-2">
-                                    <button name="action" type="submit" value="addnotes" class="btn btn-success btn-block">Add Notes</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="card card_margins text-bg-light mb-3" style="width: 100%;">
-                        <form action="<?php echo $PHP_SELF ?>" method="post">
-                            <div class="card-body release-body-height">
-                                <h4 class="card-title">View Notes</h4>
-                                <textarea name="allnotes" id="allnotes" style="width: 100%; height: 400px;"><?php echo $releasenotes; ?></textarea>
-                            </div>
-                            <div class="card-footer">
-                                <div class="d-grid gap-2">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div> -->
-
-        <br>
-        <div class="card-group">
-
-            <div class="card">
-                <form action="<?php echo $PHP_SELF ?>" method="post">
-                    <div class="card-body release-body-height">
-                        <h4 class="card-title">Add Notes</h4>
-                        <textarea name="relnotes" id="relnotes" style="width: 100%; height: 400px;"></textarea>
-                    </div>
-                    <div class="card-footer">
-                        <div class="d-grid gap-2">
-                            <button name="action" type="submit" value="addnotes" class="btn btn-success btn-block">Add Notes</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="card">
-                <form action="<?php echo $PHP_SELF ?>" method="post">
-                    <div class="card-body release-body-height">
-                        <h4 class="card-title">View Notes</h4>
-                        <textarea name="allnotes" id="allnotes" style="width: 100%; height: 400px;"><?php echo $releasenotes; ?></textarea>
-                    </div>
-                    <div class="card-footer">
-                        <div class="d-grid gap-2">
-                            <!-- <button name="action" type="submit" value="addnotes" class="btn btn-success btn-block">Add Notes</button> -->
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                Programs
-            </div>
-            <div class="card-body">
-                <form action="<?php echo $PHP_SELF ?>" method="post">
-                    <div class="row">
-                        <div class="col-3">
-                            <select name="progname" id="">
-                                <option value="">SELECT PROGRAM</option>
-                                <?php
-                                global $progenroll_tablename, $progenrollid, $enrprogid , $enruserid, $enrolldate;
-                                global $programs_tablename, $progid, $progname , $enabled, $cost, $charge, $accordian_header, $progtype;
-                                // Attempt select query execution
-                                if ($result = $mysqli->query("SELECT * FROM $programs_tablename ORDER BY progname ASC")) {
-                                    if(mysqli_num_rows($result) > 0){
-                                        while($row = mysqli_fetch_array($result)){
-                                            $progid = $row['progid'];
-                                            $progname = $row['progname'];
-                                            $enabled = $row['enabled'];
-                                            $cost = $row['cost'];
-                                            $charge = $row['charge'];
-                                            $accordian_header = $row['accordian_header'];
-                                            $progtype = $row['progtype'];
-                                            ?>
-                                            <div class="card-group">
-                                                <option value="<?php echo $progname; ?>"><?php echo $progname; ?></option>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2"><?php menu(); ?></div>
+                <div class="col-sm-10">
+                    <!-- <h4>Dashboard</h4> -->
+                    <br>
+                    <div id="boxed">
+                        <div class="card-group">
+                            <div class="card card_margins text-bg-light mb-3">
+                                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                                <form action="<?php echo $PHP_SELF ?>" method="post">
+                                    <div class="card-body card-body-height">
+                                        <h4 class="card-title">Financial Goal Settings</h4>
+                                        <div class="mb-3 row">
+                                            <label for="totalGoalAmt" class="col-sm-6 col-form-label">Goal Amount</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="goal" class="form-control" id="totalGoalAmt" value="<?php echo $g; ?>">
                                             </div>
-                                            <?php
-                                        }
-                                        // Free result set
-                                        mysqli_free_result($result);
-                                    } else{
-                                        $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
-                                        main_form();
-                                        exit;
-                                    }
-                                } else{
-                                    echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
-                                }
-                                // End attempt select query execution
-                                global $programs_tablename, $progid, $progname , $enabled, $cost, $charge, $accordian_header, $progtype;
-                                global $selected_progid, $selected_progname , $selected_enabled, $selected_cost, $selected_charge, $selected_accordian_header, $selected_progtype;
-                                ?>
-                            </select>
-                            <div class="d-grid gap-2" style="margin-top: 10px;">
-                                <!-- <input type="hidden" name="progname" value="<?php echo $progname; ?>"> -->
-                                <button type="submit" name="action" class="btn btn-primary btn-small btn-block" value="Select Program">Select Program</button>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="amtCollected" class="col-sm-6 col-form-label">Amount Collected</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="current" class="form-control" id="amtCollected" value="<?php echo $c; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="pctCollected" class="col-sm-6 col-form-label">Percentage Collected</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $pct."%"; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Save Goals">Save Goals</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="d-grid gap-2" style="margin-top: 10px;">
-                                <button type="submit" name="action" class="btn btn-info btn-small btn-block" value="Add Program">Add Program</button>
+
+                            <div class="card card_margins text-bg-light mb-3">
+                                <form action="<?php echo $PHP_SELF ?>" method="post">
+                                    <div class="card-body card-body-height">
+                                        <h4 class="card-title">Volunteers</h4>
+                                        <div class="mb-3 row">
+                                            <label for="totalGoalAmt" class="col-sm-6 col-form-label">Positions Available</label>
+                                            <div class="col-sm-6">
+                                                <?php echo $totalpos; ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="amtCollected" class="col-sm-6 col-form-label">Positions Filled</label>
+                                            <div class="col-sm-6">
+                                                <?php echo $totalv; ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="pctCollected" class="col-sm-6 col-form-label">Percentage Filled</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $vpercent."%"; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Volunteers</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="card card_margins text-bg-light mb-3">
+                                <form action="<?php echo $PHP_SELF ?>" method="post">
+                                    <div class="card-body card-body-height">
+                                        <h4 class="card-title">Card title</h4>
+                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Go somewhere</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="card card_margins text-bg-light mb-3">
+                                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                                <form action="<?php echo $PHP_SELF ?>" method="post">
+                                    <div class="card-body card-body-height">
+                                        <h4 class="card-title">Card title</h4>
+                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Go somewhere</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div class="mb-3 row">
-                                <label for="staticPID" class="col-sm-5 col-form-label">Program ID:</label>
-                                <div class="col-sm-7">
-                                    <input type="text" readonly class="form-control-plaintext" name="selected_progid" value="<?php echo $selected_progid; ?>">
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputPassword" class="col-sm-5 col-form-label">Program Name:</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="selected_progname" value="<?php echo $selected_progname; ?>">
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="staticEmail" class="col-sm-5 col-form-label">Enabled:</label>
-                                <div class="col-sm-7">
-                                    <input type="text"  class="form-control" name="selected_enabled" value="<?php echo $selected_enabled; ?>">
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputPassword" class="col-sm-5 col-form-label">Cost:</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="inputPassword" name="selected_cost" value="<?php echo $selected_cost; ?>">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="mb-3 row">
-                                <label for="inputPassword" class="col-sm-5 col-form-label">Charge:</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="inputPassword" name="selected_charge" value="<?php echo $selected_charge; ?>">
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="staticEmail" class="col-sm-5 col-form-label">Accordian Header:</label>
-                                <div class="col-sm-7">
-                                    <input type="text"  class="form-control" name="selected_accordian_header" value="<?php echo $selected_accordian_header; ?>">
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputPassword" class="col-sm-5 col-form-label">Program Type:</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="inputPassword" name="selected_progtype" value="<?php echo $selected_progtype; ?>">
-                                </div>
-                            </div>
-                            <div class="mb-3 d-grid gap-2">
-                                <!-- <form action="<?php echo $PHP_SELF ?>" method="post"> -->
-                                    <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Add Program">Submit Program</button>
-                                <!-- </form> -->
-                            </div>
-                        </div>
-                        <div class="col-3"></div>
                     </div>
-                </form>
+        
+                    <!-- <br>
+                    <div class="d-flex">
+                        <div id="boxed">
+                            <div class="card-group">
+
+                                <div class="card card_margins text-bg-light mb-3" style="width: 100%;">
+                                    <form action="<?php echo $PHP_SELF ?>" method="post">
+                                        <div class="card-body release-body-height">
+                                            <h4 class="card-title">Add Notes</h4>
+                                            <textarea name="relnotes" id="relnotes" style="width: 100%; height: 400px;"></textarea>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="d-grid gap-2">
+                                                <button name="action" type="submit" value="addnotes" class="btn btn-success btn-block">Add Notes</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="card card_margins text-bg-light mb-3" style="width: 100%;">
+                                    <form action="<?php echo $PHP_SELF ?>" method="post">
+                                        <div class="card-body release-body-height">
+                                            <h4 class="card-title">View Notes</h4>
+                                            <textarea name="allnotes" id="allnotes" style="width: 100%; height: 400px;"><?php echo $releasenotes; ?></textarea>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="d-grid gap-2">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <br>
+                    <div class="card-group">
+
+                        <div class="card">
+                            <form action="<?php echo $PHP_SELF ?>" method="post">
+                                <div class="card-body release-body-height">
+                                    <h4 class="card-title">Add Notes</h4>
+                                    <textarea name="relnotes" id="relnotes" style="width: 100%; height: 400px;"></textarea>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="d-grid gap-2">
+                                        <button name="action" type="submit" value="addnotes" class="btn btn-success btn-block">Add Notes</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card">
+                            <form action="<?php echo $PHP_SELF ?>" method="post">
+                                <div class="card-body release-body-height">
+                                    <h4 class="card-title">View Notes</h4>
+                                    <textarea name="allnotes" id="allnotes" style="width: 100%; height: 400px;"><?php echo $releasenotes; ?></textarea>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="d-grid gap-2">
+                                        <!-- <button name="action" type="submit" value="addnotes" class="btn btn-success btn-block">Add Notes</button> -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            Programs
+                        </div>
+                        <div class="card-body">
+                            <form action="<?php echo $PHP_SELF ?>" method="post">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <select name="progname" id="">
+                                            <option value="">SELECT PROGRAM</option>
+                                            <?php
+                                            global $progenroll_tablename, $progenrollid, $enrprogid , $enruserid, $enrolldate;
+                                            global $programs_tablename, $progid, $progname , $enabled, $cost, $charge, $accordian_header, $progtype;
+                                            // Attempt select query execution
+                                            if ($result = $mysqli->query("SELECT * FROM $programs_tablename ORDER BY progname ASC")) {
+                                                if(mysqli_num_rows($result) > 0){
+                                                    while($row = mysqli_fetch_array($result)){
+                                                        $progid = $row['progid'];
+                                                        $progname = $row['progname'];
+                                                        $enabled = $row['enabled'];
+                                                        $cost = $row['cost'];
+                                                        $charge = $row['charge'];
+                                                        $accordian_header = $row['accordian_header'];
+                                                        $progtype = $row['progtype'];
+                                                        ?>
+                                                        <div class="card-group">
+                                                            <option value="<?php echo $progname; ?>"><?php echo $progname; ?></option>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    // Free result set
+                                                    mysqli_free_result($result);
+                                                } else{
+                                                    $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
+                                                    main_form();
+                                                    exit;
+                                                }
+                                            } else{
+                                                echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
+                                            }
+                                            // End attempt select query execution
+                                            global $programs_tablename, $progid, $progname , $enabled, $cost, $charge, $accordian_header, $progtype;
+                                            global $selected_progid, $selected_progname , $selected_enabled, $selected_cost, $selected_charge, $selected_accordian_header, $selected_progtype;
+                                            ?>
+                                        </select>
+                                        <div class="d-grid gap-2" style="margin-top: 10px;">
+                                            <!-- <input type="hidden" name="progname" value="<?php echo $progname; ?>"> -->
+                                            <button type="submit" name="action" class="btn btn-primary btn-small btn-block" value="Select Program">Select Program</button>
+                                        </div>
+                                        <div class="d-grid gap-2" style="margin-top: 10px;">
+                                            <button type="submit" name="action" class="btn btn-info btn-small btn-block" value="Add Program">Add Program</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="mb-3 row">
+                                            <label for="staticPID" class="col-sm-5 col-form-label">Program ID:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" readonly class="form-control-plaintext" name="selected_progid" value="<?php echo $selected_progid; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputPassword" class="col-sm-5 col-form-label">Program Name:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" name="selected_progname" value="<?php echo $selected_progname; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="staticEmail" class="col-sm-5 col-form-label">Enabled:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"  class="form-control" name="selected_enabled" value="<?php echo $selected_enabled; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputPassword" class="col-sm-5 col-form-label">Cost:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" id="inputPassword" name="selected_cost" value="<?php echo $selected_cost; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="mb-3 row">
+                                            <label for="inputPassword" class="col-sm-5 col-form-label">Charge:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" id="inputPassword" name="selected_charge" value="<?php echo $selected_charge; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="staticEmail" class="col-sm-5 col-form-label">Accordian Header:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"  class="form-control" name="selected_accordian_header" value="<?php echo $selected_accordian_header; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputPassword" class="col-sm-5 col-form-label">Program Type:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" id="inputPassword" name="selected_progtype" value="<?php echo $selected_progtype; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 d-grid gap-2">
+                                            <!-- <form action="<?php echo $PHP_SELF ?>" method="post"> -->
+                                                <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Add Program">Submit Program</button>
+                                            <!-- </form> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div id="boxed" style="margin-top: 50px;">&nbsp;</div>
+                    
+                </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header">
-                My Courses
-            </div>
-            <div class="card-body">
-                <!-- <h5 class="card-title">Special title treatment</h5> -->
-                <p class="card-text">BIB101 - Old Testament Survey</p>
-                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-            </div>
-        </div>
-    </div>
+    </div>                    
 
     <script>
         tinymce.init({

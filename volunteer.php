@@ -29,78 +29,76 @@ function main_form() {
     }
 
     information_modal();
-    $menuid = 3;
-    
     if(!empty($_SESSION['userid'])){
         $userid = $_SESSION['userid'];
     }
-
-    testadmin();
     ?>
     <div class="height-100">
-        <br>
-        <div id="boxed">
-            <p class="text-center"><span style="font-size: 32px;">Volunteers Needed</span></p>
-                    
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-2"></div>
-                <div class="col-sm-8">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                            <th scope="col">Position</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Needed</th>
-                            <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <form action="<?php echo $PHP_SELF; ?>" method="post">
-                                <?php
-                                $totalpos = 0;
-                                // Attempt select query execution
-                                if ($result = $mysqli->query("SELECT * FROM $volunteerpos_tablename")) {
-                                    if(mysqli_num_rows($result) > 0){
-                                        while($row = mysqli_fetch_array($result)){
-                                            $vposid = $row['vposid'];
-                                            $vtitle = $row['vtitle'];
-                                            $vdescription = $row['vdescription'];
-                                            $vneeded = $row['vneeded'];
-                                            if($vneeded > 0){
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo "<strong>".$vtitle."</strong>"; ?></td>
-                                                    <td><?php echo $vdescription; ?></td>
-                                                    <td><?php echo $vneeded; ?></td>
-                                                    <td><button class="btn btn-primary btn-sm" type="submit" name="action" value="apply">Apply For This Position</button></td>
-                                                </tr>
-                                                <?php
+                <div class="col-sm-2"><?php menu(); ?></div>
+                <div class="col-sm-10">
+                    <!-- <h4>Dashboard</h4> -->
+                    <br>
+                    <div id="boxed">
+                        <p class="text-center"><span style="font-size: 32px;">Volunteers Needed</span></p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">Position</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Needed</th>
+                                <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                    <?php
+                                    $totalpos = 0;
+                                    // Attempt select query execution
+                                    if ($result = $mysqli->query("SELECT * FROM $volunteerpos_tablename")) {
+                                        if(mysqli_num_rows($result) > 0){
+                                            while($row = mysqli_fetch_array($result)){
+                                                $vposid = $row['vposid'];
+                                                $vtitle = $row['vtitle'];
+                                                $vdescription = $row['vdescription'];
+                                                $vneeded = $row['vneeded'];
+                                                if($vneeded > 0){
+                                                    ?>
+                                                    <tr>
+                                                        <td><?php echo "<strong>".$vtitle."</strong>"; ?></td>
+                                                        <td><?php echo $vdescription; ?></td>
+                                                        <td><?php echo $vneeded; ?></td>
+                                                        <td><button class="btn btn-primary btn-sm" type="submit" name="action" value="apply">Apply For This Position</button></td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                                $totalpos += $vneeded;
                                             }
-                                            $totalpos += $vneeded;
+                                            // Free result set
+                                            mysqli_free_result($result);
+                                        } else{
+                                            $msg = "<font color='#FF0000'><strong>No records found!</strong></font>";
+                                            main_form();
+                                            exit;
                                         }
-                                        // Free result set
-                                        mysqli_free_result($result);
                                     } else{
-                                        $msg = "<font color='#FF0000'><strong>No records found!</strong></font>";
-                                        main_form();
-                                        exit;
+                                        echo "ERROR: Was not able to execute Query on line #38. " . mysqli_error($mysqli);
                                     }
-                                } else{
-                                    echo "ERROR: Was not able to execute Query on line #38. " . mysqli_error($mysqli);
-                                }
-                                // End attempt select query execution
-                                ?>
-                            </form>
-                            <tr>
-                                <td></td>
-                                <td><?php echo "Total Positions Needed: ".$totalpos; ?></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    // End attempt select query execution
+                                    ?>
+                                </form>
+                                <tr>
+                                    <td></td>
+                                    <td><?php echo "Total Positions Needed: ".$totalpos; ?></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="col-sm-2"></div>
+                <!-- <div class="col-sm-2"></div> -->
             </div>
         </div>
 

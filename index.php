@@ -41,12 +41,9 @@ function main_form() {
     }
     // End attempt select query execution
 
-    $menuid = 1;
     if(!empty($_SESSION['userid'])){
         $userid = $_SESSION['userid'];
     }
-
-    // testadmin();
 
     $g = $goalamt;
     $c = $curgoal;
