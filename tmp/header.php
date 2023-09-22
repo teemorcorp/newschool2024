@@ -209,7 +209,7 @@ if(!empty($_SESSION['userid'])){
                             ?>
                             <div class="menu_icons">
                                 <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'notifications.php';">
-                                    <i class='bx bx-bell'></i>
+                                    <span style="font-weight: bold;"><i class='bx bx-bell text-white' style="font-weight: bold; font-size: 18px;"></i></span>
                                     <?php
                                     if($msgcnt >= 1){
                                         ?>
@@ -231,7 +231,7 @@ if(!empty($_SESSION['userid'])){
 
                             <div class="menu_icons">
                                 <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'studentmail.php';">
-                                    <i class='bx bx-envelope'></i>
+                                    <span style="font-weight: bold;"><i class='bx bx-envelope text-white' style="font-weight: bold; font-size: 18px;"></i></span>
                                     <?php
                                     if($mailcnt >= 1){
                                         ?>
