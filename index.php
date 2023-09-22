@@ -17,11 +17,16 @@ if (isset($_POST['action'])) {
 //*******************  MAIN FORM  ***********************
 //*******************************************************
 function main_form() {
-	global $PHP_SELF, $mysqli, $msg, $notice, $notice_header, $notice_body, $fullname;
+	global $PHP_SELF, $mysqli, $msg, $notice, $fullname;
     global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $currentnotes, $goalamt, $curgoal;
     global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
     global $menuid, $goal, $current, $pct, $userid;
+    global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
     information_modal();
+
+    if(!empty($_SESSION['userid'])){
+        $userid = $_SESSION['userid'];
+    }
 
     // Attempt select query execution
     if ($result = $mysqli->query("SELECT goalamt, curgoal FROM $system_tablename")) {
@@ -40,10 +45,6 @@ function main_form() {
         echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
     }
     // End attempt select query execution
-
-    if(!empty($_SESSION['userid'])){
-        $userid = $_SESSION['userid'];
-    }
 
     $g = $goalamt;
     $c = $curgoal;

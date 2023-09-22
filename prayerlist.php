@@ -5,6 +5,7 @@
 ****   Written by: Tom Moore
 ****   (c) 2001 - 2021 TEEMOR eBusiness Solutions
 ****************************************************/
+session_start();
 
 // Grab action
 if (isset($_POST['action'])) {
@@ -16,50 +17,60 @@ if (isset($_POST['action'])) {
 //*******************  MAIN FORM  ***********************
 //*******************************************************
 function main_form() {
-	global $PHP_SELF, $mysqli, $msg;
-    global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $goalamt, $curgoal;
-    global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
+	global $PHP_SELF, $mysqli, $msg, $notice, $status, $fullname;
+    global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $currentnotes, $goalamt, $curgoal;
+    global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
     global $menuid, $goal, $current, $pct, $userid;
+    global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
+
     include "tmp/header.php";
     information_modal();
+
     if(!empty($_SESSION['userid'])){
         $userid = $_SESSION['userid'];
     }
 
+    $status = $_SESSION['answered'];
+
+    // $_SESSION['answered'] = "";
     ?>
     <div class="height-100">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-2"><?php menu(); ?></div>
                 <div class="col-sm-10">
-                    <!-- <h4>Dashboard</h4> -->
                     <br>
                     <div id="boxed">
                         <div class="row ml-12 mr-12 clearfix">
-                                <p class="text-center"><span style="font-size: 32px;">Join Us In Prayer</span></p>
-                                    <!-- <p>< ?php echo $_SESSION['msg']."<br>"; ?></p> -->
-                                <div class="col-sm-2"></div>
-                                <div class="col-sm-2 text-center">
-                                    <form action="<?php echo $PHP_SELF; ?>" method="post">
-                                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">Add Prayer Request</button>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2 text-center">
-                                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
-                                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View Answered Only</button>
-                                    </form> -->
-                                </div>
-                                <div class="col-sm-2 text-center">
-                                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
-                                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View Unanswered Only</button>
-                                    </form> -->
-                                </div>
-                                <div class="col-sm-2 text-center">
-                                    <!-- <form action="<?php echo $PHP_SELF; ?>" method="post">
-                                        <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">View All Requests</button>
-                                    </form> -->
-                                </div>
-                                <div class="col-sm-2"></div>
+                            <p class="text-center"><span style="font-size: 32px;">Join Us In Prayer</span></p>
+                                <p>
+                                    <?php
+                                    echo $_SESSION['msg']."<br>";
+                                    $_SESSION['msg'] = "";
+                                    ?>
+                                </p>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2 text-center">
+                                <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                    <button name="action" type="submit" class="btn btn-primary btn-sm" value="add_prayer">Add Prayer Request</button>
+                                </form>
+                            </div>
+                            <div class="col-sm-2 text-center">
+                                <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                    <button name="action" type="submit" class="btn btn-primary btn-sm" value="answered_only">View Answered Only</button>
+                                </form>
+                            </div>
+                            <div class="col-sm-2 text-center">
+                                <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                    <button name="action" type="submit" class="btn btn-primary btn-sm" value="unanswered_only">View Unanswered Only</button>
+                                </form>
+                            </div>
+                            <div class="col-sm-2 text-center">
+                                <form action="<?php echo $PHP_SELF; ?>" method="post">
+                                    <button name="action" type="submit" class="btn btn-primary btn-sm" value="allrequests">View All Requests</button>
+                                </form>
+                            </div>
+                            <div class="col-sm-2"></div>
                         </div>
 
                         <div class="row" style="margin-top: 20px;">
@@ -85,7 +96,17 @@ function main_form() {
                                 $start_from = ($page-1) * $perpage; 
                                 
                                 // Attempt select query execution
-                                $sql = "SELECT COUNT(*) AS 'TotalItems' FROM $prayers_tablename";
+                                if($status == 0){
+                                    $sql = "SELECT COUNT(*) AS 'TotalItems' FROM $prayers_tablename WHERE answered = 0";
+                                }elseif($status == 1){
+                                    $sql = "SELECT COUNT(*) AS 'TotalItems' FROM $prayers_tablename WHERE answered = 1";
+                                }elseif($status == 2){
+                                    $sql = "SELECT COUNT(*) AS 'TotalItems' FROM $prayers_tablename";
+                                }else{
+                                    $sql = "SELECT COUNT(*) AS 'TotalItems' FROM $prayers_tablename";
+                                }
+
+                                // $sql = "SELECT COUNT(*) AS 'TotalItems' FROM $prayers_tablename";
                                 if($result = mysqli_query($mysqli, $sql)){
                                     if(mysqli_num_rows($result) > 0){
                                         $row = mysqli_fetch_array($result);
@@ -148,7 +169,16 @@ function main_form() {
                                     </tr>
                                     <?php
                                     // Attempt select query execution
-                                    if ($result = $mysqli->query("SELECT * FROM $prayers_tablename")) {
+                                    if($status == 0){
+                                        $sql = "SELECT * FROM $prayers_tablename WHERE answered = 0";
+                                    }elseif($status == 1){
+                                        $sql = "SELECT * FROM $prayers_tablename WHERE answered = 1";
+                                    }elseif($status == 2){
+                                        $sql = "SELECT * FROM $prayers_tablename";
+                                    }else{
+                                        $sql = "SELECT * FROM $prayers_tablename";
+                                    }
+                                    if($result = mysqli_query($mysqli, $sql)){
                                         if(mysqli_num_rows($result) > 0){
                                             while($row = mysqli_fetch_array($result)){
                                                 $prayerid = $row['prayerid'];
@@ -171,7 +201,7 @@ function main_form() {
                                                             }else{
                                                                 ?>
                                                                 <input type="hidden" name="answeredid" value="<?php echo $prayerid; ?>">
-                                                                <button name="action" type="submit" class="btn btn-warning btn-sm" style="width; 100%;" value="not_answered">NOT ANSWERED</button>
+                                                                <button name="action" type="submit" class="btn btn-warning btn-sm" style="width; 100%;" value="unanswered">NOT ANSWERED</button>
                                                                 <?php
                                                             }
                                                             ?>
@@ -184,8 +214,6 @@ function main_form() {
                                             mysqli_free_result($result);
                                         } else{
                                             echo "<font color='#FF0000'><strong>No record found!</strong></font>";
-                                            // main_form();
-                                            // exit;
                                         }
                                     } else{
                                         echo "ERROR: Was not able to execute Query on line #51. " . mysqli_error($mysqli);
@@ -197,12 +225,12 @@ function main_form() {
                             <div class="col-sm-2"></div>
                         </div>
                     </div>
+                    <div id="boxed" style="margin-bottom: 50px;">&nbsp;</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- <div id="boxed" style="margin-bottom: 50px;">&nbsp;</div> -->
 </div>
 <?php
 include "tmp/footer.php";
@@ -387,8 +415,26 @@ switch($action) {
     case "answered":
         answered();
     break;
-    case "not_answered":
+    case "unanswered":
         not_answered();
+    break;
+    case "allrequests":
+        $_SESSION['answered'] = 2;
+        // echo "answered = ".$_SESSION['answered'];
+        // exit;
+		header('Location: prayerlist.php');
+    break;
+    case "answered_only":
+        $_SESSION['answered'] = 1;
+        // echo "answered = ".$_SESSION['answered'];
+        // exit;
+		header('Location: prayerlist.php');
+    break;
+    case "unanswered_only":
+        $_SESSION['answered'] = 0;
+        // echo "answered = ".$_SESSION['answered'];
+        // exit;
+		header('Location: prayerlist.php');
     break;
     case "add_prayer":
         add_prayer();
