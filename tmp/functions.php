@@ -4,7 +4,7 @@
  *************************************************************************/
 function information_modal(){
     global $PHP_SELF, $mysqli, $hdmysqli, $bkcolor, $perpage, $page, $msg;
-    global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $goalamt, $curgoal;
+    global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $currentnotes, $goalamt, $curgoal;
 
     // Attempt select query execution
     $sql = "SELECT * FROM $system_tablename";
@@ -14,6 +14,7 @@ function information_modal(){
             $sysadminver = $row['sysadminver'];
             $verdate = $row['verdate'];
             $releasenotes = $row['releasenotes'];
+            $currentnotes = $row['currentnotes'];
             // Free result set
             mysqli_free_result($result);
         } else {
@@ -27,7 +28,7 @@ function information_modal(){
     // End attempt select query execution
 
     ?>
-    <div class="modal fade" id="information_modal" tabindex="-1" role="dialog" aria-labelledby="informationLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="information_modal" tabindex="-1" role="dialog" aria-labelledby="informationLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="width: 750px; margin-left: -120px; height: 750px;">
                 <div class="modal-header">
@@ -38,20 +39,17 @@ function information_modal(){
                 </div>
                 <div class="modal-body">
                     <textarea class="form-control" id="mytextarea">
-                        <?php echo $releasenotes; ?>
+                        < ?php echo $releasenotes; ?>
                     </textarea>
                 </div>
                 <div class="modal-footer">
-                    <!-- <form action="generate_pdf.php" target="_blank" method="post">
-                        <button name="action" type="submit" value="DateMonth" class="btn btn-primary"><i class="fas fa-print"></i> Print Release Notes</button>
-                    </form> -->
-                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <form action="< ?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <script src="https://cdn.tiny.cloud/1/qa5ollct4qx4a9lkzbhdh1ki6763pwyi6jx3m0s5ut86u8by/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>

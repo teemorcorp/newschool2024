@@ -18,7 +18,7 @@ if (isset($_POST['action'])) {
 //*******************************************************
 function main_form() {
 	global $PHP_SELF, $mysqli, $msg, $notice, $notice_header, $notice_body, $fullname;
-    global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $goalamt, $curgoal;
+    global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $currentnotes, $goalamt, $curgoal;
     global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
     global $menuid, $goal, $current, $pct, $userid;
     information_modal();
@@ -335,22 +335,7 @@ function main_form() {
 
 
     <?php
-        $news = "<h3><strong>IMPORTANT!</strong></h3>
-        We have been having problems with students not being able to change their password. This has just been fixed finally. We deeply apologize for the inconvenience.
-        <br /><br />
-        If you cannot login to the school page because you forgot your password, go to the login page. Just under the login area you will find a link entitled &quot;I Forgot My Password&quot;. Click this link and follow the directions. It may take several minutes to receive an email. When you do click the link in the email or copy it to your browser and you will get to a screen where you can change your password.
-        <br /><br />
-        We are very sorry for the inconvenience.
-        <br /><br />
-        Blessings to you and yours!
-        <br /><br />
-        <strong>10/21/2020</strong>
-        <br /><br />
-        <h3><strong>NEW SCHOOL CAMPUS</strong></h3>
-        We have just opened another campus in Africa located in the Zimbabwe refugee camp. They will begin classes next week, November 2020 and would like to welcome those students to the IHN Bible College family! You can see more by checking out our <a href='https://ihnbible.org/campus_africa.php'>Africa campus</a> pages.
-        <br /><br />
-        <strong>11/03/2020</strong>
-        ";
+        $news = $currentnotes;
     ?>
 
 

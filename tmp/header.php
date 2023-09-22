@@ -58,7 +58,7 @@ if(!empty($_SESSION['userid'])){
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>IHN Bible College Online Campus</title>
-		<meta name="author" content="TEEMOR eBiz Builder" />
+		<meta name="author" content="TEEMOR eBusiness Solutions" />
 		<meta name="keywords" content="" />
 		<meta name="description" content="" />
 		<link rel="shortcut icon" href="img/ihn_logo.png" />
@@ -187,167 +187,92 @@ if(!empty($_SESSION['userid'])){
             <div class="container-fluid d-flex">
                 <a class="navbar-brand text-white" href="#">Navbar</a>
                 <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon text-white"></span>
+                    <span class="navbar-toggler-icon text-white"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <!-- <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                    </li> -->
-                </ul>
-                <span class="navbar-text d-flex text-white">
-                    <?php
-                    $msgcnt = 0;
-                    $mailcnt = 0;
-                    if(!empty($_SESSION['userid'])){
-                        ?>
-                        <div class="menu_icons">
-                            <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'notifications.php';">
-                            <i class='bx bx-bell'></i>
-                            <?php
-                            if($msgcnt >= 1){
-                                ?>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    <?php
-                                        if($msgcnt >= 100){
-                                            echo "99+";
-                                        }else{
-                                            echo $msgcnt;
-                                        }
-                                    ?>
-                                    <span class="visually-hidden">unread messages</span>
-                                </span>
-                                <?php
-                            }
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                        </li> -->
+                    </ul>
+                    <span class="navbar-text d-flex text-white">
+                        <?php
+                        $msgcnt = 0;
+                        $mailcnt = 0;
+                        if(!empty($_SESSION['userid'])){
                             ?>
-                            </a>
-                        </div>
-
-                        <div class="menu_icons">
-                            <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'studentmail.php';">
-                            <i class='bx bx-envelope'></i>
-                            <?php
-                            if($mailcnt >= 1){
-                                ?>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <div class="menu_icons">
+                                <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'notifications.php';">
+                                    <i class='bx bx-bell'></i>
                                     <?php
-                                        if($mailcnt >= 100){
-                                            echo "99+";
-                                        }else{
-                                            echo $mailcnt;
-                                        }
+                                    if($msgcnt >= 1){
+                                        ?>
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            <?php
+                                                if($msgcnt >= 100){
+                                                    echo "99+";
+                                                }else{
+                                                    echo $msgcnt;
+                                                }
+                                            ?>
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                        <?php
+                                    }
                                     ?>
-                                    <span class="visually-hidden">unread messages</span>
-                                </span>
-                                <?php
-                            }
-                            ?>
-                            </a>
-                        </div>
-                        <?php
-                    }else{
-                        ?>
-                        <div class="menu_icons">
-                            <a onClick="Javascript:window.location.href = 'admissions.php';"><i class='bx bxs-school nav_icon'></i><span style="font-size: 18px;"> Enroll Now</span></a>
-                        </div>
-                        <div class="menu_icons">
-                            <a onClick="Javascript:window.location.href = 'login.php';"><i class='bx bx-log-in nav_icon'></i><span style="font-size: 18px;"> Student Login</span></a>
-                        </div>
-                        <?php
-                    }
+                                </a>
+                            </div>
 
-                    if(empty($imagepath)){
+                            <div class="menu_icons">
+                                <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'studentmail.php';">
+                                    <i class='bx bx-envelope'></i>
+                                    <?php
+                                    if($mailcnt >= 1){
+                                        ?>
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            <?php
+                                                if($mailcnt >= 100){
+                                                    echo "99+";
+                                                }else{
+                                                    echo $mailcnt;
+                                                }
+                                            ?>
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                        <?php
+                                    }
+                                    ?>
+                                </a>
+                            </div>
+                            <?php
+                        }else{
+                            ?>
+                            <div class="menu_icons">
+                                <a onClick="Javascript:window.location.href = 'admissions.php';"><i class='bx bxs-school nav_icon'></i><span style="font-size: 18px;"> Enroll Now</span></a>
+                            </div>
+                            <div class="menu_icons">
+                                <a onClick="Javascript:window.location.href = 'login.php';"><i class='bx bx-log-in nav_icon'></i><span style="font-size: 18px;"> Student Login</span></a>
+                            </div>
+                            <?php
+                        }
+
+                        if(empty($imagepath)){
+                            ?>
+                            <img class="header_img" style="margin-top: 2px;" src="img/portraits/NoPhoto.jpg" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
+                            <?php
+                        }else{
+                            ?>
+                            <img class="header_img" style="margin-top: 2px;" src="img/portraits/<?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
+                            <?php
+                        }
                         ?>
-                        <img class="header_img" style="margin-top: 2px;" src="img/portraits/NoPhoto.jpg" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
-                        <?php
-                    }else{
-                        ?>
-                        <img class="header_img" style="margin-top: 2px;" src="img/portraits/<?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
-                        <?php
-                    }
-                    ?>
-                </span>
+                    </span>
                 </div>
             </div>
         </nav>
-
-        <!-- <header class="header">
-            <div class="text-white d-flex">
-                < ?php
-                $msgcnt = 0;
-                $mailcnt = 0;
-                if(!empty($_SESSION['userid'])){
-                    ?>
-                    <div class="menu_icons">
-                        <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'notifications.php';">
-                        <i class='bx bx-bell'></i>
-                        < ?php
-                        if($msgcnt >= 1){
-                            ?>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                < ?php
-                                    if($msgcnt >= 100){
-                                        echo "99+";
-                                    }else{
-                                        echo $msgcnt;
-                                    }
-                                ?>
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
-                            < ?php
-                        }
-                        ?>
-                        </a>
-                    </div>
-
-                    <div class="menu_icons">
-                        <a class="btn btn-primary position-relative btn-circle" onClick="Javascript:window.location.href = 'studentmail.php';">
-                        <i class='bx bx-envelope'></i>
-                        < ?php
-                        if($mailcnt >= 1){
-                            ?>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                < ?php
-                                    if($mailcnt >= 100){
-                                        echo "99+";
-                                    }else{
-                                        echo $mailcnt;
-                                    }
-                                ?>
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
-                            < ?php
-                        }
-                        ?>
-                        </a>
-                    </div>
-                    < ?php
-                }else{
-                    ?>
-                    <div class="menu_icons">
-                        <a onClick="Javascript:window.location.href = 'admissions.php';"><i class='bx bxs-school nav_icon'></i><span style="font-size: 18px;"> Enroll Now</span></a>
-                    </div>
-                    <div class="menu_icons">
-                        <a onClick="Javascript:window.location.href = 'login.php';"><i class='bx bx-log-in nav_icon'></i><span style="font-size: 18px;"> Student Login</span></a>
-                    </div>
-                    < ?php
-                }
-
-                if(empty($imagepath)){
-                    ?>
-                    <img class="header_img" style="margin-top: 2px;" src="img/portraits/NoPhoto.jpg" alt="" /> <div style="margin-top: 13px; margin-left: 10px;"><?php echo $fullname; ?></div>
-                    < ?php
-                }else{
-                    ?>
-                    <img class="header_img" style="margin-top: 2px;" src="img/portraits/< ?php echo $imagepath; ?>" alt="" /> <div style="margin-top: 13px; margin-left: 10px;">< ?php echo $fullname; ?></div>
-                    < ?php
-                }
-                ?>
-            </div>
-        </header> -->
