@@ -95,18 +95,18 @@ function main_form() {
                             <span style="font-size: 36px; font-weight: bold;"><strong>Already Registered As a Student?<br>Enroll Into a Program or Course Now!</strong></span>
                         </div>
                         <div class="row">
-                            <div class="col-sm-2"></div>
-                            <div id="boxed" class="col-sm-8" align="center">
+                            <div class="col-sm-1"></div>
+                            <div id="boxed" class="col-sm-10" align="center">
                                 <span style="font-size: 24px; font-weight: bold;">List of Programs</span>
                                 <p>When enrolling into a program you will automatically be enrolled into the individual courses which are required by the program. There is no need to enroll into a course that is in a program if you intend to enroll into that program. However, if you have already enrolled into a course and then decide later to enroll into a program in which has the course you have already enrolled into, that course will automatically be connected to the program, and you will receive credit if you have successfully completed the course.</p>
                             </div>
-                            <div class="col-sm-2"></div>
+                            <div class="col-sm-1"></div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-2"></div>
-                            <div id="boxed" class="col-sm-8" align="center">
+                            <div class="col-sm-1"></div>
+                            <div id="boxed" class="col-sm-10" align="center">
                                 <p><span style="font-size: 32px;">List of Courses</span></p>
-                                <div class="row row-cols-1 row-cols-md-4 g-4">
+                                <div class="row row-cols-1 row-cols-md-5 g-4">
                                     <?php
                                     // Attempt select query execution
                                     if ($result = $mysqli->query("SELECT * FROM $courses_tablename")) {
@@ -124,10 +124,9 @@ function main_form() {
                                                     <div class="col">
                                                         <div class="card list-cards">
                                                             <div class="card-body">
-                                                                <span class="card-title" style="font-size: 18px; font-weight: bold;"><?php echo $coursename; ?></span>
-                                                                <br>
-                                                                <span class="card-title" style="font-size: 14px; font-weight: bold;"><?php echo $coursecode." - ".$credits." Credits"; ?></span>
-                                                                <p class="card-text"><?php echo substr_replace($coursedesc, "...", 140); ?></p>
+                                                                <p><span style="font-size: 14px; font-weight: bold;"><?php echo $coursename; ?></span></p>
+                                                                <p><span style="font-size: 14px; font-weight: bold;"><?php echo $coursecode." - ".$credits." Credits"; ?></span></p>
+                                                                <p style="font-size: 12px;"><?php echo substr_replace($coursedesc, "...", 180); ?></p>
                                                             </div>
                                                             <div class="card-footer d-grid gap-2">
                                                                 <?php
@@ -161,7 +160,7 @@ function main_form() {
                                     ?>
                                 </div>
                             </div>
-                            <div class="col-sm-2"></div>
+                            <div class="col-sm-1"></div>
                         </div>
                     </div>
                 </div>
@@ -334,3 +333,5 @@ switch($action) {
 }
 
 ?>
+ 
+

@@ -185,7 +185,7 @@ if(!empty($_SESSION['userid'])){
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary header">
             <div class="container-fluid d-flex">
-                <a class="navbar-brand text-white" href="#">Navbar</a>
+                <a class="navbar-brand text-white" href="#"><img src="img/ihnbible_logo_900x150.jpg" style="width: 200px;" alt="IHN Bible"></a>
                 <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon text-white"></span>
                 </button>

@@ -2,10 +2,16 @@
 global $dbhost, $dbusername, $dbpassword, $dbname, $mysqli;
 
 // SERVER
+// $dbhost = 'localhost';
+// $dbusername = 'teemorco_school2';
+// $dbpassword = 'TestSch00l2';
+// $dbname = 'teemorco_school2';
+
+// SERVER
 $dbhost = 'localhost';
-$dbusername = 'teemorco_school2';
-$dbpassword = 'TestSch00l2';
-$dbname = 'teemorco_school2';
+$dbusername = 'teemorco_ihnschl';
+$dbpassword = '1nh15nam3';
+$dbname = 'teemorco_ihnschool';
 
 // LOCALHOST
 // $dbhost = 'localhost';
@@ -28,6 +34,14 @@ $ticker_tablename = 'ticker';
 $volunteers_tablename = 'volunteers';
 $volunteerpos_tablename = 'volunteerpos';
 $system_tablename = 'system';
+$branches_tablename = 'branches';
+$progcourses_tablename = 'progcourses';
+$courselessons_tablename = 'courselessons';
+$quizzes_tablename = 'quizzes';
+$quizdet_tablename = 'quizdet';
+$answerquiz_tablename = 'answerquiz';
+$messages_tablename = 'messages';
+$studentmsg_tablename = 'studentmsg';
 
 //*****************************************************************************
 //****************************** DB_CONNECT() *********************************
