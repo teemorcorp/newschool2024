@@ -22,7 +22,7 @@ function main_form() {
     global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
     global $menuid, $goal, $current, $pct;
     global $progenroll_tablename, $progenrollid, $enrprogid , $enruserid, $enrolldate;
-    global $programs_tablename, $progid, $progname , $enabled, $cost, $charge, $accordian_header, $progtype;
+    global $programs_tablename, $progid, $progname, $progdesc, $enabled, $cost, $charge, $accordian_header, $progtype;
     global $selected_progid, $selected_progname , $selected_enabled, $selected_cost, $selected_charge, $selected_accordian_header, $selected_progtype;
     global $volunteers_tablename, $vid, $vfname , $vmname, $vlname, $vemail, $vphone, $vaddress, $vcity, $vstate, $vzip;
     global $volunteerpos_tablename, $vposid, $vtitle, $vdescription, $vneeded;

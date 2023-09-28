@@ -25,6 +25,7 @@ function main_form() {
     global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
     global $enrollments_tablename, $enrollid, $euserid , $eprogid, $ecourseid, $examscore, $passed, $compdate, $rating;
     global $courses_tablename, $courseid, $cprogid , $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
+    global $programs_tablename, $progid, $progname, $progdesc, $enabled, $cost, $charge, $accordian_header, $progtype;
 
     information_modal();
     if(!empty($_SESSION['userid'])){
@@ -99,6 +100,56 @@ function main_form() {
                             <div id="boxed" class="col-sm-10" align="center">
                                 <span style="font-size: 24px; font-weight: bold;">List of Programs</span>
                                 <p>When enrolling into a program you will automatically be enrolled into the individual courses which are required by the program. There is no need to enroll into a course that is in a program if you intend to enroll into that program. However, if you have already enrolled into a course and then decide later to enroll into a program in which has the course you have already enrolled into, that course will automatically be connected to the program, and you will receive credit if you have successfully completed the course.</p>
+                                <div class="row row-cols-1 row-cols-md-5 g-4">
+                                    <?php
+    global $programs_tablename, $progid, $progname, $progdesc, $enabled, $cost, $charge, $accordian_header, $progtype;
+                                    // Attempt select query execution
+                                    if ($result = $mysqli->query("SELECT * FROM $programs_tablename")) {
+                                        if(mysqli_num_rows($result) > 0){
+                                            while($row = mysqli_fetch_array($result)){
+                                                $progid = $row['progid'];
+                                                $progname = $row['progname'];
+                                                $progdesc = $row['progdesc'];
+                                                $enabled = $row['enabled'];
+                                                if($enabled){
+                                                    ?>
+                                                    <div class="col">
+                                                        <div class="card list-cards">
+                                                            <div class="card-body">
+                                                                <p><span style="font-size: 14px; font-weight: bold;"><?php echo $progname; ?></span></p>
+                                                                <p style="font-size: 12px;"><?php echo substr_replace($progdesc, "...", 180); ?></p>
+                                                            </div>
+                                                            <div class="card-footer d-grid gap-2">
+                                                                <?php
+                                                                if(empty($_SESSION['userid'])){
+                                                                    ?>
+                                                                    <a href="#applicate" class="btn btn-primary btn-sm btn-block">Register or Login To Study</a>
+                                                                    <?php
+                                                                }else{
+                                                                    ?>
+                                                                    <a href="enroll.php?id=<?php echo $courseid; ?>" class="btn btn-primary btn-sm">Enroll Into Program</a>
+                                                                    <?php
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            }
+                                            // Free result set
+                                            mysqli_free_result($result);
+                                        } else{
+                                            $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
+                                            main_form();
+                                            exit;
+                                        }
+                                    } else{
+                                        echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
+                                    }
+                                    // End attempt select query execution
+                                    ?>
+                                </div>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
