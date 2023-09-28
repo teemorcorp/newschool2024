@@ -136,6 +136,11 @@ function main_form() {
                     <br>
                     <div id="boxed">
                         <div class="card-group">
+                            <?php
+                            /***********************************************************************************************
+                            *******   GOAL SETTINGS
+                            ***********************************************************************************************/
+                            ?>
                             <div class="card card_margins text-bg-light mb-3">
                                 <!-- <img src="..." class="card-img-top" alt="..."> -->
                                 <form action="<?php echo $PHP_SELF ?>" method="post">
@@ -167,7 +172,11 @@ function main_form() {
                                     </div>
                                 </form>
                             </div>
-
+                            <?php
+                            /***********************************************************************************************
+                            *******   VOLUNTEERS
+                            ***********************************************************************************************/
+                            ?>
                             <div class="card card_margins text-bg-light mb-3">
                                 <form action="<?php echo $PHP_SELF ?>" method="post">
                                     <div class="card-body card-body-height">
@@ -198,12 +207,39 @@ function main_form() {
                                     </div>
                                 </form>
                             </div>
-
+                            <?php
+                            /***********************************************************************************************
+                            *******   ENROLLMENY INFORMATION
+                            ***********************************************************************************************/
+                            ?>
                             <div class="card card_margins text-bg-light mb-3">
                                 <form action="<?php echo $PHP_SELF ?>" method="post">
                                     <div class="card-body card-body-height">
-                                        <h4 class="card-title">Card title</h4>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                                        <h4 class="card-title">Enrollment Information</h4>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6">
+                                                Enrollments
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <?php echo $totalpos; ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6">
+                                                Positions Filled
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <?php echo $totalv; ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6">
+                                                Percentage Filled
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $vpercent."%"; ?>">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-footer">
                                         <div class="d-grid gap-2">
@@ -212,13 +248,40 @@ function main_form() {
                                     </div>
                                 </form>
                             </div>
-
+                            <?php
+                            /***********************************************************************************************
+                            *******   GOAL SETTINGS
+                            ***********************************************************************************************/
+                            ?>
                             <div class="card card_margins text-bg-light mb-3">
                                 <!-- <img src="..." class="card-img-top" alt="..."> -->
                                 <form action="<?php echo $PHP_SELF ?>" method="post">
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Card title</h4>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6">
+                                                Enrollments
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <?php echo $totalpos; ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6">
+                                                Positions Filled
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <?php echo $totalv; ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6">
+                                                Percentage Filled
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $vpercent."%"; ?>">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-footer">
                                         <div class="d-grid gap-2">
