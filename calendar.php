@@ -42,7 +42,7 @@ if(!empty($_SESSION['userid'])){
                                 <h3>News & Upcoming Events</h3>
                                 <div>
                                     <p>This is where you will find current news and general information about upcoming events that may be of interest. For more detailed information on specific events see the Events section below.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, recusandae reiciendis minus facere iusto laboriosam odit. Et omnis accusamus perspiciatis cumque cum, hic quos exercitationem eveniet laudantium, quia reprehenderit rerum!</p>
+                                    <p>For now, this area expands. It does not scroll. I will look into it.</p>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, recusandae reiciendis minus facere iusto laboriosam odit. Et omnis accusamus perspiciatis cumque cum, hic quos exercitationem eveniet laudantium, quia reprehenderit rerum!</p>
                                 </div>
                                 <h3>Events</h3>
