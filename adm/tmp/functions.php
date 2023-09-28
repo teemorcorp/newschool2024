@@ -157,7 +157,7 @@ function admmenu(){
             <?php
         }
         ?>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Program Management</a></li>
+        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Program Management</a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Course Management</a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Exam Management</a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Quiz Management</a></li>

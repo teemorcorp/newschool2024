@@ -64,8 +64,10 @@ function main_form() {
     }
     // End attempt select query execution
 
-    if(!empty($_SESSION['userid'])){
+    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
         $userid = $_SESSION['userid'];
+    }else{
+        header('Location: ../index.php');
     }
 
     $g = $goalamt;
@@ -473,7 +475,7 @@ function main_form() {
                                     </div>
                                     <div class="card-footer">
                                         <div class="gap-2 text-center">
-                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Programs</button> <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Courses</button>
+                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="manage_progs">Manage Programs</button> <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Courses</button>
                                         </div>
                                     </div>
                                 </form>
@@ -963,6 +965,9 @@ switch($action) {
     case "addnotes":
         save_notes();
         break;
+    case "manage_progs":
+        header('Location: programs.php');
+    break;
     case "Register":
         header('Location: register.php');
     break;
