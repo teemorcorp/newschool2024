@@ -255,23 +255,23 @@ function main_form() {
     // *******************************************************************************************
     // ********   TOTAL ACTIVE COURSES
     // *******************************************************************************************
-    // // Attempt select query execution
-    // $sql = "SELECT COUNT(*) AS 'totalActiveCourses' FROM $programs_tablename WHERE validcourse = '1'";
-    // if($result = mysqli_query($mysqli, $sql)){
-    //     if(mysqli_num_rows($result) > 0){
-    //         $row = mysqli_fetch_array($result);
-    //         $totalActiveCourses = $row['totalActiveCourses'];
-    //         // Free result set
-    //         mysqli_free_result($result);
-    //     } else{
-    //         $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
-    //         main_form();
-    //         exit;
-    //     }
-    // } else{
-    //     echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
-    // }
-    // // End attempt select query execution
+    // Attempt select query execution
+    $sql = "SELECT COUNT(*) AS 'totalActiveCourses' FROM $courses_tablename WHERE validcourse = '1'";
+    if($result = mysqli_query($mysqli, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result);
+            $totalActiveCourses = $row['totalActiveCourses'];
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+            main_form();
+            exit;
+        }
+    } else{
+        echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+    }
+    // End attempt select query execution
 
     // *******************************************************************************************
     // ********   TOTAL EXAMS
@@ -473,7 +473,7 @@ function main_form() {
                                     </div>
                                     <div class="card-footer">
                                         <div class="gap-2 text-center">
-                                            <button type="submit" name="action" class="btn btn-success btn-small" value="Go somewhere">Manage Programs</button> <button type="submit" name="action" class="btn btn-success btn-small" value="Go somewhere">Manage Courses</button>
+                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Programs</button> <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Courses</button>
                                         </div>
                                     </div>
                                 </form>
