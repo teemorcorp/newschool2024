@@ -442,10 +442,6 @@ echo "Line #436<br>";
 echo "Line #438<br>";
         if(mysqli_num_rows($result) > 0){
 echo "Line #441<br>";
-            // $row = mysqli_fetch_array($result);
-            // $userid = $row['userid'];
-            // $useremail = $row['useremail'];
-            // $isadmin = $row['isadmin'];
             // Free result set
             mysqli_free_result($result);
         } else{
