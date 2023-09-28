@@ -18,14 +18,21 @@ if (isset($_POST['action'])) {
 
 function main_form() {
 	global $PHP_SELF, $mysqli, $msg, $notice, $notice_header, $notice_body;
-    global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
     global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $currentnotes, $goalamt, $curgoal;
+    global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
     global $menuid, $goal, $current, $pct;
     global $progenroll_tablename, $progenrollid, $enrprogid , $enruserid, $enrolldate;
     global $programs_tablename, $progid, $progname , $enabled, $cost, $charge, $accordian_header, $progtype;
     global $selected_progid, $selected_progname , $selected_enabled, $selected_cost, $selected_charge, $selected_accordian_header, $selected_progtype;
-    global $$volunteers_tablename, $vid, $vfname , $vmname, $vlname, $vemail, $vphone, $vaddress, $vcity, $vstate, $vzip;
-    global $$volunteerpos_tablename, $vposid, $vtitle, $vdescription, $vneeded;
+    global $volunteers_tablename, $vid, $vfname , $vmname, $vlname, $vemail, $vphone, $vaddress, $vcity, $vstate, $vzip;
+    global $volunteerpos_tablename, $vposid, $vtitle, $vdescription, $vneeded;
+    global $enrollments_tablename, $enrollid, $euserid , $eprogid, $ecourseid, $examscore, $passed, $compdate, $rating;
+    global $courses_tablename, $courseid, $cprogid , $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
+    global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
+    global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
+    global $quizdet_tablename, $qdetid, $quizname, $courseid;
+    global $answerquiz_tablename, $answerid, $userid, $courseid, $quizid, $qdetid, $answer, $score;
+    global $lessons_tablename, $lessonid, $courseid, $lesson_name, $lesson_number;
 
     include "tmp/header.php";
     dbconnect();
@@ -118,6 +125,196 @@ function main_form() {
     // *******************************************************************************************
     // ********   END VOLUNTEER CALCULATIONS
     // *******************************************************************************************
+
+    // *******************************************************************************************
+    // ********   STUDENTS CALCULATIONS
+    // *******************************************************************************************
+    // Attempt select query execution
+    $sql = "SELECT COUNT(*) AS 'totalStudents' FROM $users_tablename";
+    if($result = mysqli_query($mysqli, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result);
+            $totalStudents = $row['totalStudents'];
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+            main_form();
+            exit;
+        }
+    } else{
+        echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+    }
+    // End attempt select query execution
+
+    // *******************************************************************************************
+    // ********   COURSE ENROLLMENTS
+    // *******************************************************************************************
+    // Attempt select query execution
+    $sql = "SELECT COUNT(*) AS 'totalEnrollments' FROM $enrollments_tablename";
+    if($result = mysqli_query($mysqli, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result);
+            $totalEnrollments = $row['totalEnrollments'];
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+            main_form();
+            exit;
+        }
+    } else{
+        echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+    }
+    // End attempt select query execution
+
+    // *******************************************************************************************
+    // ********   PROGRAM ENROLLMENTS
+    // *******************************************************************************************
+    // Attempt select query execution
+    $sql = "SELECT COUNT(*) AS 'totalProgEnroll' FROM $progenroll_tablename";
+    if($result = mysqli_query($mysqli, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result);
+            $totalProgEnroll = $row['totalProgEnroll'];
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+            main_form();
+            exit;
+        }
+    } else{
+        echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+    }
+    // End attempt select query execution
+
+    // *******************************************************************************************
+    // ********   TOTAL PROGRAMS
+    // *******************************************************************************************
+    // Attempt select query execution
+    $sql = "SELECT COUNT(*) AS 'totalPrograms' FROM $programs_tablename";
+    if($result = mysqli_query($mysqli, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result);
+            $totalPrograms = $row['totalPrograms'];
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+            main_form();
+            exit;
+        }
+    } else{
+        echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+    }
+    // End attempt select query execution
+
+    // *******************************************************************************************
+    // ********   TOTAL ACTIVE PROGRAMS
+    // *******************************************************************************************
+    // Attempt select query execution
+    $sql = "SELECT COUNT(*) AS 'totalActivePrograms' FROM $programs_tablename WHERE enabled = '1'";
+    if($result = mysqli_query($mysqli, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result);
+            $totalActivePrograms = $row['totalActivePrograms'];
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+            main_form();
+            exit;
+        }
+    } else{
+        echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+    }
+    // End attempt select query execution
+
+    // *******************************************************************************************
+    // ********   TOTAL COURSES
+    // *******************************************************************************************
+    // Attempt select query execution
+    $sql = "SELECT COUNT(*) AS 'totalCourses' FROM $courses_tablename";
+    if($result = mysqli_query($mysqli, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result);
+            $totalCourses = $row['totalCourses'];
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+            main_form();
+            exit;
+        }
+    } else{
+        echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+    }
+    // End attempt select query execution
+
+    // *******************************************************************************************
+    // ********   TOTAL ACTIVE COURSES
+    // *******************************************************************************************
+    // // Attempt select query execution
+    // $sql = "SELECT COUNT(*) AS 'totalActiveCourses' FROM $programs_tablename WHERE validcourse = '1'";
+    // if($result = mysqli_query($mysqli, $sql)){
+    //     if(mysqli_num_rows($result) > 0){
+    //         $row = mysqli_fetch_array($result);
+    //         $totalActiveCourses = $row['totalActiveCourses'];
+    //         // Free result set
+    //         mysqli_free_result($result);
+    //     } else{
+    //         $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+    //         main_form();
+    //         exit;
+    //     }
+    // } else{
+    //     echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+    // }
+    // // End attempt select query execution
+
+    // *******************************************************************************************
+    // ********   TOTAL EXAMS
+    // *******************************************************************************************
+    // Attempt select query execution
+    $sql = "SELECT COUNT(*) AS 'totalExams' FROM $exams_tablename";
+    if($result = mysqli_query($mysqli, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result);
+            $totalExams = $row['totalExams'];
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+            main_form();
+            exit;
+        }
+    } else{
+        echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+    }
+    // End attempt select query execution
+
+    // *******************************************************************************************
+    // ********   TOTAL QUIZZES
+    // *******************************************************************************************
+    // Attempt select query execution
+    $sql = "SELECT COUNT(*) AS 'totalQuizzes' FROM $quizzes_tablename";
+    if($result = mysqli_query($mysqli, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result);
+            $totalQuizzes = $row['totalQuizzes'];
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            $msg = "<font color='#FF0000'><strong>No Records Found!</strong></font>";
+            main_form();
+            exit;
+        }
+    } else{
+        echo "ERROR: Was not able to execute Query on line #145. " . mysqli_error($mysqli);
+    }
+    // End attempt select query execution
+
     ?>
     <div class="height-100">
         <div class="container-fluid">
@@ -147,20 +344,20 @@ function main_form() {
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Financial Goal Settings</h4>
                                         <div class="mb-3 row">
-                                            <label for="totalGoalAmt" class="col-sm-6 col-form-label">Goal Amount</label>
-                                            <div class="col-sm-6">
+                                            <label for="totalGoalAmt" class="col-sm-9 col-form-label">Goal Amount</label>
+                                            <div class="col-sm-3" style="text-align: right;">
                                                 <input type="text" name="goal" class="form-control" id="totalGoalAmt" value="<?php echo $g; ?>">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label for="amtCollected" class="col-sm-6 col-form-label">Amount Collected</label>
-                                            <div class="col-sm-6">
+                                            <label for="amtCollected" class="col-sm-9 col-form-label">Amount Collected</label>
+                                            <div class="col-sm-3" style="text-align: right;">
                                                 <input type="text" name="current" class="form-control" id="amtCollected" value="<?php echo $c; ?>">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label for="pctCollected" class="col-sm-6 col-form-label">Percentage Collected</label>
-                                            <div class="col-sm-6">
+                                            <label for="pctCollected" class="col-sm-9 col-form-label">Percentage Collected</label>
+                                            <div class="col-sm-3" style="text-align: right;">
                                                 <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $pct."%"; ?>">
                                             </div>
                                         </div>
@@ -182,26 +379,26 @@ function main_form() {
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Volunteers</h4>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-9">
                                                 Positions Available
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3" style="text-align: right;">
                                                 <?php echo $totalpos; ?>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-9">
                                                 Positions Filled
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3" style="text-align: right;">
                                                 <?php echo $totalv; ?>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-9">
                                                 Percentage Filled
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3" style="text-align: right;">
                                                 <?php echo $vpercent."%"; ?>
                                             </div>
                                             <!-- <div class="col-sm-6">
@@ -218,7 +415,7 @@ function main_form() {
                             </div>
                             <?php
                             /***********************************************************************************************
-                            *******   ENROLLMENY INFORMATION
+                            *******   ENROLLMENT INFORMATION
                             ***********************************************************************************************/
                             ?>
                             <div class="card card_margins text-bg-light mb-3">
@@ -226,23 +423,21 @@ function main_form() {
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Enrollment Information</h4>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-11">
+                                            <div class="col-sm-9">
                                                 Total Students<br>
                                                 Course Enrollments<br>
-                                                Positions Filled<br>
-                                                Percentage Filled<br>
+                                                Programs Enrolled<br>
                                             </div>
-                                            <div class="col-sm-1">
-                                                <?php echo $totalpos; ?><br>
-                                                <?php echo $totalpos; ?><br>
-                                                <?php echo $totalpos; ?><br>
-                                                <?php echo $totalpos; ?><br>
+                                            <div class="col-sm-3" style="text-align: right;">
+                                                <?php echo $totalStudents; ?><br>
+                                                <?php echo $totalEnrollments; ?><br>
+                                                <?php echo $totalProgEnroll; ?><br>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
                                         <div class="d-grid gap-2">
-                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Go somewhere</button>
+                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Users</button>
                                         </div>
                                     </div>
                                 </form>
@@ -258,27 +453,27 @@ function main_form() {
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Programs & Courses</h4>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-11">
+                                            <div class="col-sm-9">
                                                 Total Programs<br>
                                                 Total Active Programs<br>
                                                 Total Courses<br>
                                                 Total Active Courses<br>
-                                                Total Exams<br>
-                                                Total Quizzes<br>
+                                                Total Exam Questions<br>
+                                                Total Quiz Questions<br>
                                             </div>
-                                            <div class="col-sm-1">
-                                                <?php echo $totalpos; ?><br>
-                                                <?php echo $totalv; ?><br>
-                                                <?php echo $totalv; ?><br>
-                                                <?php echo $totalv; ?><br>
-                                                <?php echo $totalv; ?><br>
-                                                <?php echo $totalv; ?><br>
+                                            <div class="col-sm-3" style="text-align: right;">
+                                                <?php echo $totalPrograms; ?><br>
+                                                <?php echo $totalActivePrograms; ?><br>
+                                                <?php echo $totalCourses; ?><br>
+                                                <?php echo $totalActiveCourses; ?><br>
+                                                <?php echo $totalExams; ?><br>
+                                                <?php echo $totalQuizzes; ?><br>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <div class="d-grid gap-2">
-                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Go somewhere</button>
+                                        <div class="gap-2 text-center">
+                                            <button type="submit" name="action" class="btn btn-success btn-small" value="Go somewhere">Manage Programs</button> <button type="submit" name="action" class="btn btn-success btn-small" value="Go somewhere">Manage Courses</button>
                                         </div>
                                     </div>
                                 </form>
