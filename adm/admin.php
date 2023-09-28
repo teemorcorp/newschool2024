@@ -182,22 +182,31 @@ function main_form() {
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Volunteers</h4>
                                         <div class="mb-3 row">
-                                            <label for="totalGoalAmt" class="col-sm-6 col-form-label">Positions Available</label>
+                                            <div class="col-sm-6">
+                                                Positions Available
+                                            </div>
                                             <div class="col-sm-6">
                                                 <?php echo $totalpos; ?>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label for="amtCollected" class="col-sm-6 col-form-label">Positions Filled</label>
+                                            <div class="col-sm-6">
+                                                Positions Filled
+                                            </div>
                                             <div class="col-sm-6">
                                                 <?php echo $totalv; ?>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label for="pctCollected" class="col-sm-6 col-form-label">Percentage Filled</label>
                                             <div class="col-sm-6">
-                                                <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $vpercent."%"; ?>">
+                                                Percentage Filled
                                             </div>
+                                            <div class="col-sm-6">
+                                                <?php echo $vpercent."%"; ?>
+                                            </div>
+                                            <!-- <div class="col-sm-6">
+                                                <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $vpercent."%"; ?>">
+                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="card-footer">
@@ -217,27 +226,17 @@ function main_form() {
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Enrollment Information</h4>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-6">
-                                                Enrollments
+                                            <div class="col-sm-11">
+                                                Total Students<br>
+                                                Course Enrollments<br>
+                                                Positions Filled<br>
+                                                Percentage Filled<br>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <?php echo $totalpos; ?>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <div class="col-sm-6">
-                                                Positions Filled
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <?php echo $totalv; ?>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <div class="col-sm-6">
-                                                Percentage Filled
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $vpercent."%"; ?>">
+                                            <div class="col-sm-1">
+                                                <?php echo $totalpos; ?><br>
+                                                <?php echo $totalpos; ?><br>
+                                                <?php echo $totalpos; ?><br>
+                                                <?php echo $totalpos; ?><br>
                                             </div>
                                         </div>
                                     </div>
@@ -250,36 +249,30 @@ function main_form() {
                             </div>
                             <?php
                             /***********************************************************************************************
-                            *******   GOAL SETTINGS
+                            *******   COURSE INFORMATION
                             ***********************************************************************************************/
                             ?>
                             <div class="card card_margins text-bg-light mb-3">
                                 <!-- <img src="..." class="card-img-top" alt="..."> -->
                                 <form action="<?php echo $PHP_SELF ?>" method="post">
                                     <div class="card-body card-body-height">
-                                        <h4 class="card-title">Card title</h4>
+                                        <h4 class="card-title">Programs & Courses</h4>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-6">
-                                                Enrollments
+                                            <div class="col-sm-11">
+                                                Total Programs<br>
+                                                Total Active Programs<br>
+                                                Total Courses<br>
+                                                Total Active Courses<br>
+                                                Total Exams<br>
+                                                Total Quizzes<br>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <?php echo $totalpos; ?>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <div class="col-sm-6">
-                                                Positions Filled
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <?php echo $totalv; ?>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <div class="col-sm-6">
-                                                Percentage Filled
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $vpercent."%"; ?>">
+                                            <div class="col-sm-1">
+                                                <?php echo $totalpos; ?><br>
+                                                <?php echo $totalv; ?><br>
+                                                <?php echo $totalv; ?><br>
+                                                <?php echo $totalv; ?><br>
+                                                <?php echo $totalv; ?><br>
+                                                <?php echo $totalv; ?><br>
                                             </div>
                                         </div>
                                     </div>
