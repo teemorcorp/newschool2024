@@ -475,16 +475,32 @@ function add_new(){
     global $progcourses_tablename, $pgid, $progid, $courseid;
 	
 $progid = $_POST['progid'];
-//echo "user_id = ".$user_id."<br>";
-//exit;
 
-$sql = $mysqli->query("SELECT * FROM $programs_tablename WHERE progid = '$progid'");
-if(!$sql) error_message("Error in $courses_tablename (courses) line #135");
-$row = $sql->fetch_assoc();		
-$progname = $row['progname'];
-$enabled = $row['enabled'];
-$cost = $rowb['cost'];
-$charge = $rowb['charge'];		
+// Attempt select query execution
+$totalpos = 0;
+if ($resultx = $mysqli->query("SELECT * FROM $programs_tablename WHERE progid = '$progid'")) {
+    if(mysqli_num_rows($resultx) > 0){
+        while($rowx = mysqli_fetch_array($resultx)){
+            $progname = $rowx['progname'];
+            $enabled = $rowx['enabled'];	
+        }
+        // Free result set
+        mysqli_free_result($resultx);
+    } else{
+        $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
+        main_form();
+        exit;
+    }
+} else{
+    echo "ERROR: Was not able to execute Query on line #55. " . mysqli_error($mysqli);
+}
+// End attempt select query execution
+
+// $sql = $mysqli->query("SELECT * FROM $programs_tablename WHERE progid = '$progid'");
+// if(!$sql) error_message("Error in $courses_tablename (courses) line #135");
+// $row = $sql->fetch_assoc();		
+// $progname = $row['progname'];
+// $enabled = $row['enabled'];	
 				
 $_SESSION['progname'] = $progname;
 $_SESSION['enabled'] = $enabled;
@@ -513,24 +529,24 @@ $_SESSION['enabled'] = $enabled;
                 Enabled
             </td>
             <td align="left" valign="top">
-<?php
-if($_SESSION['enabled'] == true){
-?>
-<input type="radio" name="enabled" value="1" checked> Yes
-<input type="radio" name="enabled" value="0"> No
-<?php
-}else{
-?>
-<input type="radio" name="enabled" value="1"> Yes
-<input type="radio" name="enabled" value="0" checked> No
-<?php
-}
-?>
+                <?php
+                if($_SESSION['enabled'] == true){
+                    ?>
+                    <input type="radio" name="enabled" value="1" checked> Yes
+                    <input type="radio" name="enabled" value="0"> No
+                    <?php
+                }else{
+                    ?>
+                    <input type="radio" name="enabled" value="1"> Yes
+                    <input type="radio" name="enabled" value="0" checked> No
+                    <?php
+                }
+                ?>
             </td>
         </tr>
         <tr>
             <td align="right" valign="top">
-               Cost
+                Cost
             </td>
             <td align="left" valign="top">
                 <input type="text" name="cost" size="30" value="<?php echo $_SESSION['cost'] ?>">

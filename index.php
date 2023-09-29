@@ -240,7 +240,7 @@ function main_form() {
 
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="margin-top: 80px;">
                 <div class="modal-header">
@@ -250,17 +250,17 @@ function main_form() {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <?php echo $news; ?>
+                    < ?php echo $news; ?>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Welcome Video -->
-    <div class="modal fade" id="videoOne" tabindex="-1" role="dialog" aria-labelledby="videoOneLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="videoOne" tabindex="-1" role="dialog" aria-labelledby="videoOneLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="margin-top: 80px;">
                 <div class="modal-header">
@@ -277,17 +277,17 @@ function main_form() {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- How to Use This Site Video -->
-    <div class="modal fade" id="videoTwo" tabindex="-1" role="dialog" aria-labelledby="videoTwoLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="videoTwo" tabindex="-1" role="dialog" aria-labelledby="videoTwoLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="margin-top: 80px;">
                 <div class="modal-header">
-                    <!-- <h5 class="modal-title" id="exampleModalLabel">How to Use This Site</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">How to Use This Site</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button> -->
+                    </button>
                 </div>
                 <div class="modal-body" align="center">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/nTL5gtP0nyg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -297,17 +297,17 @@ function main_form() {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- How to Enroll Video -->
-    <div class="modal fade" id="videoThree" tabindex="-1" role="dialog" aria-labelledby="videoThreeLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="videoThree" tabindex="-1" role="dialog" aria-labelledby="videoThreeLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="margin-top: 80px;">
                 <div class="modal-header">
-                    <!-- <h5 class="modal-title" id="exampleModalLabel">How to Enroll</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">How to Enroll</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button> -->
+                    </button>
                 </div>
                 <div class="modal-body" align="center">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/D7Ef4kM5BLg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -317,7 +317,7 @@ function main_form() {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <?php
     include "tmp/footer.php";

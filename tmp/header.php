@@ -77,6 +77,8 @@ if(!empty($_SESSION['userid'])){
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
         <!-- **********************  END JQUERY  ******************************************************************-->
 
+        <link href="css/styles.css" rel="stylesheet" />
+
         <!-- ********************************************************************************************************
         *******  DATE PICKER / CALENDAR
         ***********************************************************************************************************-->
@@ -150,7 +152,8 @@ if(!empty($_SESSION['userid'])){
                 $(".selector").dialog({
                     buttons: [{
                         text: "Ok",
-                        icon: "ui-icon-heart",
+                        // icon: "ui-icon-heart",
+                        icon: "window-close",
                         click: function() {
                             $( this ).dialog( "close" );
                         }
@@ -162,8 +165,6 @@ if(!empty($_SESSION['userid'])){
                 });
             });
         </script>
-
-        <link href="css/styles.css" rel="stylesheet" />
         
         <style>
             .modal {
