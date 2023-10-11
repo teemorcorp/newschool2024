@@ -1,17 +1,10 @@
 <?php
-/*************************************************************
-** IHN Bible College Online
-** Author: TJ Moore
-** tjmooredev@gmail.com
-** Copyright (c) 2001 - 2021 Thomas J. Moore, D.D.
-**************************************************************/
-include 'includes/globals.php';
-session_start();
-db_connect();
-
-if($mysqli->connect_error) {
-	echo 'Failed to connect to server: (' . $mysqli->connect_error . ') ' . $mysqli->connect_error;
-}
+/****************************************************
+****   IHN Bible College
+****   Designed by: Tom Moore
+****   Written by: Tom Moore
+****   (c) 2001 - 2023 TEEMOR eBusiness Solutions
+****************************************************/
 
 // Grab action
 if (isset($_POST['action'])) {
@@ -23,189 +16,163 @@ if (isset($_POST['action'])) {
 //*******************************************************
 //*******************  MAIN FORM  ***********************
 //*******************************************************
-
 function main_form() {
+    global $PHP_SELF, $mysqli, $msg;
+    global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
+    global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
+    global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
+    global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
+    global $progcourses_tablename, $pgid, $progid, $courseid;
+    global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
 
-global $PHP_SELF, $mysqli, $msg;
-global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
-global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
-global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
-global $progcourses_tablename, $pgid, $progid, $courseid;
-global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
-
-$main_background_color = "#1c262f";
-$sub_background_color = "#26333c"; 
-$child_background_color = "#2f3d4a";
-
-$_SESSION['userid'] = "1";
-$userid = $_SESSION['userid'];
-
-// Attempt select query execution
-$sql = "SELECT * FROM $users_tablename WHERE userid = '$userid'";
-if($result = mysqli_query($mysqli, $sql)){
-    if(mysqli_num_rows($result) > 0){
-        $row = mysqli_fetch_array($result);
-        $userid = $row['userid'];
-        $useremail = $row['useremail'];
-        $isadmin = $row['isadmin'];
-        $userfname = $row['userfname'];
-        $userlname = $row['userlname'];
-        $imagepath = $row['imagepath'];
-        $fullname = $userfname." ".$userlname;
-        // Free result set
-        mysqli_free_result($result);
-    } else{
-        $msg = "<font color='#FF0000'><strong>Account Does Not Exsist!</strong></font>";
-        main_form();
-        exit;
+    include "tmp/header.php";
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
     }
-} else{
-    echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
-}
-// End attempt select query execution
 
-include 'templates/include.tpl';
-include "templates/style.tpl";
-?>
-<body>
-<div class='container-fluid'>
-<?php
-include "templates/topmenu.tpl";
-?>
+    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+        $userid = $_SESSION['userid'];
+    }else{
+        header('Location: ../index.php');
+    }
+    ?>
+    <!-- <body> -->
+    <div class="height-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2">
+                    <?php
+                    admmenu();
+                    ?>
+                </div>
+                <div class="col-10">
+                    <div class="row " style="padding-top:10px;">
+                        <div class="col-12">
+                            <!-- *******************************************************************************************
+                            **********  POPULAR PRODUCTS
+                            *********************************************************************************************-->
+                            <section name="Website Options" style="padding-top:20px;">
+                                <h1>Exam Management</h1>
+                                <center>
+                                <?php echo $msg; ?>
+                                <br>
+                                <form action="<?php echo $PHP_SELF ?>" method="post">
+                                    <input class='btn btn-primary' name="action" type="submit" value="Add New" />
+                                </form>
+                                </center>
+                                <br>
+                                <div class="card text-dark bg-light mb-1" id="boxdisplay">
+                                    <div class="card-header">
+                                        <font size="+2"><strong>Exams</strong></font>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <td>
+                                                    <strong>Course Code</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>Course Name</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>File Name</strong>
+                                                </td>
+                                                <td>
+                                                    <strong># of Q</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>Credits</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>Enabled</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>View/Modify</strong>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                            $sqlb = $mysqli->query("SELECT * FROM $courses_tablename ORDER BY coursecode ASC");
+                                            if(!$sqlb) error_message("Error in $courses_tablename (select_exam) line #92");
+                                            $sqlb->data_seek(0);
+                                            while($rowb = $sqlb->fetch_assoc()) {
+                                                $courseid = $rowb['courseid'];
+                                                $coursecode = $rowb['coursecode'];
+                                                $coursename = $rowb['coursename'];
+                                                $credits = $rowb['credits'];
+                                                $filename = $rowb['filename'];
+                                                $validcourse = $rowb['validcourse'];
+                                                
+                                                
+                                                $sqlx = $mysqli->query("SELECT COUNT(*) AS 'TotalQuestions' FROM $exams_tablename WHERE excourseid = '$courseid'");
+                                                if(!$sqlx) error_message("Error in $exams_tablename (main) line #106");
+                                                $rowx = $sqlx->fetch_assoc();	
+                                                $total_questions = $rowx['TotalQuestions'];
 
-<!-- *****************************************************************************************************
-*******  MAIN
-*******************************************************************************************************-->    
-<section>
-    <div class="row" style="height: 100vh;">
-        <div class="col-sm-2" style="background-color:#1c262f; padding-left: 0px;">
-            <?php include "templates/leftmenu.tpl"; ?>
-        </div>
-        <div class="col-10">
-            <div class="row " style="padding-top:10px;">
-                <div class="col-12">
-                    
-
-                    <!-- *******************************************************************************************
-                    **********  POPULAR PRODUCTS
-                    *********************************************************************************************-->
-                    <section name="Website Options" style="padding-top:20px;">
-                        <h1>Exam Management</h1>
-                        <center>
-                        <?php echo $msg; ?>
-                        <br>
-                        <form action="<?php echo $PHP_SELF ?>" method="post">
-                            <input class='btn btn-primary' name="action" type="submit" value="Add New" />
-                        </form>
-                        </center>
-                        <br>
-                        <div class="card text-dark bg-light mb-1" id="boxdisplay">
-                            <div class="card-header">
-                                <font size="+2"><strong>Exams</strong></font>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-striped">
-                                    <tr>
-                                        <td>
-                                            <strong>Course Code</strong>
-                                        </td>
-                                        <td>
-                                            <strong>Course Name</strong>
-                                        </td>
-                                        <td>
-                                            <strong>File Name</strong>
-                                        </td>
-                                        <td>
-                                            <strong># of Q</strong>
-                                        </td>
-                                        <td>
-                                            <strong>Credits</strong>
-                                        </td>
-                                        <td>
-                                            <strong>Enabled</strong>
-                                        </td>
-                                        <td>
-                                            <strong>View/Modify</strong>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                    $sqlb = $mysqli->query("SELECT * FROM $courses_tablename ORDER BY coursecode ASC");
-                                    if(!$sqlb) error_message("Error in $courses_tablename (select_exam) line #92");
-                                    $sqlb->data_seek(0);
-                                    while($rowb = $sqlb->fetch_assoc()) {
-                                        $courseid = $rowb['courseid'];
-                                        $coursecode = $rowb['coursecode'];
-                                        $coursename = $rowb['coursename'];
-                                        $credits = $rowb['credits'];
-                                        $filename = $rowb['filename'];
-                                        $validcourse = $rowb['validcourse'];
-                                        
-                                        
-                                        $sqlx = $mysqli->query("SELECT COUNT(*) AS 'TotalQuestions' FROM $exams_tablename WHERE excourseid = '$courseid'");
-                                        if(!$sqlx) error_message("Error in $exams_tablename (main) line #106");
-                                        $rowx = $sqlx->fetch_assoc();	
-                                        $total_questions = $rowx['TotalQuestions'];
-
-                                        
-                                        if($bgcolor == "#99FFFF"){
-                                            $bgcolor = "#CCFFFF";
-                                        }else{
-                                            $bgcolor = "#99FFFF";
-                                        }
-                                    ?>
-                                    <form action="quest_edit.php?courseid=<?php echo $courseid ?>" method="post">
-                                        <tr>
-                                            <td>
-                                                <?php echo $coursecode ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $coursename ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $filename ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $total_questions ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $credits ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $validcourse ?>
-                                            </td>
-                                            <td>
-                                                <input type="hidden" name="courseid" value="<?php echo $courseid ?>">
-                                                <button class="btn btn-success" name="action" type="submit" value="View/Modify">View/Modify</button>
-                                                <!--a href="quest_edit.php?courseid=< ?php echo $courseid ?>">View/Modify</a-->
-                                            </td>
-                                        </tr>
-                                    </form>
-                                    <?php
-                                    }
-                                    ?>
-                                </table>
-                            </div>
+                                                
+                                                if($bgcolor == "#99FFFF"){
+                                                    $bgcolor = "#CCFFFF";
+                                                }else{
+                                                    $bgcolor = "#99FFFF";
+                                                }
+                                            ?>
+                                            <form action="quest_edit.php?courseid=<?php echo $courseid ?>" method="post">
+                                                <tr>
+                                                    <td>
+                                                        <?php echo $coursecode ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $coursename ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $filename ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $total_questions ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $credits ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $validcourse ?>
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="courseid" value="<?php echo $courseid ?>">
+                                                        <button class="btn btn-success" name="action" type="submit" value="View/Modify">View/Modify</button>
+                                                        <!--a href="quest_edit.php?courseid=< ?php echo $courseid ?>">View/Modify</a-->
+                                                    </td>
+                                                </tr>
+                                            </form>
+                                            <?php
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-                    </section>
+                    
+                        <div id="boxed" style="margin-top: 50px;">&nbsp;</div>                 
 
-
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
 
-<br><br>
+    <script>
+        tinymce.init({
+            selector: '#progdesc',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+            width: '100%',
+            height: 420,
+            readonly: 0
+        });
+    </script>
+
 <?php
-?>
-</div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="js/pushy.min.js"></script>
-</body>
-</html>
-<?php
+include "tmp/footer.php";
 }
 
 
@@ -215,7 +182,7 @@ include "templates/topmenu.tpl";
 function edit_record(){
     global $PHP_SELF, $mysqli, $msg;
     global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-    global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+    global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
     global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
     global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
     global $progcourses_tablename, $pgid, $progid, $courseid;
@@ -361,7 +328,7 @@ function edit_record(){
 function do_edit(){
     global $PHP_SELF, $mysqli, $msg;
     global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-    global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+    global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
     global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
     global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
     global $progcourses_tablename, $pgid, $progid, $courseid;
@@ -387,25 +354,37 @@ function do_edit(){
 function add_new(){
     global $PHP_SELF, $mysqli, $msg;
     global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-    global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+    global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
     global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
     global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
     global $progcourses_tablename, $pgid, $progid, $courseid;
-	
-$progid = $_POST['progid'];
-//echo "user_id = ".$user_id."<br>";
-//exit;
+    
+    include "tmp/header.php";
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 
-$sql = $mysqli->query("SELECT * FROM $programs_tablename WHERE progid = '$progid'");
-if(!$sql) error_message("Error in $courses_tablename (courses) line #135");
-$row = $sql->fetch_assoc();		
-$progname = $row['progname'];
-$enabled = $row['enabled'];
-$cost = $rowb['cost'];
-$charge = $rowb['charge'];		
-				
-$_SESSION['progname'] = $progname;
-$_SESSION['enabled'] = $enabled;
+    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+        $userid = $_SESSION['userid'];
+    }else{
+        header('Location: ../index.php');
+    }
+	
+    $progid = $_POST['progid'];
+    //echo "user_id = ".$user_id."<br>";
+    //exit;
+
+    // $sql = $mysqli->query("SELECT * FROM $programs_tablename WHERE progid = '$progid'");
+    // if(!$sql) error_message("Error in $courses_tablename (courses) line #135");
+    // $row = $sql->fetch_assoc();		
+    // $progname = $row['progname'];
+    // $isenabled = $row['isenabled'];
+    // $cost = $row['cost'];
+    // $charge = $row['charge'];		
+                    
+    // $_SESSION['progname'] = $progname;
+    // $_SESSION['isenabled'] = $isenabled;
 ?>
 <form action="<?php echo $PHP_SELF ?>" method="post">
     <center>
@@ -432,15 +411,15 @@ $_SESSION['enabled'] = $enabled;
             </td>
             <td align="left" valign="top">
                 <?php
-                if($_SESSION['enabled'] == true){
+                if($_SESSION['isenabled'] == true){
                 ?>
-                <input type="radio" name="enabled" value="1" checked> Yes
-                <input type="radio" name="enabled" value="0"> No
+                <input type="radio" name="isenabled" value="1" checked> Yes
+                <input type="radio" name="isenabled" value="0"> No
                 <?php
                 }else{
                 ?>
-                <input type="radio" name="enabled" value="1"> Yes
-                <input type="radio" name="enabled" value="0" checked> No
+                <input type="radio" name="isenabled" value="1"> Yes
+                <input type="radio" name="isenabled" value="0" checked> No
                 <?php
                 }
                 ?>
@@ -489,18 +468,18 @@ $_SESSION['enabled'] = $enabled;
 function do_add(){
     global $PHP_SELF, $mysqli, $msg;
     global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-    global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+    global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
     global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
     global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
     global $progcourses_tablename, $pgid, $progid, $courseid;
 	
     $progid = $_POST['progid'];
     $progname = $_POST['progname'];
-    $enabled = $_POST['enabled'];
+    $isenabled = $_POST['isenabled'];
     $cost = $_POST['cost'];
     $charge = $_POST['charge'];
 
-    $sql = $mysqli->query("INSERT INTO $programs_tablename VALUES(NULL, '$progname', '$enabled', '$cost', '$charge')");
+    $sql = $mysqli->query("INSERT INTO $programs_tablename VALUES(NULL, '$progname', '$isenabled', '$cost', '$charge')");
     if(!$sql) error_message("Error fetching data from $programs_tablename (programs) line #523");
 
     main_form();
@@ -513,7 +492,7 @@ function do_add(){
 function add_course(){
     global $PHP_SELF, $mysqli, $msg;
     global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-    global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+    global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
     global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
     global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
     global $progcourses_tablename, $pgid, $progid, $courseid;
@@ -543,7 +522,7 @@ function add_course(){
 function delete_course(){
     global $PHP_SELF, $mysqli, $msg;
     global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-    global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+    global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
     global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
     global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
     global $progcourses_tablename, $pgid, $progid, $courseid;
@@ -575,7 +554,6 @@ switch($action) {
 		do_edit();
 	break;
 	case "View/Modify":
-		//edit_record();
         ?>
         <script type="text/javascript">
             <!--
@@ -586,7 +564,13 @@ switch($action) {
         <?php
 	break;
 	case "Add New":
-		add_new();
+        ?>
+        <script type="text/javascript">
+            <!--
+            window.top.location.href = "exam_add.php";
+            -->
+        </script>
+        <?php
 	break;
 	default:
 		main_form();

@@ -32,12 +32,11 @@ function main_form()
     global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
     global $messages_tablename, $msgid, $typeid, $msgtitle, $msgbody, $msgdate;
 
-    $main_background_color = "#1c262f";
-    $sub_background_color = "#26333c";
-    $child_background_color = "#2f3d4a";
-
-    $_SESSION['userid'] = "1";
-    $userid = $_SESSION['userid'];
+    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+        $userid = $_SESSION['userid'];
+    }else{
+        header('Location: ../index.php');
+    }
 
     // Attempt select query execution
     $sql = "SELECT * FROM $users_tablename WHERE userid = '$userid'";

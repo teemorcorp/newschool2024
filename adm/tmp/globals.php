@@ -1,5 +1,5 @@
 <?php
-global $dbhost, $dbusername, $dbpassword, $dbname, $mysqli;
+global $dbhost, $dbusername, $dbpassword, $dbname, $mysqli, $conn;
 
 // SERVER
 // $dbhost = 'localhost';
@@ -19,12 +19,14 @@ $dbname = 'teemorco_ihnschool';
 // $dbpassword = '1nh15nam3';
 // $dbname = 'school2';
 
+
 $users_tablename = 'users';
 $answers_tablename = 'answers';
 $courses_tablename = 'courses';
 $enrollments_tablename = 'enrollments';
 $exams_tablename = 'exams';
 $lessons_tablename = 'lessons';
+$notes_tablename = 'notes';
 $prayers_tablename = 'prayers';
 $programs_tablename = 'programs';
 $progenroll_tablename = 'progenroll';

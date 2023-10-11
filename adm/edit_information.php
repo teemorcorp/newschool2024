@@ -26,14 +26,13 @@ if (isset($_POST['action'])) {
 function main_form() {
 global $PHP_SELF, $mysqli, $msg;
 global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-    global $system_tablename, $sysid, $president, $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate;
+global $system_tablename, $sysid, $president, $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate;
 
-$main_background_color = "#1c262f";
-$sub_background_color = "#26333c"; 
-$child_background_color = "#2f3d4a";
-
-//$_SESSION['userid'] = "1";
-$userid = $_SESSION['userid'];
+    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+        $userid = $_SESSION['userid'];
+    }else{
+        header('Location: ../index.php');
+    }
 
 // Attempt select query execution
 $sql = "SELECT * FROM $users_tablename WHERE userid = '$userid'";
@@ -207,7 +206,7 @@ function save_message(){
     if ($mysqli->query($sql) === TRUE) {
         $msg = "Updated!<br><br>";
     } else {
-        $msg = "Error: ".$sql."<br>".$conn->error;
+        $msg = "Error: ".$sql."<br>".$mysqli->error;
     }
     main_form();
 }

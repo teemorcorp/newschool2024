@@ -3,7 +3,7 @@
 ****   IHN Bible College
 ****   Designed by: Tom Moore
 ****   Written by: Tom Moore
-****   (c) 2001 - 2021 TEEMOR eBusiness Solutions
+****   (c) 2001 - 2023 TEEMOR eBusiness Solutions
 ****************************************************/
 
 // Grab action
@@ -22,7 +22,7 @@ function main_form() {
     global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
     global $menuid, $goal, $current, $pct;
     global $progenroll_tablename, $progenrollid, $enrprogid , $enruserid, $enrolldate;
-    global $programs_tablename, $progid, $progname, $progdesc, $enabled, $cost, $charge, $accordian_header, $progtype;
+    global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
     global $selected_progid, $selected_progname , $selected_enabled, $selected_cost, $selected_charge, $selected_accordian_header, $selected_progtype;
     global $volunteers_tablename, $vid, $vfname , $vmname, $vlname, $vemail, $vphone, $vaddress, $vcity, $vstate, $vzip;
     global $volunteerpos_tablename, $vposid, $vtitle, $vdescription, $vneeded;
@@ -40,6 +40,11 @@ function main_form() {
         die("Connection failed: " . mysqli_connect_error());
     }
 
+    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+        $userid = $_SESSION['userid'];
+    }else{
+        header('Location: ../index.php');
+    }
 
     // *******************************************************************************************
     // ********   FINANCIAL GOAL CALCULATIONS
@@ -63,12 +68,6 @@ function main_form() {
         echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
     }
     // End attempt select query execution
-
-    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
-        $userid = $_SESSION['userid'];
-    }else{
-        header('Location: ../index.php');
-    }
 
     $g = $goalamt;
     $c = $curgoal;
@@ -216,7 +215,7 @@ function main_form() {
     // ********   TOTAL ACTIVE PROGRAMS
     // *******************************************************************************************
     // Attempt select query execution
-    $sql = "SELECT COUNT(*) AS 'totalActivePrograms' FROM $programs_tablename WHERE enabled = '1'";
+    $sql = "SELECT COUNT(*) AS 'totalActivePrograms' FROM $programs_tablename WHERE isenabled = '1'";
     if($result = mysqli_query($mysqli, $sql)){
         if(mysqli_num_rows($result) > 0){
             $row = mysqli_fetch_array($result);
@@ -323,7 +322,6 @@ function main_form() {
             <div class="row">
                 <div class="col-sm-2">
                     <?php
-                    // menu();
                     admmenu();
                     ?>
                 </div>
@@ -346,21 +344,21 @@ function main_form() {
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Financial Goal Settings</h4>
                                         <div class="mb-3 row">
-                                            <label for="totalGoalAmt" class="col-sm-9 col-form-label">Goal Amount</label>
+                                            <label for="totalGoalAmt" class="col-sm-8 col-form-label">Goal Amount</label>
                                             <div class="col-sm-3" style="text-align: right;">
-                                                <input type="text" name="goal" class="form-control" id="totalGoalAmt" value="<?php echo $g; ?>">
+                                                <input style="width: 100px;" type="text" name="goal" class="form-control" id="totalGoalAmt" value="<?php echo $g; ?>">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label for="amtCollected" class="col-sm-9 col-form-label">Amount Collected</label>
+                                            <label for="amtCollected" class="col-sm-8 col-form-label">Amount Collected</label>
                                             <div class="col-sm-3" style="text-align: right;">
-                                                <input type="text" name="current" class="form-control" id="amtCollected" value="<?php echo $c; ?>">
+                                                <input style="width: 100px;" type="text" name="current" class="form-control" id="amtCollected" value="<?php echo $c; ?>">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label for="pctCollected" class="col-sm-9 col-form-label">Percentage Collected</label>
+                                            <label for="pctCollected" class="col-sm-8 col-form-label">Percentage Collected</label>
                                             <div class="col-sm-3" style="text-align: right;">
-                                                <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $pct."%"; ?>">
+                                                <input style="width: 100px; text-align: right;" type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $pct."%"; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -381,27 +379,27 @@ function main_form() {
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Volunteers</h4>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-8">
                                                 Positions Available
                                             </div>
                                             <div class="col-sm-3" style="text-align: right;">
-                                                <?php echo $totalpos; ?>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalpos; ?></span>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-8">
                                                 Positions Filled
                                             </div>
                                             <div class="col-sm-3" style="text-align: right;">
-                                                <?php echo $totalv; ?>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalv; ?></span>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-8">
                                                 Percentage Filled
                                             </div>
                                             <div class="col-sm-3" style="text-align: right;">
-                                                <?php echo $vpercent."%"; ?>
+                                                <span style="width: 100px; text-align: right;"><?php echo $vpercent."%"; ?></span>
                                             </div>
                                             <!-- <div class="col-sm-6">
                                                 <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $vpercent."%"; ?>">
@@ -425,15 +423,15 @@ function main_form() {
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Enrollment Information</h4>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-8">
                                                 Total Students<br>
                                                 Course Enrollments<br>
                                                 Programs Enrolled<br>
                                             </div>
                                             <div class="col-sm-3" style="text-align: right;">
-                                                <?php echo $totalStudents; ?><br>
-                                                <?php echo $totalEnrollments; ?><br>
-                                                <?php echo $totalProgEnroll; ?><br>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalStudents; ?></span><br>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalEnrollments; ?></span><br>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalProgEnroll; ?></span><br>
                                             </div>
                                         </div>
                                     </div>
@@ -455,7 +453,7 @@ function main_form() {
                                     <div class="card-body card-body-height">
                                         <h4 class="card-title">Programs & Courses</h4>
                                         <div class="mb-3 row">
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-8">
                                                 Total Programs<br>
                                                 Total Active Programs<br>
                                                 Total Courses<br>
@@ -464,18 +462,18 @@ function main_form() {
                                                 Total Quiz Questions<br>
                                             </div>
                                             <div class="col-sm-3" style="text-align: right;">
-                                                <?php echo $totalPrograms; ?><br>
-                                                <?php echo $totalActivePrograms; ?><br>
-                                                <?php echo $totalCourses; ?><br>
-                                                <?php echo $totalActiveCourses; ?><br>
-                                                <?php echo $totalExams; ?><br>
-                                                <?php echo $totalQuizzes; ?><br>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalPrograms; ?></span><br>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalActivePrograms; ?></span><br>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalCourses; ?></span><br>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalActiveCourses; ?></span><br>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalExams; ?></span><br>
+                                                <span style="width: 100px; text-align: right;"><?php echo $totalQuizzes; ?></span><br>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
                                         <div class="gap-2 text-center">
-                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="manage_progs">Manage Programs</button> <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Courses</button>
+                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="manage_progs">Manage Programs</button> <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="courses">Manage Courses</button>
                                         </div>
                                     </div>
                                 </form>
@@ -550,116 +548,6 @@ function main_form() {
                             </form>
                         </div>
 
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            Programs
-                        </div>
-                        <div class="card-body">
-                            <form action="<?php echo $PHP_SELF ?>" method="post">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <select name="progname" id="">
-                                            <option value="">SELECT PROGRAM</option>
-                                            <?php
-                                            global $progenroll_tablename, $progenrollid, $enrprogid , $enruserid, $enrolldate;
-                                            global $programs_tablename, $progid, $progname , $enabled, $cost, $charge, $accordian_header, $progtype;
-                                            // Attempt select query execution
-                                            if ($result = $mysqli->query("SELECT * FROM $programs_tablename ORDER BY progname ASC")) {
-                                                if(mysqli_num_rows($result) > 0){
-                                                    while($row = mysqli_fetch_array($result)){
-                                                        $progid = $row['progid'];
-                                                        $progname = $row['progname'];
-                                                        $enabled = $row['enabled'];
-                                                        $cost = $row['cost'];
-                                                        $charge = $row['charge'];
-                                                        $accordian_header = $row['accordian_header'];
-                                                        $progtype = $row['progtype'];
-                                                        ?>
-                                                        <div class="card-group">
-                                                            <option value="<?php echo $progname; ?>"><?php echo $progname; ?></option>
-                                                        </div>
-                                                        <?php
-                                                    }
-                                                    // Free result set
-                                                    mysqli_free_result($result);
-                                                } else{
-                                                    $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
-                                                    main_form();
-                                                    exit;
-                                                }
-                                            } else{
-                                                echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
-                                            }
-                                            // End attempt select query execution
-                                            global $programs_tablename, $progid, $progname , $enabled, $cost, $charge, $accordian_header, $progtype;
-                                            global $selected_progid, $selected_progname , $selected_enabled, $selected_cost, $selected_charge, $selected_accordian_header, $selected_progtype;
-                                            ?>
-                                        </select>
-                                        <div class="d-grid gap-2" style="margin-top: 10px;">
-                                            <!-- <input type="hidden" name="progname" value="<?php echo $progname; ?>"> -->
-                                            <button type="submit" name="action" class="btn btn-primary btn-small btn-block" value="Select Program">Select Program</button>
-                                        </div>
-                                        <div class="d-grid gap-2" style="margin-top: 10px;">
-                                            <button type="submit" name="action" class="btn btn-info btn-small btn-block" value="Add Program">Add Program</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="mb-3 row">
-                                            <label for="staticPID" class="col-sm-5 col-form-label">Program ID:</label>
-                                            <div class="col-sm-7">
-                                                <input type="text" readonly class="form-control-plaintext" name="selected_progid" value="<?php echo $selected_progid; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label for="inputPassword" class="col-sm-5 col-form-label">Program Name:</label>
-                                            <div class="col-sm-7">
-                                                <input type="text" class="form-control" name="selected_progname" value="<?php echo $selected_progname; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label for="staticEmail" class="col-sm-5 col-form-label">Enabled:</label>
-                                            <div class="col-sm-7">
-                                                <input type="text"  class="form-control" name="selected_enabled" value="<?php echo $selected_enabled; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label for="inputPassword" class="col-sm-5 col-form-label">Cost:</label>
-                                            <div class="col-sm-7">
-                                                <input type="text" class="form-control" id="inputPassword" name="selected_cost" value="<?php echo $selected_cost; ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="mb-3 row">
-                                            <label for="inputPassword" class="col-sm-5 col-form-label">Charge:</label>
-                                            <div class="col-sm-7">
-                                                <input type="text" class="form-control" id="inputPassword" name="selected_charge" value="<?php echo $selected_charge; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label for="staticEmail" class="col-sm-5 col-form-label">Accordian Header:</label>
-                                            <div class="col-sm-7">
-                                                <input type="text"  class="form-control" name="selected_accordian_header" value="<?php echo $selected_accordian_header; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label for="inputPassword" class="col-sm-5 col-form-label">Program Type:</label>
-                                            <div class="col-sm-7">
-                                                <input type="text" class="form-control" id="inputPassword" name="selected_progtype" value="<?php echo $selected_progtype; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 d-grid gap-2">
-                                            <!-- <form action="<?php echo $PHP_SELF ?>" method="post"> -->
-                                                <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Add Program">Submit Program</button>
-                                            <!-- </form> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-3"></div>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                     
                     <div id="boxed" style="margin-top: 50px;">&nbsp;</div>
@@ -958,6 +846,9 @@ switch($action) {
     break;
     case "Save Goals":
         save_goals();
+    break;
+    case "courses":
+        header('Location: courses.php');
     break;
     case "updatenotes":
         current_notes();

@@ -28,7 +28,7 @@ function information_modal(){
     // End attempt select query execution
 
     ?>
-    <!-- <div class="modal fade" id="information_modal" tabindex="-1" role="dialog" aria-labelledby="informationLabel" aria-hidden="true">
+    <div class="modal fade" id="information_modal" tabindex="-1" role="dialog" aria-labelledby="informationLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="width: 750px; margin-left: -120px; height: 750px;">
                 <div class="modal-header">
@@ -49,7 +49,7 @@ function information_modal(){
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <script src="https://cdn.tiny.cloud/1/qa5ollct4qx4a9lkzbhdh1ki6763pwyi6jx3m0s5ut86u8by/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
@@ -92,7 +92,7 @@ function menu(){
   <nav class="floating-menu">
     <ul id="menu">
         <?php
-        if($_SESSION['isadmin']){
+        if(isset($_SESSION['isadmin']) && $_SESSION['isadmin']){
             ?>
             <li class="list-group-item"><a class="nav-link" href="adm/admin.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Administration</a></li>
             <?php
@@ -156,7 +156,7 @@ function menu(){
 }
 
 function PersonalStats(){
-	global $PHP_SELF, $mysqli, $msg, $notice, $fullname;
+	global $PHP_SELF, $mysqli, $msg, $notice, $fullname, $month, $averageGPA, $enrollmentdate;
     global $answers_tablename, $answerid, $userid, $courseid, $examid, $answer, $score, $gpa;
     global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $currentnotes, $goalamt, $curgoal;
     global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
@@ -396,52 +396,6 @@ function PersonalStats(){
                 </div>
             </div>
             <div class="col-sm-4 text-center">
-                <span style="font-size: 20px; font-weight: bold;"><strong>IHN Space Social Media Site</strong></span>&nbsp;<!--button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#messages_modal">Send a Message</button-->
-
-                <div id="boxoutline" style="height: 300px;">
-                    <div class="row clearfix">
-                        <div class="col-sm-12 text-center">
-                            IHN Space Is Here!<br>
-                            <img src="img/ihnspace1.jpg" width="80%">
-                            <?php
-                            // *******************************************************
-                            // GET STUDENT MESSAGES
-                            // *******************************************************
-                            // Attempt select query execution
-                            /*
-
-                            $sqlz = "SELECT * FROM $studentmsg_tablename WHERE studentid = '$userid'";
-                            if($resultz = mysqli_query($mysqli, $sqlz)){
-                                while ($rowz = mysqli_fetch_array($resultz)) {
-                                    $uid = $rowz['userid'];
-                                    $studentid = $rowz['studentid'];
-                                    $message = $rowz['message'];
-                                    $sqlm = $mysqli->query("SELECT userfname, usermname, userlname, imagepath FROM $users_tablename WHERE userid = '$studentid'");
-                                    if ($resultm = mysqli_query($mysqli, $sqlm)) {
-                                        if (mysqli_num_rows($resultm) > 0) {
-                                            $rowm = mysqli_fetch_array($resultm);
-                                            $userfname = $rowm['userfname'];
-                                            $usermname = $rowm['usermname'];
-                                            $userlname = $rowm['userlname'];
-                                            $imagepath = $rowm['imagepath'];
-                                            if(empty($imagepath)){
-                                                $imagepath = "images/NoPhoto.jpg";
-                                            }
-                                        }
-                                    }
-                                    echo "<img src='".$imagepath."' style='width: 50px; float: left; margin-right: 10px;'><strong>".$userfname." ".$usermname." ".$userlname."</strong><br>";
-                                    echo $message . "<br>";
-                                    echo "<hr>";
-                                }
-                                // Free result set
-                                mysqli_free_result($resultd);
-                            } else{
-                                echo "ERROR: Was not able to execute Query on dashboard line #534. " . mysqli_error($mysqli);
-                            }*/
-                            ?>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -458,11 +412,18 @@ function WelcomeToDashboard(){
     <br>
     <div id="boxed">
         <div class="row ml-12 mr-12 clearfix">
-            <div class="col" align="center">
+            <div class="col-sm-4 text-center">
+                <span style="font-size: 20px; font-weight:"><strong>IHN Bible Radio</strong></span>
+                <div id="boxoutline" style="height: 340px;">
+                    <img src="img/ihn_radio.jpg" alt="IHN Bible College" style="width: 80%;"><br>
+                    <script src="//myradiostream.com/embed/ihnbible"></script>
+                </div>
+            </div>
+            <div class="col-sm-4" align="center">
                 <?php
                 if(empty($_SESSION['userid'])){
                     ?>
-                    <font size="+3"><strong>Welcome to the Dashboard, Visitor!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <font size="+3"><strong>Welcome, Visitor!</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;
                     <?php
                 }else{
                     ?>
@@ -470,11 +431,26 @@ function WelcomeToDashboard(){
                     <?php
                 }
                 ?>
-                <!-- <button type="button" id="btnrounded" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#information_modal">Update as of <?php echo date('m/d/Y'); ?></button> -->
                 <br>
-                <button type="button" class="btn btn-warning" id="opener">Update as of <?php echo date('m/d/Y'); ?></button>
+                <button type="button" class="btn btn-warning btn-sm" id="opener">Update as of <?php echo date('m/d/Y'); ?></button>
                 <br><br>
-                <script src="//myradiostream.com/embed/ihnbible"></script>
+                <span style="font-size:20px; font-weight: bold;"><strong>From The President</strong></span>
+                <br>
+                <video width="100%" height="240" controls>
+                    <source src="vids/WelcomeoIHNBBS.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="col-sm-4 text-center">
+                <span style="font-size: 20px; font-weight: bold;"><strong>IHN Space Social Media Site</strong></span>
+                <div id="boxoutline" style="height: 340px;">
+                    <div class="row clearfix">
+                        <div class="col-sm-12 text-center">
+                            IHN Space Is Here!<br>
+                            <a href="https://ihnspace.com" target="_blank"><img src="img/ihnspace1.jpg" width="90%"></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -616,12 +592,6 @@ function GetFamiliar(){
                 <font size="+2"><strong><a class="btn btn-primary" href="library/IHN_Bible_College_Catalog_2022-2023.pdf" target="_blank">Download 2022 - 2023 College Catalog</a></strong></font>
             </div>
             <div class="col-sm-4 text-center">
-                <span style="font-size:20px; font-weight: bold;"><strong>From The President</strong></span>
-                <br>
-                <video width="100%" height="240" controls>
-                    <source src="vids/WelcomeoIHNBBS.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
             </div>
             <div class="col-sm-4" align="center">
                 <!-- GetResponse Form -->

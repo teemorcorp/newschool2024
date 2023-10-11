@@ -1,18 +1,10 @@
 <?php
-
-/*************************************************************
- ** IHN Bible College Online
- ** Author: TJ Moore
- ** tjmooredev@gmail.com
- ** Copyright (c) 2001 - 2021 Thomas J. Moore, D.D.
- **************************************************************/
-include 'includes/globals.php';
-session_start();
-db_connect();
-
-if ($mysqli->connect_error) {
-    echo 'Failed to connect to server: (' . $mysqli->connect_error . ') ' . $mysqli->connect_error;
-}
+/****************************************************
+****   IHN Bible College
+****   Designed by: Tom Moore
+****   Written by: Tom Moore
+****   (c) 2001 - 2021 TEEMOR eBusiness Solutions
+****************************************************/
 
 // Grab action
 if (isset($_POST['action'])) {
@@ -20,14 +12,11 @@ if (isset($_POST['action'])) {
 } else {
     $action = '';
 }
-
 //*******************************************************
 //*******************  MAIN FORM  ***********************
 //*******************************************************
 
-function main_form()
-{
-
+function main_form() {
     global $PHP_SELF, $mysqli, $msg;
     global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
     global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
@@ -39,12 +28,17 @@ function main_form()
     global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
     global $quizdet_tablename, $qdetid, $quizname, $courseid;
 
-    $main_background_color = "#1c262f";
-    $sub_background_color = "#26333c";
-    $child_background_color = "#2f3d4a";
+    include "tmp/header.php";
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 
-    //$_SESSION['userid'] = "1";
-    $userid = $_SESSION['userid'];
+    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+        $userid = $_SESSION['userid'];
+    }else{
+        header('Location: ../index.php');
+    }
 
     // Attempt select query execution
     $sql = "SELECT * FROM $users_tablename WHERE userid = '$userid'";
@@ -85,402 +79,128 @@ function main_form()
         echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
     }
     // End attempt select query execution
-
-    include 'templates/include.tpl';
-    include "templates/style.tpl";
 ?>
-    <script>
-        tinymce.init({
-            selector: 'textarea#basic-example',
-            height: 300,
-            width: 300,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-        });
-    </script>
-
-    <body>
-        <div class='container-fluid'>
-            <?php
-            include "templates/topmenu.tpl";
-            ?>
-
-            <!-- *****************************************************************************************************
-*******  MAIN
-*******************************************************************************************************-->
-            <section>
-                <div class="row" style="height: 100vh;">
-                    <div class="col-sm-2" style="background-color:#1c262f; padding-left: 0px;">
-                        <?php include "templates/leftmenu.tpl"; ?>
-                    </div>
-                    <div class="col-10">
-                        <div class="row " style="padding-top:10px;">
-                            <div class="col-12">
-
-
-                                <!-- *******************************************************************************************
-                    **********  POPULAR PRODUCTS
-                    *********************************************************************************************-->
-                                <section name="Website Options" style="padding-top:20px;">
-                                    <h1>Course Management</h1>
-                                    <center>
-                                        <?php echo $msg; ?>
-                                        <br>
-                                        <form action="<?php echo $PHP_SELF ?>" method="post">
-                                            <input class='btn btn-primary' name="action" type="submit" value="Add New" />
-                                        </form>
-                                    </center>
+    <div class="height-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2">
+                    <?php
+                    admmenu();
+                    ?>
+                </div>
+                <div class="col-10">
+                    <div class="row " style="padding-top:10px;">
+                        <div class="col-12">
+                            <!-- *******************************************************************************************
+                            **********  POPULAR PRODUCTS
+                            *********************************************************************************************-->
+                            <section name="Website Options" style="padding-top:20px;">
+                                <h1>Course Management</h1>
+                                <center>
+                                    <?php echo $msg; ?>
                                     <br>
-                                    <div class="card text-dark bg-light mb-1" id="boxdisplay">
-                                        <div class="card-header">
-                                            <font size="+2"><strong>School Programs</strong></font>
-                                        </div>
-                                        <div class="card-body">
-                                            <form action="<?php echo $PHP_SELF ?>" method="post">
-                                                <table class="table">
-                                                    <tr>
-                                                        <td>
-                                                            <font size="+1"><strong>Course Code</strong></font>
-                                                        </td>
-                                                        <td>
-                                                            <font size="+1"><strong>Course Name</strong></font>
-                                                        </td>
-                                                        <td>
-                                                            <font size="+1"><strong>File Name</strong></font>
-                                                        </td>
-                                                        <td>
-                                                            <font size="+1"><strong>Credits</strong></font>
-                                                        </td>
-                                                        <td>
-                                                            <font size="+1"><strong>Enabled</strong></font>
-                                                        </td>
-                                                        <td align="right">
-                                                            <font size="+1"><strong>View/Modify</strong></font>
-                                                        </td>
-                                                    </tr>
-                                                    <tbody>
-                                                        <tr>
-                                                            <?php
-                                                            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
-
-                                                            // Attempt select query execution
-                                                            $sql = "SELECT * FROM $courses_tablename ORDER BY coursename ASC";
-                                                            if ($result = mysqli_query($mysqli, $sql)) {
-                                                                if (mysqli_num_rows($result) > 0) {
-                                                                    while ($row = mysqli_fetch_array($result)) {
-                                                                        $courseid = $row['courseid'];
-                                                                        $coursecode = $row['coursecode'];
-                                                                        $coursename = $row['coursename'];
-                                                                        $credits = $row['credits'];
-                                                                        $filename = $row['filename'];
-                                                                        $validcourse = $row['validcourse'];
-                                                                        if ($validcourse == "Yes") {
-                                                                            $en = "<font color='green'><strong>Yes</strong></font>";
-                                                                        } else {
-                                                                            $en = "<font color='#F00'><strong>No</strong></font>";
-                                                                        }
-                                                            ?>
-                                                        <tr>
-                                                            <form action="<?php echo $PHP_SELF ?>" method="post">
-                                                                <td><?php echo $coursecode; ?></td>
-                                                                <td><?php echo $coursename; ?></td>
-                                                                <td><?php echo $filename; ?></td>
-                                                                <td><?php echo $credits; ?></td>
-                                                                <td><?php echo $en; ?></td>
-                                                                <td align="right">
-                                                                    <input type="hidden" name="courseid" value="<?php echo $courseid ?>">
-                                                                    <!--input class='btn btn-success' name="action" type="submit" value="View/Modify" /-->
-                                                                    <button class="btn btn-success" name="action" type="submit" value="View/Modify">View/Modify</button><button class="btn btn-danger" name="action" type="submit" value="Delete">Delete</button>
-                                                                </td>
-                                                            </form>
-                                                        </tr>
-                                                    <?php
-                                                                    }
-                                                                    // Free result set
-                                                                    mysqli_free_result($result);
-                                                                } else {
-                                                    ?>
-                                                    <tr>
-                                                        <td colspan="5">
-                                                            <center>No data available in table</center>
-                                                        </td>
-                                                    </tr>
-                                            <?php
-                                                                }
-                                                            } else {
-                                                                echo "ERROR: Was not able to execute Query on line #213. " . mysqli_error($hdmysqli);
-                                                            }
-                                                            // End attempt select query execution
-                                            ?>
-                                            </tr>
-                                                </table>
-                                        </div>
+                                    <form action="<?php echo $PHP_SELF ?>" method="post">
+                                        <input class='btn btn-primary' name="action" type="submit" value="Add New" />
+                                    </form>
+                                </center>
+                                <br>
+                                <div class="card text-dark bg-light mb-1" id="boxdisplay">
+                                    <div class="card-header">
+                                        <font size="+2"><strong>School Programs</strong></font>
                                     </div>
-                                </section>
+                                    <div class="card-body">
+                                        <form action="<?php echo $PHP_SELF ?>" method="post">
+                                            <table class="table">
+                                                <tr>
+                                                    <td>
+                                                        <font size="+1"><strong>Course Code</strong></font>
+                                                    </td>
+                                                    <td>
+                                                        <font size="+1"><strong>Course Name</strong></font>
+                                                    </td>
+                                                    <td>
+                                                        <font size="+1"><strong>File Name</strong></font>
+                                                    </td>
+                                                    <td>
+                                                        <font size="+1"><strong>Credits</strong></font>
+                                                    </td>
+                                                    <td>
+                                                        <font size="+1"><strong>Enabled</strong></font>
+                                                    </td>
+                                                    <td align="right">
+                                                        <font size="+1"><strong>View/Modify</strong></font>
+                                                    </td>
+                                                </tr>
+                                                <tbody>
+                                                    <tr>
+                                                        <?php
+                                                        global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
+
+                                                        // Attempt select query execution
+                                                        $sql = "SELECT * FROM $courses_tablename ORDER BY coursename ASC";
+                                                        if ($result = mysqli_query($mysqli, $sql)) {
+                                                            if (mysqli_num_rows($result) > 0) {
+                                                                while ($row = mysqli_fetch_array($result)) {
+                                                                    $courseid = $row['courseid'];
+                                                                    $coursecode = $row['coursecode'];
+                                                                    $coursename = $row['coursename'];
+                                                                    $credits = $row['credits'];
+                                                                    $filename = $row['filename'];
+                                                                    $validcourse = $row['validcourse'];
+                                                                    if ($validcourse == "1") {
+                                                                        $en = "<font color='green'><strong>Yes</strong></font>";
+                                                                    } else {
+                                                                        $en = "<font color='#F00'><strong>No</strong></font>";
+                                                                    }
+                                                        ?>
+                                                    <tr>
+                                                        <form action="<?php echo $PHP_SELF ?>" method="post">
+                                                            <td><?php echo $coursecode; ?></td>
+                                                            <td><?php echo $coursename; ?></td>
+                                                            <td><?php echo $filename; ?></td>
+                                                            <td><?php echo $credits; ?></td>
+                                                            <td><?php echo $en; ?></td>
+                                                            <td align="right">
+                                                                <input type="hidden" name="courseid" value="<?php echo $courseid ?>">
+                                                                <!--input class='btn btn-success' name="action" type="submit" value="View/Modify" /-->
+                                                                <button class="btn btn-success btn-sm" name="action" type="submit" value="View/Modify">View/Modify</button>&nbsp;<button class="btn btn-danger btn-sm" name="action" type="submit" value="Delete">Delete</button>
+                                                            </td>
+                                                        </form>
+                                                    </tr>
+                                                    <?php
+                                                    }
+                                                        // Free result set
+                                                        mysqli_free_result($result);
+                                                    } else {
+                                                        ?>
+                                                        <tr>
+                                                            <td colspan="5">
+                                                                <center>No data available in table</center>
+                                                            </td>
+                                                        </tr>
+                                                        <?php
+                                                    }
+                                                } else {
+                                                    echo "ERROR: Was not able to execute Query on line #213. " . mysqli_error($hdmysqli);
+                                                }
+                                                // End attempt select query execution
+                                                ?>
+                                        </tr>
+                                            </table>
+                                    </div>
+                                </div>
+                            </section>
 
 
-                            </div>
-                            <!--div class="col-sm-1"></div-->
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
             <br><br>
-            <?php
-            //include 'templates/footer.tpl';
-            ?>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="js/pushy.min.js"></script>
-    </body>
 
-    </html>
 <?php
-}
-
-
-//*****************************************************************************************************
-//***  EDIT RECORD
-//*****************************************************************************************************
-function edit_record()
-{
-    global $PHP_SELF, $mysqli, $msg;
-    global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
-    global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
-    global $progcourses_tablename, $pgid, $progid, $courseid;
-    global $courselessons_tablename, $lessonid, $courseid, $lessonnumber, $lessonname, $lessondetail, $videourl, $fileurl, $qdetid, $isvalid;
-    global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
-    global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
-    global $quizdet_tablename, $qdetid, $quizname, $courseid;
-
-    $main_background_color = "#1c262f";
-    $sub_background_color = "#26333c";
-    $child_background_color = "#2f3d4a";
-
-    $courseid = $_POST['courseid'];
-
-    $sql = $mysqli->query("SELECT * FROM $courses_tablename WHERE courseid = '$courseid'");
-    //if(!$sql) error_message("Error in $courses_tablename (courses) line #174");
-    $row = $sql->fetch_assoc();
-    $cprogid = $row['cprogid'];
-    $coursecode = $row['coursecode'];
-    $coursename = $row['coursename'];
-    $coursedesc = stripslashes($row['coursedesc']);
-    $credits = $row['credits'];
-    $filename = $row['filename'];
-    $validcourse = $row['validcourse'];
-
-    $_SESSION['cprogid'] = $cprogid;
-    $_SESSION['coursecode'] = $coursecode;
-    $_SESSION['coursename'] = $coursename;
-    $_SESSION['coursedesc'] = $coursedesc;
-    $_SESSION['credits'] = $credits;
-    $_SESSION['filename'] = $filename;
-    $_SESSION['validcourse'] = $validcourse;
-
-    include 'templates/include.tpl';
-    include "templates/style.tpl";
-?>
-    <script>
-        tinymce.init({
-            selector: 'textarea#basic-example',
-            height: 500,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-        });
-    </script>
-
-    <body>
-        <div class='container-fluid'>
-            <section>
-                <div style="height: 60px;">
-                    <div class="row" style="background-color: #a90329; background-image: linear-gradient(to bottom, #00c3ff, #0084ff); height: 60px; padding-top: 0px;">
-                        <div class="col-sm-6" align="left" style="padding-top: 0px;">
-                            <a class="navbar-brand" href="#">
-                                <img src="img/IHN_Logo_1000x1000_trans.png" style="height: 40px; margin-top: 5px;">
-                                <font color="#ffffff" style="margin-bottom: 40px;"><strong>IHN BIBLE COLLEGE</strong></font>
-                            </a>
-                        </div>
-                        <div class="col-sm-6" align="right" style="padding-top: 10px;">
-                            <img src="img/tom1.jpg" width="40px;" style="border-radius: 50%;">&nbsp;&nbsp;&nbsp;<font color="#ffffff"><strong>Administrator</strong>&nbsp;&nbsp;&nbsp;<i class="fas fa-cog" style="margin-top: 10px;"></i></font>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- *****************************************************************************************************
-    *******  MAIN
-    *******************************************************************************************************-->
-            <section>
-                <div class="row" style="height: 100vh;">
-                    <div class="col-sm-2" style="background-color:#1c262f; padding-left: 0px;">
-                        <?php include "templates/leftmenu.tpl"; ?>
-                    </div>
-                    <div class="col-10">
-                        <div class="row " style="padding-top:10px;">
-                            <div class="col-12">
-                                <form action="<?php echo $PHP_SELF ?>" method="post">
-                                    <center>
-                                        <table class="table">
-                                            <tr>
-                                                <td>
-                                                    Course Code
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="coursecode" size="30" value="<?php echo $_SESSION['coursecode'] ?>">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Course Name
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="coursename" size="30" value="<?php echo $_SESSION['coursename'] ?>">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Course Description
-                                                </td>
-                                                <td>
-                                                    <textarea id="basic-example" name="coursedesc" size="30"><?php echo $_SESSION['coursedesc'] ?></textarea>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Credits
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="credits" size="2" value="<?php echo $_SESSION['credits'] ?>">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    File Name
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="filename" size="30" value="<?php echo $_SESSION['filename'] ?>">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Valid
-                                                </td>
-                                                <td>
-                                                    <?php
-                                                    if ($_SESSION['validcourse'] == 'Yes') {
-                                                    ?>
-                                                        <input type="radio" name="validcourse" value="Yes" checked> Yes
-                                                        <input type="radio" name="validcourse" value="No"> No
-                                                    <?php
-                                                    } else {
-                                                    ?>
-                                                        <input type="radio" name="validcourse" value="Yes"> Yes
-                                                        <input type="radio" name="validcourse" value="No" checked> No
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <input type="hidden" name="courseid" value="<?php echo $courseid ?>">
-                                        <input class="btn btn-primary" type="submit" name="action" value="Done" />
-                                    </center>
-                                    <hr>
-                                    <br />
-                                    <button class="btn btn-primary" name="action" type="submit" value="NewLesson">Add New Lesson</button>
-                                </form>
-                                <br />
-                                <form action="<?php echo $PHP_SELF ?>" method="post">
-                                    <center>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td>ID</td>
-                                                <td>Lesson</td>
-                                                <td>Lesson Name</td>
-                                                <td>Is Valid</td>
-                                                <td></td>
-                                            </tr>
-                                            <?php
-                                            // Attempt select query execution
-                                            $sql = "SELECT * FROM $courselessons_tablename WHERE courseid = '$courseid' ORDER BY lessonid ASC";
-                                            if ($result = mysqli_query($mysqli, $sql)) {
-                                                if (mysqli_num_rows($result) > 0) {
-                                                    while ($row = mysqli_fetch_array($result)) {
-                                                        $lessonid = $row['lessonid'];
-                                                        $courseid = $row['courseid'];
-                                                        $lessonnumber = $row['lessonnumber'];
-                                                        $lessonname = $row['lessonname'];
-                                                        $lessondetail = $row['lessondetail'];
-                                                        $videourl = $row['videourl'];
-                                                        $fileurl = $row['fileurl'];
-                                                        $qdetid = $row['qdetid'];
-                                                        $isvalid = $row['isvalid'];
-                                            ?>
-                                                        <tr>
-                                                            <form action="<?php echo $PHP_SELF ?>" method="post">
-                                                                <td><?php echo $lessonid; ?></td>
-                                                                <td><?php echo $lessonnumber; ?></td>
-                                                                <td><?php echo $lessonname; ?></td>
-                                                                <td><?php echo $isvalid; ?></td>
-                                                                <td align="right">
-                                                                    <input type="hidden" name="lessonid" value="<?php echo $lessonid ?>">
-                                                                    <button class="btn btn-success" name="action" type="submit" value="ModifyLesson">View/Modify</button>
-                                                                    <?php if ($_SESSION['isadmin'] == '1' && $_SESSION['role'] == "Administrator") { ?>
-                                                                        <button class="btn btn-danger" name="action" type="submit" value="DeleteLesson">Delete</button>
-                                                                    <?php } ?>
-                                                                </td>
-                                                            </form>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    // Free result set
-                                                    mysqli_free_result($result);
-                                                } else {
-                                                    ?>
-                                                    <tr>
-                                                        <td colspan="5">
-                                                            <center>No data available in table</center>
-                                                        </td>
-                                                    </tr>
-                                            <?php
-                                                }
-                                            } else {
-                                                echo "ERROR: Was not able to execute Query on line #346. " . mysqli_error($mysqli);
-                                            }
-                                            // End attempt select query execution
-                                            ?>
-                                        </table>
-                                    </center>
-                                </form>
-                                <br /><br />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    <?php
+include "tmp/footer.php";
 }
 
 
@@ -497,10 +217,6 @@ function edit_lesson()
     global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
     global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
     global $quizdet_tablename, $qdetid, $quizname, $courseid;
-
-    $main_background_color = "#1c262f";
-    $sub_background_color = "#26333c";
-    $child_background_color = "#2f3d4a";
 
     $lessonid = $_POST['lessonid'];
 
@@ -717,15 +433,6 @@ function edit_lesson()
         $filename = addslashes($_POST['filename']);
         $validcourse = $_POST['validcourse'];
 
-        /*echo "courseid: ".$courseid."<br>";
-    echo "coursecode: ".$coursecode."<br>";
-    echo "coursename: ".$coursename."<br>";
-    echo "coursedesc: ".$coursedesc."<br>";
-    echo "credits: ".$credits."<br>";
-    echo "filename: ".$filename."<br>";
-    echo "validcourse: ".$validcourse."<br>";
-    exit;*/
-
         $sql = "UPDATE $courses_tablename SET coursecode = '$coursecode', coursename = '$coursename', coursedesc = '$coursedesc', credits = '$credits', filename = '$filename', validcourse = '$validcourse' WHERE courseid = '$courseid'";
 
         if ($mysqli->query($sql) === TRUE) {
@@ -733,9 +440,6 @@ function edit_lesson()
         } else {
             $msg = "Error: " . $sql . "<br>" . $mysqli->error;
         }
-
-        //$sql = $mysqli->query("UPDATE $courses_tablename SET coursecode = '$coursecode', coursename = '$coursename', coursedesc = '$coursedesc', credits = '$credits', filename = '$filename', validcourse = '$validcourse' WHERE courseid = '$courseid'");
-        //if(!$sql) error_message("Error fetching data from $courses_tablename (programs) line #397");
 
         main_form();
     }
@@ -766,7 +470,6 @@ function edit_lesson()
         $isvalid = $_POST['isvalid'];
 
         $sql = $mysqli->query("UPDATE $courselessons_tablename SET lessonnumber = '$lessonnumber', lessonname = '$lessonname', lessondetail = '$lessondetail', videourl = '$videourl', fileurl = '$fileurl', qdetid = '$qdetid', isvalid = '$isvalid' WHERE lessonid = '$lessonid'");
-        //if(!$sql) error_message("Error fetching data from $courses_tablename (programs) line #590");
 
         edit_record();
     }
@@ -785,10 +488,6 @@ function edit_lesson()
         global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
         global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
         global $quizdet_tablename, $qdetid, $quizname, $courseid;
-
-        $main_background_color = "#1c262f";
-        $sub_background_color = "#26333c";
-        $child_background_color = "#2f3d4a";
 
         $courseid = $_POST['courseid'];
 
@@ -954,11 +653,8 @@ function edit_lesson()
             include 'templates/include.tpl';
 
             $progid = $_POST['progid'];
-            /*echo "user_id = ".$user_id."<br>";
-    exit;*/
 
             $sql = $mysqli->query("SELECT * FROM $programs_tablename WHERE progid = '$progid'");
-            //if(!$sql) error_message("Error in $courses_tablename (courses) line #135");
             $row = $sql->fetch_assoc();
             $progname = $row['progname'];
             $enabled = $row['enabled'];
@@ -1036,34 +732,6 @@ function edit_lesson()
                                     ?>
                                 </td>
                             </tr>
-                            <!--tr>
-                <td align="right" valign="top">
-                    Cost
-                </td>
-                <td align="left" valign="top">
-                    <input type="text" name="cost" size="30" value="< ?php echo $_SESSION['cost'] ?>">
-                </td>
-            </tr>
-            <tr>
-                <td align="right" valign="top">
-                    Charge
-                </td>
-                <td align="left" valign="top">
-                    < ?php
-                    if($_SESSION['charge'] == true){
-                    ?>
-                    <input type="radio" name="charge" value="Yes" checked> Yes
-                    <input type="radio" name="charge" value="No"> No
-                    < ?php
-                    }else{
-                    ?>
-                    <input type="radio" name="charge" value="Yes"> Yes
-                    <input type="radio" name="charge" value="No" checked> No
-                    < ?php
-                    }
-                    ?>
-                </td>
-            </tr-->
                         </table>
                         <input type="hidden" name="progid" value="<?php echo $progid ?>">
                         <input class="btn btn-primary" type="submit" name="action" value="Submit" />
@@ -1093,7 +761,6 @@ function edit_lesson()
             $enabled = $_POST['enabled'];
 
             $sql = $mysqli->query("INSERT INTO $courses_tablename VALUES(NULL, '0', '$coursecode', '$coursename', '$coursedesc', '$credits', '$filename', '$validcourse')");
-            //if(!$sql) error_message("Error fetching data from $programs_tablename (programs) line #523");
 
             main_form();
         }
@@ -1119,18 +786,7 @@ function edit_lesson()
             $quizid = $_POST['quizid'];
             $isvalid = $_POST['isvalid'];
 
-            /*echo "courseid: ".$courseid."<br>";
-    echo "lessonnumber: ".$lessonnumber."<br>";
-    echo "lessonname: ".$lessonname."<br>";
-    echo "lessondetail: ".$lessondetail."<br>";
-    echo "videourl: ".$videourl."<br>";
-    echo "fileurl: ".$fileurl."<br>";
-    echo "quizid: ".$quizid."<br>";
-    echo "isvalid: ".$isvalid."<br>";
-    exit;*/
-
             $sql = $mysqli->query("INSERT INTO $courselessons_tablename VALUES(NULL, '$courseid', '$lessonnumber', '$lessonname', '$lessondetail', '$videourl', '$fileurl', '$quizid', '$isvalid')");
-            //if(!$sql) error_message("Error fetching data from $courselessons_tablename (adm-courses) line #1035");
 
             main_form();
         }
@@ -1152,7 +808,6 @@ function edit_lesson()
             $courseid = $_POST['courseid'];
 
             $sql = $mysqli->query("SELECT * FROM $courses_tablename WHERE courseid = '$courseid'");
-            //if(!$sql) error_message("Error in $courses_tablename (courses) line #338");
             $row = $sql->fetch_assoc();
             $coursecode = $row['coursecode'];
             $coursename = stripslashes($row['coursename']);
@@ -1162,7 +817,6 @@ function edit_lesson()
             $validcourse = $row['validcourse'];
 
             $sql = $mysqli->query("INSERT INTO $prog_det_tablename VALUES(NULL, '$progid', '$courseid', '$coursecode', '$coursename', '$credits')");
-            //if(!$sql) error_message("Error fetching data from $programs_tablename (programs) line #554");
             main_form();
         }
 
@@ -1182,7 +836,6 @@ function edit_lesson()
             $courseid = $_POST['courseid'];
 
             $query = mysqli_query($mysqli, "DELETE FROM $courses_tablename WHERE courseid = '$courseid'");
-            //if(!$query) error_message("Error fetching data from $courses_tablename (delete_prod) line #573");
 
             main_form();
         }
@@ -1200,7 +853,6 @@ function edit_lesson()
             $lessonid = $_POST['lessonid'];
 
             $query = mysqli_query($mysqli, "DELETE FROM $courselessons_tablename WHERE lessonid = '$lessonid'");
-            //if(!$query) error_message("Error fetching data from $courses_tablename (delete_prod) line #573");
 
             main_form();
         }
@@ -1232,7 +884,8 @@ function edit_lesson()
                 do_edit_lesson();
                 break;
             case "View/Modify":
-                edit_record();
+                header('Location: courses_modify.php?id='.$_POST['courseid']);
+                // edit_record();
                 break;
             case "DeleteLesson":
                 delete_lesson();

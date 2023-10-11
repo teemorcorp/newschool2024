@@ -1,4 +1,5 @@
 <?php
+
 /*************************************************************************
  **  RELEASE NOTES MODAL
  *************************************************************************/
@@ -153,22 +154,22 @@ function admmenu(){
         <?php
         if($_SESSION['isadmin']){
             ?>
-            <li class="list-group-item"><a class="nav-link" href="admin.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Administration</a></li>
+            <li class="list-group-item"><a class="nav-link" href="admin.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Admin Dashboard</a></li>
             <?php
         }
         ?>
         <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Program Management</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Course Management</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Exam Management</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Quiz Management</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Staff</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Student Management</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Home Room Messages</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Information</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Mass Message Students</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;School Newsletter</a></li>
+        <li class="list-group-item"><a class="nav-link" href="courses.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Course Management</a></li>
+        <li class="list-group-item"><a class="nav-link" href="exams.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Exam Management</a></li>
+        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Quiz Management</a></li>
+        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Staff</a></li>
+        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Student Management</a></li>
+        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Home Room Messages</a></li>
+        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Information</a></li>
+        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Mass Message Students</a></li>
+        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;School Newsletter</a></li>
+        <li class="list-group-item"><a class="nav-link" href="notes.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Notes</a></li>
         <!-- <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li> -->

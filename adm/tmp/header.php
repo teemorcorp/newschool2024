@@ -6,16 +6,31 @@
 ****   (c) 2001 - 2021 TEEMOR eBusiness Solutions
 ****************************************************/
 include 'globals.php';
+// require_once "tmp/config.php";
+// require_once "tmp/classes/Account.php";
+// require_once "tmp/classes/UpdateNotes.php";
 session_start();
 dbconnect();
 if (!$mysqli) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-global $PHP_SELF, $mysqli, $msg, $menuid, $fullname;
+global $PHP_SELF, $mysqli, $msg, $notice, $notice_header, $notice_body, $menuid, $fullname;
+global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $currentnotes, $goalamt, $curgoal;
 global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
-global $system_tablename, $sysid, $president , $vice, $treasurer, $secretary, $directorafrica, $deanedu, $corecourses, $followers, $facebook, $twitter, $youtube, $linkedin, $info, $updatedate, $cookietime, $sysadminver, $verdate, $releasenotes, $goalamt, $curgoal;
-global $prayers_tablename, $prayerid, $prayee, $prayer_request, $answered;
+global $menuid, $goal, $current, $pct;
+global $progenroll_tablename, $progenrollid, $enrprogid , $enruserid, $enrolldate;
+global $programs_tablename, $progid, $progname, $progdesc, $enabled, $cost, $charge, $accordian_header, $progtype;
+global $selected_progid, $selected_progname , $selected_enabled, $selected_cost, $selected_charge, $selected_accordian_header, $selected_progtype;
+global $volunteers_tablename, $vid, $vfname , $vmname, $vlname, $vemail, $vphone, $vaddress, $vcity, $vstate, $vzip;
+global $volunteerpos_tablename, $vposid, $vtitle, $vdescription, $vneeded;
+global $enrollments_tablename, $enrollid, $euserid , $eprogid, $ecourseid, $examscore, $passed, $compdate, $rating;
+global $courses_tablename, $courseid, $cprogid , $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
+global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
+global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
+global $quizdet_tablename, $qdetid, $quizname, $courseid;
+global $answerquiz_tablename, $answerid, $userid, $courseid, $quizid, $qdetid, $answer, $score;
+global $lessons_tablename, $lessonid, $courseid, $lesson_name, $lesson_number;
     
 include "functions.php";
 

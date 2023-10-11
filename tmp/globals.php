@@ -25,6 +25,7 @@ $courses_tablename = 'courses';
 $enrollments_tablename = 'enrollments';
 $exams_tablename = 'exams';
 $lessons_tablename = 'lessons';
+$notes_tablename = 'notes';
 $prayers_tablename = 'prayers';
 $programs_tablename = 'programs';
 $progenroll_tablename = 'progenroll';

@@ -36,11 +36,17 @@ global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $questio
 global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
 global $quizdet_tablename, $qdetid, $quizname, $courseid;
 
-$main_background_color = "#1c262f";
-$sub_background_color = "#26333c"; 
-$child_background_color = "#2f3d4a";
+include "tmp/header.php";
+dbconnect();
+if (!$mysqli) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
-$userid = $_SESSION['userid'];
+if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+    $userid = $_SESSION['userid'];
+}else{
+    header('Location: ../index.php');
+}
 
 // Attempt select query execution
 $sql = "SELECT * FROM $users_tablename WHERE userid = '$userid'";

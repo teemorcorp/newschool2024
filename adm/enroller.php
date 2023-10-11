@@ -29,12 +29,11 @@ global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfnam
 global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
 global $progenroll_tablename, $progenrollid, $enrprogid, $enruserid;
 
-$main_background_color = "#1c262f";
-$sub_background_color = "#26333c"; 
-$child_background_color = "#2f3d4a";
-
-//$_SESSION['userid'] = "1";
-$userid = $_SESSION['userid'];
+if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+    $userid = $_SESSION['userid'];
+}else{
+    header('Location: ../index.php');
+}
 
 // Attempt select query execution
 $sql = "SELECT * FROM $users_tablename WHERE userid = '$userid'";
