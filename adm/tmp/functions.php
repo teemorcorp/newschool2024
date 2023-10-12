@@ -158,36 +158,36 @@ function admmenu(){
             <?php
         }
         ?>
-        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Program Management</a></li>
-        <li class="list-group-item"><a class="nav-link" href="courses.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Course Management</a></li>
-        <li class="list-group-item"><a class="nav-link" href="exams.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Exam Management</a></li>
-        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Quiz Management</a></li>
-        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Staff</a></li>
-        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Student Management</a></li>
-        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Home Room Messages</a></li>
-        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Information</a></li>
-        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Mass Message Students</a></li>
-        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;School Newsletter</a></li>
-        <li class="list-group-item"><a class="nav-link" href="notes.php"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Notes</a></li>
-        <!-- <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li> -->
+        <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Program Management</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="courses.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Course Management</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="exams.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Exam Management</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="quizzes.php"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Quiz Management</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Staff</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Student Management</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Home Room Messages</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Information</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Mass Message Students</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">School Newsletter</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="notes.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Notes</span></a></li>
+        <!-- <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Dashboard</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Dashboard</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Dashboard</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Dashboard</span></a></li> -->
         <hr style="color: #000;">
-        <li class="list-group-item"><a class="nav-link" href="../index.php"><i class='bx bx-grid-alt nav_icon'></i>&nbsp;&nbsp;Dashboard</a></li>
-        <li class="list-group-item"><a class="nav-link" href="../about.php"><i class='bx bx-universal-access nav_icon'></i>&nbsp;&nbsp;About</a></li>
-        <li class="list-group-item"><a class="nav-link" href="../calendar.php"><i class='bx bx-calendar nav_icon' title="Calendar"></i>&nbsp;&nbsp;Calendar</a></li>
-        <li class="list-group-item"><a class="nav-link" href="../courses.php"><i class='bx bx-book-reader nav_icon' title="Courses"></i>&nbsp;&nbsp;Courses</a></li>
-        <li class="list-group-item"><a class="nav-link" href="../admissions.php"><i class='bx bxs-school nav_icon' title="Admissions"></i>&nbsp;&nbsp;Admissions</a></li>
+        <li class="list-group-item"><a class="nav-link" href="../index.php"><i class='bx bx-grid-alt nav_icon'></i><span style="margin-left: 10px;">Dashboard</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="../about.php"><i class='bx bx-universal-access nav_icon'></i><span style="margin-left: 10px;">About</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="../calendar.php"><i class='bx bx-calendar nav_icon' title="Calendar"></i><span style="margin-left: 10px;">Calendar</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="../courses.php"><i class='bx bx-book-reader nav_icon' title="Courses"></i><span style="margin-left: 10px;">Courses</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="../admissions.php"><i class='bx bxs-school nav_icon' title="Admissions"></i><span style="margin-left: 10px;">Admissions</span></a></li>
         
         <?php
         if(!empty($_SESSION['userid'])){
             ?>
-            <li class="list-group-item"><a class="nav-link" href="../logout.php"><i class="bx bx-log-out nav_icon" title="Logout"></i>&nbsp;&nbsp;Logout</a></li>
+            <li class="list-group-item"><a class="nav-link" href="../logout.php"><i class="bx bx-log-out nav_icon" title="Logout"></i><span style="margin-left: 10px;">Logout</span></a></li>
             <?php
         }else{
             ?>
-            <li class="list-group-item"><a class="nav-link" href="../login.php"><i class='bx bx-log-in nav_icon' title="Student Login"></i>&nbsp;&nbsp;Student Login</a></li>
+            <li class="list-group-item"><a class="nav-link" href="../login.php"><i class='bx bx-log-in nav_icon' title="Student Login"></i><span style="margin-left: 10px;">Student Login</span></a></li>
             <?php
         }
         ?>

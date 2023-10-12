@@ -255,7 +255,7 @@ function main_form() {
                                         <br /><br />
                                     </div>
                                 </div>
-                            </section>      
+                            </section>
                 
                             <div id="boxed" style="margin-top: 50px;">&nbsp;</div>                 
 
