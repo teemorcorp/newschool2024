@@ -235,25 +235,25 @@ function main_form() {
                                                 <input type="test" name="contone" class="form-control" id="contone" value="<?php echo $cont_one; ?>">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="contonedesc" class="form-label">Brief Description</label>
+                                                <label for="contonedesc" class="form-label">Content #1 Description</label>
                                                 <textarea name="contonedesc" class="form-control" id="contonedesc" rows="3"><?php echo $cont_one_desc; ?></textarea>
                                             </div>
                                             
                                             <div class="mb-3">
-                                                <label for="conttwo" class="form-label">Content #1</label>
+                                                <label for="conttwo" class="form-label">Content #2</label>
                                                 <input type="test" name="conttwo" class="form-control" id="conttwo" value="<?php echo $cont_two; ?>">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="conttwodesc" class="form-label">Brief Description</label>
+                                                <label for="conttwodesc" class="form-label">Content #2 Description</label>
                                                 <textarea name="conttwodesc" class="form-control" id="conttwodesc" rows="3"><?php echo $cont_two_desc; ?></textarea>
                                             </div>
                                             
                                             <div class="mb-3">
-                                                <label for="contthree" class="form-label">Content #1</label>
+                                                <label for="contthree" class="form-label">Content #3</label>
                                                 <input type="test" name="contthree" class="form-control" id="contthree" value="<?php echo $cont_three; ?>">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="contthreedesc" class="form-label">Brief Description</label>
+                                                <label for="contthreedesc" class="form-label">Content #3 Description</label>
                                                 <textarea name="contthreedesc" class="form-control" id="contthreedesc" rows="3"><?php echo $cont_three_desc; ?></textarea>
                                             </div>
                                             <div class="mb-3">
@@ -292,7 +292,18 @@ function main_form() {
                 </div>
             </div>
 
-            <br><br>                    
+            <br><br>
+
+    <script>
+        tinymce.init({
+            selector: '#coursedesc',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+            width: '100%',
+            height: 200,
+            readonly: 0
+        });
+    </script>
 
     <script>
         tinymce.init({
@@ -300,7 +311,51 @@ function main_form() {
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
             toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
             width: '100%',
-            height: 420,
+            height: 300,
+            readonly: 0
+        });
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: '#briefdesc',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+            width: '100%',
+            height: 200,
+            readonly: 0
+        });
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: '#contonedesc',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+            width: '100%',
+            height: 200,
+            readonly: 0
+        });
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: '#conttwodesc',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+            width: '100%',
+            height: 200,
+            readonly: 0
+        });
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: '#contthreedesc',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+            width: '100%',
+            height: 200,
             readonly: 0
         });
     </script>

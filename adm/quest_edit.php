@@ -411,6 +411,18 @@ function add_now(){
 	global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
 	global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $credits, $filename, $validcourse;
 	global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
+    
+    include "tmp/header.php";
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+        $userid = $_SESSION['userid'];
+    }else{
+        header('Location: ../index.php');
+    }
 
     $progid = $_POST['cprogid'];
     $courseid = $_POST['courseid'];
@@ -425,9 +437,14 @@ function add_now(){
 
 	$sql = $mysqli->query("INSERT INTO $exams_tablename VALUES(NULL, '$courseid', '$instruct', '$questnumber', '$question', '$ansone', '$anstwo', '$ansthree', '$ansfour', '$correct')");
 	//if(!$sql) error_message("Error fetching data from $exams_tablename (quest_edit) line #353");
-
-
-    main_form();
+    ?>
+	<script type="text/javascript">
+        <!--
+        window.top.location.href = "exams.php"; 
+        // window.top.location.href = "programs.php"; 
+        -->
+    </script>
+    <?php
 }
 
 
@@ -444,9 +461,17 @@ function edit_now(){
     global $progcourses_tablename, $pgid, $progid, $courseid;
     global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
     
-    $main_background_color = "#1c262f";
-    $sub_background_color = "#26333c"; 
-    $child_background_color = "#2f3d4a";
+    include "tmp/header.php";
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+        $userid = $_SESSION['userid'];
+    }else{
+        header('Location: ../index.php');
+    }
 
     $coursename = $_POST['coursename'];
     $examid = $_POST['examid'];
@@ -468,144 +493,112 @@ function edit_now(){
     include 'templates/include.tpl';
     include "templates/style.tpl";
     ?>
-    <body>
-<div class='container-fluid'>
-    <div style="height: 60px;">
-        <div class="row" style="background-color: #a90329; background-image: linear-gradient(to bottom, #00c3ff, #0084ff); height: 60px; padding-top: 0px;">
-            <div class="col-sm-6" align="left" style="padding-top: 0px;">
-                <a class="navbar-brand" href="#">
-                <img src="img/IHN_Logo_1000x1000_trans.png" style="height: 40px; margin-top: 5px;"><font color="#ffffff" style="margin-bottom: 40px;"><strong>IHN BIBLE COLLEGE</strong></font>
-                </a>
-            </div>
-            <div class="col-sm-6" align="right" style="padding-top: 10px;">
-                <img src="img/tom1.jpg" width="40px;" style="border-radius: 50%;">&nbsp;&nbsp;&nbsp;<font color="#ffffff"><strong>Administrator</strong>&nbsp;&nbsp;&nbsp;<i class="fas fa-cog" style="margin-top: 10px;"></i></font>
-            </div>
-        </div>
-    </div>
-
-<!-- *****************************************************************************************************
-*******  MAIN
-*******************************************************************************************************-->    
-<section>
-    <div class="row" style="height: 100vh;">
-        <div class="col-sm-2" style="background-color:#1c262f; padding-left: 0px;">
-            <?php include "templates/leftmenu.tpl"; ?>
-        </div>
-        <div class="col-10">
-            <div class="row " style="padding-top:10px;">
-                <div class="col-12">
-                    
-
-                    <!-- *******************************************************************************************
-                    **********  POPULAR PRODUCTS
-                    *********************************************************************************************-->
-                    <section name="Website Options" style="padding-top:20px;">
-                        <h1>Edit Questions</h1>
-                        <center>
-                        <?php echo $msg; ?>
-                        <br>
-                        </center>
-                        <br>
-        
-                        <center>
-                        <form action="<?php echo $PHP_SELF ?>" method="post">
-                            <table width="600" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td width="300" align="left" valign="top">
-                                        Exam ID:
-                                    </td>
-                                    <td width="300" align="left" valign="top">
+    <!-- <body> -->
+    <div class="height-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2">
+                    <?php
+                    // menu();
+                    admmenu();
+                    ?>
+                </div>
+                <div class="col-10">
+                    <div class="row " style="padding-top:10px;">
+                        <div class="col-12">
+                            <!-- *******************************************************************************************
+                            **********  POPULAR PRODUCTS
+                            *********************************************************************************************-->
+                            <div id="boxed" style="margin-top: 10px;">
+                                <h1>Edit Questions</h1>
+                                <center>
+                                <?php echo $msg; ?>
+                                <br>
+                                </center>
+                                <br>
+                
+                                <form action="<?php echo $PHP_SELF ?>" method="post">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Exam ID</label>
                                         <?php echo $examid ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" valign="top">
-                                        Instructions:
-                                    </td>
-                                    <td align="left" valign="top">
-                                        <textarea cols="60" rows="5" name="instruct" type="text" /><?php echo $instruct ?></textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" valign="top">
-                                        Question #:
-                                    </td>
-                                    <td align="left" valign="top">
-                                        <input maxlength="3" name="questnumber" size="3" type="text" value="<?php echo $questnumber ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" valign="top">
-                                        Question:
-                                    </td>
-                                    <td align="left" valign="top">
-                                        <textarea cols="60" rows="5" name="question" type="text" /><?php echo $question ?></textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" valign="top">
-                                        Answer 1:
-                                    </td>
-                                    <td align="left" valign="top">
-                                        <input maxlength="255" name="ansone" size="60" type="text" value="<?php echo $ansone ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" valign="top">
-                                        Answer 2:
-                                    </td>
-                                    <td align="left" valign="top">
-                                        <input maxlength="255" name="anstwo" size="60" type="text" value="<?php echo $anstwo ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" valign="top">
-                                        Answer 3:
-                                    </td>
-                                    <td align="left" valign="top">
-                                        <input maxlength="255" name="ansthree" size="60" type="text" value="<?php echo $ansthree ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" valign="top">
-                                        Answer 4:
-                                    </td>
-                                    <td align="left" valign="top">
-                                        <input maxlength="255" name="ansfour" size="60" type="text" value="<?php echo $ansfour ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" valign="top">
-                                        Correct Answer:
-                                    </td>
-                                    <td align="left" valign="top">
-                                        <input maxlength="3" name="correct" size="3" type="text" value="<?php echo $correct ?>" />
-                                    </td>
-                                </tr>
-                            </table>
-                            <input type="hidden" name="coursename" value="<?php echo $coursename ?>">
-                            <input type="hidden" name="examid" value="<?php echo $examid ?>">
-                            <input class="btn btn-success" name="action" type="submit" value="Save Question" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn btn-danger" type="submit" name="action" value="Delete" />
-                        </form>
-                    </section>
-                    <br><br>
+                                    </div>
 
+                                    <div class="mb-3">
+                                        <label for="instruct" class="form-label">Instructions</label>
+                                        <textarea class="form-control" name="instruct" id="instruct" rows="3"><?php echo $instruct; ?></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="questnumber" class="form-label">Question #</label>
+                                        <input type="text" class="form-control" style="width: 50px;" name="questnumber" id="questnumber" value="<?php echo $questnumber ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="instruct" class="form-label">Question</label>
+                                        <textarea class="form-control" name="question" id="question" rows="3"><?php echo $question; ?></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="ansone" class="form-label">Answer #1</label>
+                                        <input type="text" class="form-control" style="width: 350px;" name="ansone" id="ansone" value="<?php echo $ansone ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="anstwo" class="form-label">Answer #2</label>
+                                        <input type="text" class="form-control" style="width: 350px;" name="anstwo" id="anstwo" value="<?php echo $anstwo ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="ansthree" class="form-label">Answer #3</label>
+                                        <input type="text" class="form-control" style="width: 350px;" name="ansthree" id="ansthree" value="<?php echo $ansthree ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="ansfour" class="form-label">Answer #4</label>
+                                        <input type="text" class="form-control" style="width: 350px;" name="ansfour" id="ansfour" value="<?php echo $ansfour ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="correct" class="form-label">Correct Answer</label>
+                                        <input type="text" class="form-control" style="width: 50px;" name="correct" id="correct" value="<?php echo $correct ?>">
+                                    </div>
+
+                                    <input type="hidden" name="coursename" value="<?php echo $coursename ?>">
+                                    <input type="hidden" name="examid" value="<?php echo $examid ?>">
+                                    <input class="btn btn-success" name="action" type="submit" value="Save Question" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn btn-danger" type="submit" name="action" value="Delete" />
+                                </form>
+                            </div>
+
+                            <div id="boxed" style="margin-top: 50px;">&nbsp;</div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</section>                    
 
-<script>
-    tinymce.init({
-        selector: '#progdesc',
-        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-        toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
-        width: '100%',
-        height: 420,
-        readonly: 0
-    });
-</script>
+    <script>
+        tinymce.init({
+            selector: '#instruct',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+            width: '100%',
+            height: 200,
+            readonly: 0
+        });
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: '#question',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+            width: '100%',
+            height: 200,
+            readonly: 0
+        });
+    </script>
 
 <?php
 include "tmp/footer.php";
@@ -620,6 +613,12 @@ function save_question(){
 	global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
 	global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $credits, $filename, $validcourse;
 	global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
+    
+    include "tmp/globals.php";
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 
     $examid = $_POST['examid'];
     $instruct = addslashes($_POST['instruct']);
@@ -633,10 +632,14 @@ function save_question(){
 
     $query = $mysqli->query("UPDATE $exams_tablename SET instruct = '$instruct', questnumber = '$questnumber', question = '$question', ansone = '$ansone', anstwo = '$anstwo', ansthree = '$ansthree', ansfour = '$ansfour', correct = '$correct' WHERE examid = '$examid'");
     //if(!$query) error_message("Error fetching data from $exams_tablename (quest_edit) line #487");
-
-    $msg = "Updated!<br><br>";
-
-    main_form();
+    ?>
+	<script type="text/javascript">
+        <!--
+        window.top.location.href = "exams.php"; 
+        // window.top.location.href = "programs.php"; 
+        -->
+    </script>
+    <?php
 }
 
 //*******************************************************
@@ -715,6 +718,12 @@ function delete_now(){
 	global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
 	global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $credits, $filename, $validcourse;
 	global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
+    
+    include "tmp/globals.php";
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 
     $examid = $_POST['examid'];
     $coursename = $_POST['coursename'];
@@ -725,10 +734,11 @@ function delete_now(){
 
     ?>
     <center>
-    Are you sure you want to delete <strong><?php echo $coursename ?></strong> exam ID #<strong><?php echo $examid ?></strong>?
+    Are you sure you want to delete <strong><?php echo $coursename ?></strong> Exam ID #<strong><?php echo $examid ?></strong>?
     <br><br>
     <form action="<?php echo $PHP_SELF ?>" method="post">
-        <input class="button_gradient_drk_red" name="action" type="submit" value="Yes" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="button_gradient_blue" type="submit" name="action" value="No" />
+        <input type="hidden" name="examid" value="<?php echo $examid; ?>">
+        <input class="btn btn-danger btn-sm" name="action" type="submit" value="Yes" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn btn-primary btn-sm" type="submit" name="action" value="No" />
     </form>
     </center>
     <?php
@@ -744,20 +754,24 @@ function do_delete(){
 	global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
 	global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $credits, $filename, $validcourse;
 	global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
+    
+    include "tmp/globals.php";
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 
-    $examid = $_SESSION['examid'];
-    $coursename = $_SESSION['coursename'];
-
-    //echo "examid = ".$examid."<br>";
-    //echo "coursename = ".$coursename."<br>";
-    //exit;
+    $examid = $_POST['examid'];
 
     $query = $mysqli->query("DELETE FROM $exams_tablename WHERE examid = '$examid'");
     //if(!$query) error_message("Error fetching data from $exams_tablename (quest_edit) line #588");
-
-    $msg = "Updated!<br><br>";
-
-    main_form();
+    ?>
+    <script type="text/javascript">
+        <!--
+        window.location = "exams.php"
+        -->
+    </script>
+    <?php
 }
 
 

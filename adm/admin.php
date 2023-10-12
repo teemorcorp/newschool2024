@@ -28,8 +28,8 @@ function main_form() {
     global $volunteerpos_tablename, $vposid, $vtitle, $vdescription, $vneeded;
     global $enrollments_tablename, $enrollid, $euserid , $eprogid, $ecourseid, $examscore, $passed, $compdate, $rating;
     global $courses_tablename, $courseid, $cprogid , $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
-    global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
-    global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
+	global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
+	global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
     global $quizdet_tablename, $qdetid, $quizname, $courseid;
     global $answerquiz_tablename, $answerid, $userid, $courseid, $quizid, $qdetid, $answer, $score;
     global $lessons_tablename, $lessonid, $courseid, $lesson_name, $lesson_number;
@@ -364,7 +364,9 @@ function main_form() {
                                     </div>
                                     <div class="card-footer">
                                         <div class="d-grid gap-2">
-                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Save Goals">Save Goals</button>
+                                            <span class="d-inline-block btn-block" tabindex="0" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-custom-class="custom-popover" data-bs-trigger="hover focus" data-bs-title="Help" data-bs-content="Once you have entered the correct values in the top section, click the 'Save Goals' button and the information will be saved.">
+                                                <button type="submit" name="action" style="width: 100%;" class="btn btn-success btn-small btn-block" value="Save Goals">Save Goals</button>
+                                            </span>
                                         </div>
                                     </div>
                                 </form>
@@ -401,14 +403,13 @@ function main_form() {
                                             <div class="col-sm-3" style="text-align: right;">
                                                 <span style="width: 100px; text-align: right;"><?php echo $vpercent."%"; ?></span>
                                             </div>
-                                            <!-- <div class="col-sm-6">
-                                                <input type="text" name="pct" readonly class="form-control-plaintext" id="pctCollected" value="<?php echo $vpercent."%"; ?>">
-                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="card-footer">
                                         <div class="d-grid gap-2">
-                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Volunteers</button>
+                                            <span class="d-inline-block btn-block" tabindex="0" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-custom-class="custom-popover" data-bs-trigger="hover focus" data-bs-title="Help" data-bs-content="This will take you to the Volunteer Management area.">
+                                                <button type="submit" name="action" style="width: 100%;" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Volunteers</button>
+                                            </span>
                                         </div>
                                     </div>
                                 </form>
@@ -437,7 +438,9 @@ function main_form() {
                                     </div>
                                     <div class="card-footer">
                                         <div class="d-grid gap-2">
-                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Users</button>
+                                            <span class="d-inline-block btn-block" tabindex="0" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-custom-class="custom-popover" data-bs-trigger="hover focus" data-bs-title="Help" data-bs-content="This will take you to the User Management area.">
+                                                <button type="submit" name="action" style="width: 100%;" class="btn btn-success btn-small btn-block" value="Go somewhere">Manage Users</button>
+                                            </span>
                                         </div>
                                     </div>
                                 </form>
@@ -473,7 +476,11 @@ function main_form() {
                                     </div>
                                     <div class="card-footer">
                                         <div class="gap-2 text-center">
-                                            <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="manage_progs">Manage Programs</button> <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="courses">Manage Courses</button>
+                                            <span class="d-inline-block btn-block" tabindex="0" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-custom-class="custom-popover" data-bs-trigger="hover focus" data-bs-title="Help" data-bs-content="This will take you to the Program Management area.">
+                                                <button type="submit" name="action" class="btn btn-success btn-small btn-block" value="manage_progs">Manage Programs</button>
+                                            </span> 
+                                            <span class="d-inline-block btn-block" tabindex="0" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-custom-class="custom-popover" data-bs-trigger="hover focus" data-bs-title="Help" data-bs-content="This will take you to the Course Management area."><button type="submit" name="action" class="btn btn-success btn-small btn-block" value="courses">Manage Courses</button>
+                                            </span> 
                                         </div>
                                     </div>
                                 </form>
@@ -528,7 +535,9 @@ function main_form() {
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-grid gap-2">
-                                        <button name="action" type="submit" value="addnotes" class="btn btn-success btn-block">Add Release Notes</button>
+                                        <span class="d-inline-block btn-block" tabindex="0" data-bs-toggle="popover" data-bs-placement="top" data-bs-custom-class="custom-popover" data-bs-trigger="hover focus" data-bs-title="Help" data-bs-content="Release notes are a compilation of notes added from here. When you add a new note it will be added to the rest of the notes.">
+                                            <button name="action" type="submit" style="width: 100%;" value="addnotes" class="btn btn-success btn-block">Add Release Notes</button>
+                                        </span>
                                     </div>
                                 </div>
                             </form>
@@ -542,7 +551,9 @@ function main_form() {
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-grid gap-2">
-                                        <button name="action" type="submit" class="btn btn-success btn-block" value="updatenotes">Update Current Notes</button>
+                                        <span class="d-inline-block btn-block" tabindex="0" data-bs-toggle="popover" data-bs-placement="top" data-bs-custom-class="custom-popover" data-bs-trigger="hover focus" data-bs-title="Help" data-bs-content="Whatever you enter into this area will replace the current notes. You can make changes to existing notes or delete all and enter new notes.">
+                                        <button name="action" type="submit" style="width: 100%;" class="btn btn-success btn-block" value="updatenotes">Update Current Notes</button>
+                                        </span>
                                     </div>
                                 </div>
                             </form>

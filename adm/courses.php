@@ -19,7 +19,7 @@ if (isset($_POST['action'])) {
 function main_form() {
     global $PHP_SELF, $mysqli, $msg;
     global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-    global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+    global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
     global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
     global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
     global $progcourses_tablename, $pgid, $progid, $courseid;
@@ -641,139 +641,324 @@ function edit_lesson()
         //*******************************************************
         //*********************  ADD NEW  ***********************
         //*******************************************************
-        function add_new()
-        {
+        function add_new(){
             global $PHP_SELF, $mysqli, $msg;
             global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-            global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+            global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
             global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
-            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
-            global $progcourses_tablename, $pgid, $progid, $courseid;
+            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
 
-            include 'templates/include.tpl';
-
-            $progid = $_POST['progid'];
-
-            $sql = $mysqli->query("SELECT * FROM $programs_tablename WHERE progid = '$progid'");
-            $row = $sql->fetch_assoc();
-            $progname = $row['progname'];
-            $enabled = $row['enabled'];
-            $cost = $row['cost'];
-            $charge = $row['charge'];
-
-            $_SESSION['progname'] = $progname;
-            $_SESSION['enabled'] = $enabled;
+            include "tmp/header.php";
+            dbconnect();
+            if (!$mysqli) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+            
+            if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
+                $userid = $_SESSION['userid'];
+            }else{
+                header('Location: ../index.php');
+            }
             ?>
-                <form action="<?php echo $PHP_SELF ?>" method="post">
-                    <center style="margin-top: 40px;">
-                        <h1>Add Course</h1>
-                        <table width="600" align="center" cellpadding="0" cellspacing="10">
-                            <tr>
-                                <td width="200" align="right" valign="top">
-                                    Course Code:
-                                </td>
-                                <td width="400" align="left" valign="top">
-                                    <input type="text" name="coursecode" size="30" value="<?php echo $_SESSION['coursecode'] ?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="right" valign="top">
-                                    Course Name&nbsp;&nbsp;
-                                </td>
-                                <td align="left" valign="top">
-                                    <input type="text" name="coursename" size="30" value="<?php echo $_SESSION['coursename'] ?>">
-                                </td>
-                            </tr>
+            <body>
+            
+            <!-- *****************************************************************************************************
+            *******  MAIN
+            *******************************************************************************************************-->
+            <div class="height-100">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <?php
+                            // menu();
+                            admmenu();
+                            ?>
+                        </div>
+                        <div class="col-sm-10">
+                            <?php
+                            echo $_SESSION['msg'];
+                            $_SESSION['msg'] = "";
+                            ?>
+                            <br>
+                            <div id="boxed">
+                                <div class="row " style="padding-top:10px;">
+                                    <div class="col-12">
+                                        <form action="<?php echo $PHP_SELF ?>" method="post">
+                                            <div style="margin-top: 40px;">
+                                                <h1>Add Course</h1>
+                                                <div class="mb-3">
+                                                    <label for="coursecode" class="form-label">Course Code</label>
+                                                    <input type="text" name="coursecode" class="form-control" id="coursecode">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="coursename" class="form-label">Course Name</label>
+                                                    <input type="text" name="coursename" class="form-control" id="coursename">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="coursedesc" class="form-label">Course Description</label>
+                                                    <textarea class="form-control" name="coursedesc" id="coursedesc" rows="3"></textarea>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="overview" class="form-label">Course Overview</label>
+                                                    <textarea class="form-control" name="overview" id="overview" rows="3"></textarea>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="credits" class="form-label">Course Credits</label>
+                                                    <input type="text" name="credits" class="form-control" id="credits">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="filename" class="form-label">File Name</label>
+                                                    <input type="text" name="filename" class="form-control" id="filename">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="enabled" class="form-label">Is Enabled</label>
+                                                    <?php
+                                                    if ($_SESSION['enabled'] == true) {
+                                                    ?>
+                                                        <input type="radio" name="enabled" value="1" checked> Yes
+                                                        <input type="radio" name="enabled" value="0"> No
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <input type="radio" name="enabled" value="1"> Yes
+                                                        <input type="radio" name="enabled" value="0" checked> No
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="briefdesc" class="form-label">Brief Deswcription</label>
+                                                    <textarea class="form-control" name="briefdesc" id="briefdesc" rows="3"></textarea>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="coursephoto" class="form-label">Course Photo</label>
+                                                    <input type="text" name="coursephoto" class="form-control" id="coursephoto">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="coursecost" class="form-label">Course Cost</label>
+                                                    <input type="text" name="coursecost" class="form-control" id="coursecost">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="coursediscount" class="form-label">Course Discount</label>
+                                                    <input type="text" name="coursediscount" class="form-control" id="coursediscount">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="hours" class="form-label">Total Video Hours</label>
+                                                    <input type="text" name="hours" class="form-control" id="hours">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="videos" class="form-label"># of Videos</label>
+                                                    <input type="text" name="videos" class="form-control" id="videos">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="contone" class="form-label">Content One</label>
+                                                    <input type="text" name="contone" class="form-control" id="contone">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="contonedesc" class="form-label">Content One Description</label>
+                                                    <textarea class="form-control" name="contonedesc" id="contonedesc" rows="3"></textarea>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="conttwo" class="form-label">Content Two</label>
+                                                    <input type="text" name="conttwo" class="form-control" id="conttwo">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="conttwodesc" class="form-label">Content Two Description</label>
+                                                    <textarea class="form-control" name="conttwodesc" id="conttwodesc" rows="3"></textarea>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="contthree" class="form-label">Content Three</label>
+                                                    <input type="text" name="contthree" class="form-control" id="contthree">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="contthreedesc" class="form-label">Content Two Description</label>
+                                                    <textarea class="form-control" name="contthreedesc" id="contthreedesc" rows="3"></textarea>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="headphoto" class="form-label">Header Photo</label>
+                                                    <input type="text" name="headphoto" class="form-control" id="headphoto">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="topcourse" class="form-label">Is Top Course</label>
+                                                    <?php
+                                                    if ($_SESSION['topcourse'] == true) {
+                                                    ?>
+                                                        <input type="radio" name="topcourse" value="1" checked> Yes
+                                                        <input type="radio" name="topcourse" value="0"> No
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <input type="radio" name="topcourse" value="1"> Yes
+                                                        <input type="radio" name="topcourse" value="0" checked> No
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </div>
 
-                            <tr>
-                                <td align="right" valign="top">
-                                    Course Description&nbsp;&nbsp;
-                                </td>
-                                <td align="left" valign="top">
-                                    <textarea id="basic-example" name="coursedesc" rows="5" width="100%"><?php echo $_SESSION['coursedesc'] ?></textarea>
-                                </td>
-                            </tr>
+                                                <input type="hidden" name="progid" value="<?php echo $progid ?>">
+                                                <input class="btn btn-primary" type="submit" name="action" value="Submit" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <div id="boxed" style="margin-top: 50px;">&nbsp;</div>
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                            <tr>
-                                <td align="right" valign="top">
-                                    Course Credits&nbsp;&nbsp;
-                                </td>
-                                <td align="left" valign="top">
-                                    <input type="text" name="credits" size="30" value="<?php echo $_SESSION['credits'] ?>">
-                                </td>
-                            </tr>
+        <script>
+            tinymce.init({
+                selector: '#coursedesc',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+                width: '100%',
+                height: 300,
+                readonly: 0
+            });
+        </script>
 
-                            <tr>
-                                <td align="right" valign="top">
-                                    File Name&nbsp;&nbsp;
-                                </td>
-                                <td align="left" valign="top">
-                                    <input type="text" name="filename" size="30" value="<?php echo $_SESSION['filename'] ?>">
-                                </td>
-                            </tr>
+        <script>
+            tinymce.init({
+                selector: '#overview',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+                width: '100%',
+                height: 400,
+                readonly: 0
+            });
+        </script>
 
-                            <tr>
-                                <td align="right" valign="top">
-                                    Enabled&nbsp;&nbsp;
-                                </td>
-                                <td align="left" valign="top">
-                                    <?php
-                                    if ($_SESSION['enabled'] == true) {
-                                    ?>
-                                        <input type="radio" name="enabled" value="1" checked> Yes
-                                        <input type="radio" name="enabled" value="0"> No
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <input type="radio" name="enabled" value="1"> Yes
-                                        <input type="radio" name="enabled" value="0" checked> No
-                                    <?php
-                                    }
-                                    ?>
-                                </td>
-                            </tr>
-                        </table>
-                        <input type="hidden" name="progid" value="<?php echo $progid ?>">
-                        <input class="btn btn-primary" type="submit" name="action" value="Submit" />
-                    </center>
-                </form>
-            <?php
+        <script>
+            tinymce.init({
+                selector: '#briefdesc',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+                width: '100%',
+                height: 300,
+                readonly: 0
+            });
+        </script>
+
+        <script>
+            tinymce.init({
+                selector: '#contonedesc',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+                width: '100%',
+                height: 300,
+                readonly: 0
+            });
+        </script>
+
+        <script>
+            tinymce.init({
+                selector: '#conttwodesc',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+                width: '100%',
+                height: 300,
+                readonly: 0
+            });
+        </script>
+
+        <script>
+            tinymce.init({
+                selector: '#contthreedesc',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo| bold italic underline strikethrough | bullist numlist indent outdent  | link image media table | align lineheight| emoticons charmap | removeformat | blocks fontfamily fontsize ',
+                width: '100%',
+                height: 300,
+                readonly: 0
+            });
+        </script>
+
+        <?php
+            include "tmp/footer.php";
         }
 
 
         //*******************************************************
         //**********************  DO ADD  ***********************
         //*******************************************************
-        function do_add()
-        {
+        function do_add(){
             global $PHP_SELF, $mysqli, $msg;
             global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-            global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+            global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
             global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
-            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
+            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
             global $progcourses_tablename, $pgid, $progid, $courseid;
 
+            include "tmp/globals.php";
+            dbconnect();
+            if (!$mysqli) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+            
             $coursecode = $_POST['coursecode'];
             $coursename = stripslashes($_POST['coursename']);
-            $coursedesc = $_POST['coursedesc'];
+            $coursedesc = stripslashes($_POST['coursedesc']);
+            $overview = stripslashes($_POST['overview']);
             $credits = $_POST['credits'];
             $filename = $_POST['filename'];
-            $enabled = $_POST['enabled'];
-
-            $sql = $mysqli->query("INSERT INTO $courses_tablename VALUES(NULL, '0', '$coursecode', '$coursename', '$coursedesc', '$credits', '$filename', '$validcourse')");
-
-            main_form();
+            $validcourse = $_POST['validcourse'];
+            $brief_desc = stripslashes($_POST['brief_desc']);
+            $course_photo = $_POST['course_photo'];
+            $course_cost = $_POST['course_cost'];
+            $course_discount = $_POST['course_discount'];
+            $hours = $_POST['hours'];
+            $videos = $_POST['videos'];
+            $cont_one = $_POST['cont_one'];
+            $cont_one_desc = stripslashes($_POST['cont_one_desc']);
+            $cont_two = $_POST['cont_two'];
+            $cont_two_desc = stripslashes($_POST['cont_two_desc']);
+            $cont_three = $_POST['cont_three'];
+            $cont_three_desc = stripslashes($_POST['cont_three_desc']);
+            $head_photo = $_POST['head_photo'];
+            $top_course = $_POST['top_course'];
+            
+            $sql = $mysqli->query("INSERT INTO $courses_tablename VALUES(NULL, '0', '$coursecode', '$coursename', '$coursedesc', '$overview', '$credits', '$filename', '$validcourse', '$brief_desc', '$course_photo', '$course_cost', '$course_discount', '$hours', '$videos', '$cont_one', '$cont_one_desc', '$cont_two', '$cont_two_desc', '$cont_three', '$cont_three_desc', '$head_photo', '$top_course')");
+            
+            ?>
+            <script type="text/javascript">
+                <!--
+                window.top.location.href = "courses.php"; 
+                -->
+            </script>
+            <?php
         }
 
 
         //*******************************************************
         //******************  DO ADD LESSON  ********************
         //*******************************************************
-        function do_add_lesson()
-        {
+        function do_add_lesson(){
             global $PHP_SELF, $mysqli, $msg;
             global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
-            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
+            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
             global $progcourses_tablename, $pgid, $progid, $courseid;
             global $courselessons_tablename, $lessonid, $courseid, $lessonnumber, $lessonname, $lessondetail, $videourl, $fileurl, $quizid, $isvalid;
 
@@ -795,13 +980,12 @@ function edit_lesson()
         //*******************************************************
         //**********************  DO ADD  ***********************
         //*******************************************************
-        function add_course()
-        {
+        function add_course(){
             global $PHP_SELF, $mysqli, $msg;
             global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-            global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+            global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
             global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
-            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
+            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
             global $progcourses_tablename, $pgid, $progid, $courseid;
 
             $progid = $_POST['progid'];
@@ -824,30 +1008,40 @@ function edit_lesson()
         //*******************************************************
         //**********************  DO ADD  ***********************
         //*******************************************************
-        function delete_course()
-        {
+        function delete_course(){
             global $PHP_SELF, $mysqli, $msg;
             global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-            global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
+            global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
             global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
-            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
+            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
             global $progcourses_tablename, $pgid, $progid, $courseid;
+
+            include "tmp/globals.php";
+            dbconnect();
+            if (!$mysqli) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
 
             $courseid = $_POST['courseid'];
 
             $query = mysqli_query($mysqli, "DELETE FROM $courses_tablename WHERE courseid = '$courseid'");
-
-            main_form();
+            
+            ?>
+            <script type="text/javascript">
+                <!--
+                window.top.location.href = "courses.php"; 
+                -->
+            </script>
+            <?php
         }
 
 
         //*******************************************************
         //******************  DELETE LESSON  ********************
         //*******************************************************
-        function delete_lesson()
-        {
+        function delete_lesson(){
             global $PHP_SELF, $mysqli, $msg;
-            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
+            global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $overview, $credits, $filename, $validcourse, $brief_desc, $course_photo, $course_cost, $course_discount, $hours, $videos, $cont_one, $cont_one_desc, $cont_two, $cont_two_desc, $cont_three, $cont_three_desc, $head_photo, $top_course;
             global $courselessons_tablename, $lessonid, $courseid, $lessonnumber, $lessonname, $lessondetail, $videourl, $fileurl, $quizid;
 
             $lessonid = $_POST['lessonid'];

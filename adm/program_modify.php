@@ -177,7 +177,7 @@ function main_form() {
                                                         </select>
 
                                                         <input type="hidden" name="progid" value="<?php echo $progid ?>">
-                                                        <input class='button_gradient_green' name="action" type="submit" value="Add Course" />
+                                                        <input class='btn btn-primary btn-sm' name="action" type="submit" value="Add Course" />
                                                     </form>
                                                     <br>
                                                     <table class="table table-striped">
@@ -418,29 +418,19 @@ function do_edit(){
 //**********************  DO ADD  ***********************
 //*******************************************************
 function delete_prog(){
-    global $PHP_SELF, $mysqli, $msg, $result, $dbhost, $dbuser, $dbpwd, $dbname;
-    global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-    global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
-    global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
-    global $progcourses_tablename, $pgid, $progid, $courseid;
+    global $PHP_SELF, $mysqli, $msg;
     global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
-    
-    include "tmp/header.php";
+
+    include 'tmp/globals.php';
     dbconnect();
     if (!$mysqli) {
         die("Connection failed: " . mysqli_connect_error());
-    }
-
-    if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
-        $userid = $_SESSION['userid'];
-    }else{
-        header('Location: ../index.php');
     }
 	
     $progid = $_POST['progid'];
 
     $query = mysqli_query($mysqli, "DELETE FROM $programs_tablename WHERE progid = '$progid'");
-    if(!$query) error_message("Error fetching data from $programs_tablename (delete_prod) line #388");
+    // if(!$query) error_message("Error fetching data from $programs_tablename (delete_prod) line #388");
 
     ?>
 	<script type="text/javascript">
@@ -451,18 +441,109 @@ function delete_prog(){
 <?php
 }
 
+
+//*******************************************************
+//**********************  DO ADD  ***********************
+//*******************************************************
+function delete_course(){
+    global $PHP_SELF, $mysqli, $msg;
+    global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
+
+    include 'tmp/globals.php';
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    
+    $progid = $_POST['progid'];
+    $courseid = $_POST['courseid'];
+
+    $query = mysqli_query($mysqli, "DELETE FROM $prog_det_tablename WHERE progid = '$progid' AND courseid = '$courseid'");
+    // if(!$query) error_message("Error fetching data from $prog_det_tablename (delete_prod) line #388");
+    
+    ?>
+	<script type="text/javascript">
+        <!--
+        window.top.location.href = "program_modify.php?id=<?php echo $progid; ?>"; 
+        // window.top.location.href = "programs.php"; 
+        -->
+    </script>
+    <?php
+}
+
+
+//*******************************************************
+//**********************  DO ADD  ***********************
+//*******************************************************
+function add_course(){
+    global $PHP_SELF, $mysqli, $msg;
+    global $programs_tablename, $progid, $progname, $progdesc, $isenabled, $cost, $charge, $accordian_header, $progtype;
+    global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
+    global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
+
+    include 'tmp/globals.php';
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    
+    $progid = $_POST['progid'];
+    $courseid = $_POST['courseid'];
+
+
+    // Attempt select query execution
+    if ($result = $mysqli->query("SELECT * FROM $courses_tablename WHERE courseid = '$courseid'")) {
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_array($result);
+            $coursecode = $row['coursecode'];
+            $coursename = $row['coursename'];
+            $coursedesc = addslashes($row['coursedesc']);
+            $credits = $row['credits'];
+            $filename = $row['filename'];
+            $validcourse = $row['validcourse'];
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            $msg = "<font color='#FF0000'><strong>Account not found!</strong></font>";
+            main_form();
+            exit;
+        }
+    } else{
+        echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
+    }
+    // End attempt select query execution
+
+    $sql = $mysqli->query("INSERT INTO $prog_det_tablename VALUES(NULL, '$progid', '$courseid', '$coursecode', '$coursename', '$credits')");
+    // if(!$sql) error_message("Error fetching data from $programs_tablename (programs) line #345");
+    
+    ?>
+	<script type="text/javascript">
+        <!--
+        window.top.location.href = "program_modify.php?id=<?php echo $progid; ?>"; 
+        // window.top.location.href = "programs.php"; 
+        -->
+    </script>
+    <?php
+}
+
 //*******************************************************
 //**********************  SWITCH  ***********************
 //*******************************************************
 switch ($action) {
+	case "REMOVE":
+		delete_course();
+    break;
 	case "Delete":
 		delete_prog();
-	    break;
+    break;
 	case "Done":
 		do_edit();
-	    break;
+    break;
+    case "Add Course":
+        add_course();
+    break;
     default:
         main_form();
-        break;
+    break;
 }
 ?>

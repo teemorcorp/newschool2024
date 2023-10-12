@@ -37,48 +37,6 @@ if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
 }else{
     header('Location: ../index.php');
 }
-
-// // Attempt select query execution
-// $sql = "SELECT * FROM $users_tablename WHERE userid = '$userid'";
-// if($result = mysqli_query($mysqli, $sql)){
-//     if(mysqli_num_rows($result) > 0){
-//         $row = mysqli_fetch_array($result);
-//         $userid = $row['userid'];
-//         $useremail = $row['useremail'];
-//         $isadmin = $row['isadmin'];
-//         $userfname = $row['userfname'];
-//         $userlname = $row['userlname'];
-//         $imagepath = $row['imagepath'];
-//         $fullname = $userfname." ".$userlname;
-//         // Free result set
-//         mysqli_free_result($result);
-//     } else{
-//         $msg = "<font color='#FF0000'><strong>Account Does Not Exsist!</strong></font>";
-//         main_form();
-//         exit;
-//     }
-// } else{
-//     echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
-// }
-// // End attempt select query execution
-
-// if(!isset($courseid) or $courseid != $_SESSION['courseid']){
-// 	$courseid = $_GET['courseid'];
-// 	$_SESSION['courseid'] = $courseid;
-// }else{
-// 	$courseid = $_SESSION['courseid'];
-// }
-
-
-// $sqla = $mysqli->query("SELECT * FROM $courses_tablename WHERE courseid = '$courseid'");
-// if(!$sqla) error_message("Error in $courses_tablename (quest_edit) line #50");
-// $rowa = $sqla->fetch_assoc();	
-// $cprogid = $rowa['cprogid'];
-// $coursecode = $rowa['coursecode'];
-// $coursename = $rowa['coursename'];
-// $credits = $rowa['credits'];
-// $filename = $rowa['filename'];
-// $validcourse = $rowa['validcourse'];
 ?>
 <!-- <body> -->
 <div class="height-100">
@@ -97,7 +55,6 @@ if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
                         *********************************************************************************************-->
                         <section style="padding-top:20px;">
                             <h1>Exam Management</h1>
-                            <center>
                             <?php echo $msg; ?>
                             <br>
                             <br>
@@ -108,120 +65,34 @@ if(!empty($_SESSION['userid'] && $_SESSION['isadmin'])){
                                 <div class="card-body">
                                     <form action="<?php echo $PHP_SELF ?>" method="post">
 
-                                        <div class="mb-3 row">
-                                            <label for="coursecode" class="col-sm-2 col-form-label">Course Code</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="coursecode" id="coursecode" style="width: 100px;" required>
-                                            </div>
-                                        </div>
-
                                         <div class="mb-3">
-                                            <!-- <form action="< ?php echo $PHP_SELF ?>" method="post"> -->
-                                                <select class="input_text" name="courseid">
-                                                    <option value="0"><<< MAKE A SELECTION >>></option>
-                                                    <?php
-                                                    $sqlb = $mysqli->query("SELECT courseid, coursename FROM $courses_tablename ORDER BY coursename ASC");
-                                                    if(!$sqlb) error_message("Error in $courses_tablename (programs) line #263");
-                                                    $sqlb->data_seek(0);
-                                                    while($rowb = $sqlb->fetch_assoc()) {
-                                                        $courseid = $rowb['courseid'];
-                                                        $coursename = $rowb['coursename'];
-                                                        
-                                                    ?>
-                                                    <option value="<?php echo $courseid ?>"><?php echo $coursename ?></option>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </select>
-                                            <!-- </form> -->
-                                        </div>
-
-                                        <div class="mb-3 row">
-                                            <label for="coursecode" class="col-sm-2 col-form-label">Course Code</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="coursecode" id="coursecode" style="width: 100px;" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3 row">
-                                            <label for="coursename" class="col-sm-2 col-form-label">Course Name</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="coursename" id="coursename" style="width: 250px;" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3 row">
-                                            <label for="credits" class="col-sm-2 col-form-label">Course Credits</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="credits" id="credits" style="width: 50px;" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3 row">
-                                            <label for="filename" class="col-sm-2 col-form-label">File Name</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="filename" id="filename" style="width: 300px;" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-check mb-3" style="align-items: left;">
-                                            <div>
-                                                <strong>Enabled</strong>
-                                            </div>
-                                            <div>
+                                            <label for="courseid" class="col-sm-2 col-form-label">Course</label>
+                                            <select class="input_text" name="courseid">
+                                                <option value="0"><<< MAKE A SELECTION >>></option>
                                                 <?php
-                                                if($validcourse == true){
-                                                    ?>
-                                                    <input type="radio" name="validcourse" value="1" checked> Yes
-                                                    <input type="radio" name="validcourse" value="0"> No
-                                                    <?php
-                                                }else{
-                                                    ?>
-                                                    <input type="radio" name="validcourse" value="1"> Yes
-                                                    <input type="radio" name="validcourse" value="0" checked> No
-                                                    <?php
+                                                $sqlb = $mysqli->query("SELECT courseid, coursename FROM $courses_tablename ORDER BY coursename ASC");
+                                                // if(!$sqlb) error_message("Error in $courses_tablename (programs) line #263");
+                                                $sqlb->data_seek(0);
+                                                while($rowb = $sqlb->fetch_assoc()) {
+                                                    $courseid = $rowb['courseid'];
+                                                    $coursename = $rowb['coursename'];
+                                                    
+                                                ?>
+                                                <option value="<?php echo $courseid ?>"><?php echo $coursename ?></option>
+                                                <?php
                                                 }
                                                 ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3 row">
+                                            <label for="quizname" class="col-sm-2 col-form-label">Quiz Name</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="quizname" id="quizname" style="width: 300px;" required>
                                             </div>
                                         </div>
                                         <br /><br />
-                                        <input type="hidden" name="cprogid" value="<?php echo $cprogid ?>">
                                         <input type="hidden" name="courseid" value="<?php echo $courseid ?>">
-                                        <input class="btn btn-success" type="submit" name="action" value="Save Exam" />
-                                    </form>
-                                    <form action="<?php echo $PHP_SELF ?>" method="post">
-                                        <table id="boxes" width="100%" cellpadding="10" cellspacing="10" align="left">
-                                            <tr>
-                                                <td width="75" align="right" valign="top">
-                                                    <form action="<?php echo $PHP_SELF ?>" method="post">
-                                                        <select class="input_text" name="courseid">
-                                                            <option value="0"><<< MAKE A SELECTION >>></option>
-                                                            <?php
-                                                            $sqlb = $mysqli->query("SELECT courseid, coursename FROM $courses_tablename ORDER BY coursename ASC");
-                                                            if(!$sqlb) error_message("Error in $courses_tablename (programs) line #263");
-                                                            $sqlb->data_seek(0);
-                                                            while($rowb = $sqlb->fetch_assoc()) {
-                                                                $courseid = $rowb['courseid'];
-                                                                $coursename = $rowb['coursename'];
-                                                                
-                                                            ?>
-                                                            <option value="<?php echo $courseid ?>"><?php echo $coursename ?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </form>
-                                            </tr>
-                                            <tr>
-                                                <td width="75" align="right" valign="top">
-                                                    <strong>Quiz/Exam Name</strong>
-                                                </td>
-                                                <td width="325" align="left" valign="top">
-                                                    <input maxlength="50" name="quizname" size="30" type="text" value="" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <br /><br />
                                         <input class="btn btn-success" type="submit" name="action" value="Save Exam" />
                                     </form>
                                     <br /><br />
@@ -260,16 +131,24 @@ function save_exam(){
 	global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
 	global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $credits, $filename, $validcourse;
 	global $exams_tablename, $examid, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
-	global $quizzes_tablename, $quizid, $courseid, $quizname;
+	global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
 
+    include 'tmp/globals.php';
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    
     $courseid = $_POST['courseid'];
     $quizname = addslashes($_POST['quizname']);
 
-    $query = $mysqli->query("INSERT INTO $quizzes_tablename (quizid, courseid, quizname) VALUES (NULL, '$courseid', '$quizname')");
-    if(!$query) error_message("Error fetching data from $quizzes_tablename (quest_edit) line #510");
+echo "Line #144<br>";
+    // $query = $mysqli->query("INSERT INTO $quizzes_tablename VALUES (NULL, '$courseid', '$quizname')");
+    // if(!$query) error_message("Error fetching data from $quizzes_tablename (quest_edit) line #510");
+    $sql = $mysqli->query("INSERT INTO $quizzes_tablename VALUES(NULL, '$courseid', '$quizname'')");
+    // if(!$sql) error_message("Error fetching data from $programs_tablename (programs) line #345");
 
-    $msg = "Updated!<br><br>";
-
+echo "Line #151<br>";
     //main_form();
     ?>
     <script type="text/javascript">
