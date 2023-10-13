@@ -49,7 +49,7 @@ function main_form() {
                             <!-- *******************************************************************************************
                             **********  POPULAR PRODUCTS
                             *********************************************************************************************-->
-                            <section style="padding-top:20px;">
+                            <div id="boxed" style="margin-top: 10px;">
                                 <h1>Quiz Management</h1>
                                 <center>
                                 <?php echo $msg; ?>
@@ -84,23 +84,20 @@ function main_form() {
                                             </tr>
                                             <?php
                                             $sqlb = $mysqli->query("SELECT * FROM $quizdet_tablename ORDER BY quizname ASC");
-                                            if(!$sqlb) error_message("Error in $quizzes_tablename (select_exam) line #92");
+                                            // if(!$sqlb) error_message("Error in $quizzes_tablename (select_exam) line #92");
                                             $sqlb->data_seek(0);
                                             while($rowb = $sqlb->fetch_assoc()) {
                                                 $qdetid = $rowb['qdetid'];
                                                 $quizname = $rowb['quizname'];
                                                 $courseid = $rowb['courseid'];
-
-        global $quizzes_tablename, $quizid, $excourseid, $qdetid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
-        global $quizdet_tablename, $qdetid, $quizname, $courseid;
                                                 
                                                 $sqlx = $mysqli->query("SELECT COUNT(*) AS 'TotalQuestions' FROM $quizzes_tablename WHERE excourseid = '$courseid' AND qdetid = '$qdetid'");
-                                                if(!$sqlx) error_message("Error in $quizzes_tablename (main) line #106");
+                                                // if(!$sqlx) error_message("Error in $quizzes_tablename (main) line #106");
                                                 $rowx = $sqlx->fetch_assoc();	
                                                 $total_questions = $rowx['TotalQuestions'];
                                                 
                                             ?>
-                                            <form action="quiz_edit.php?qdetid=<?php echo $qdetid ?>" method="post">
+                                            <form action="quiz_edit.php?qdetid=<?php echo $qdetid ?>&courseid=<?php echo $courseid ?>" method="post">
                                                 <tr>
                                                     <td>
                                                         <?php echo $qdetid ?>
@@ -127,7 +124,7 @@ function main_form() {
                                         </table>
                                     </div>
                                 </div>
-                            </section>
+                            </div>
                 
                             <div id="boxed" style="margin-top: 50px;">&nbsp;</div>                 
 
@@ -173,7 +170,7 @@ function edit_record(){
     $courseid = $_POST['courseid'];
 
     $sql = $mysqli->query("SELECT * FROM $courses_tablename WHERE courseid = '$courseid'");
-    if(!$sql) error_message("Error in $courses_tablename (courses) line #174");
+    // if(!$sql) error_message("Error in $courses_tablename (courses) line #174");
     $row = $sql->fetch_assoc();	
     $cprogid = $row['cprogid'];
     $coursecode = $row['coursecode'];
@@ -265,26 +262,26 @@ function edit_record(){
                                         <input type="text" name="filename" size="30" value="<?php echo $_SESSION['filename'] ?>">
                                     </td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td>
                                         Valid
                                     </td>
                                     <td>
-                                        <?php
-                                        if($_SESSION['validcourse'] == Yes){
+                                        < ?php
+                                        if($_SESSION['validcourse'] == 'Yes'){
                                         ?>
                                         <input type="radio" name="validcourse" value="Yes" checked> Yes
                                         <input type="radio" name="validcourse" value="No"> No
-                                        <?php
+                                        < ?php
                                         }else{
                                         ?>
                                         <input type="radio" name="validcourse" value="Yes"> Yes
                                         <input type="radio" name="validcourse" value="No" checked> No
-                                        <?php
+                                        < ?php
                                         }
                                         ?>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </table>
                             <input type="hidden" name="courseid" value="<?php echo $courseid ?>">
                             <input type="submit" name="action" value="Done" />
@@ -323,7 +320,7 @@ function do_edit(){
     $validcourse = $_POST['validcourse'];
 
     $sql = $mysqli->query("UPDATE $courses_tablename SET coursecode = '$coursecode', coursename = '$coursename', coursedesc = '$coursedesc', credits = '$credits', filename = '$filename', validcourse = '$validcourse' WHERE courseid = '$courseid'");
-    if(!$sql) error_message("Error fetching data from $courses_tablename (programs) line #397");
+    // if(!$sql) error_message("Error fetching data from $courses_tablename (programs) line #397");
 
     main_form();
 }
@@ -342,116 +339,80 @@ function add_new(){
     global $quizzes_tablename, $quizid, $quizname, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
     global $quizdet_tablename, $qdetid, $quizname, $courseid;
 
-    $main_background_color = "#1c262f";
-    $sub_background_color = "#26333c"; 
-    $child_background_color = "#2f3d4a";
-    
-    $_SESSION['userid'] = "1";
-    $userid = $_SESSION['userid'];
-    
-    // Attempt select query execution
-    $sql = "SELECT * FROM $users_tablename WHERE userid = '$userid'";
-    if($result = mysqli_query($mysqli, $sql)){
-        if(mysqli_num_rows($result) > 0){
-            $row = mysqli_fetch_array($result);
-            $userid = $row['userid'];
-            $useremail = $row['useremail'];
-            $isadmin = $row['isadmin'];
-            $userfname = $row['userfname'];
-            $userlname = $row['userlname'];
-            $imagepath = $row['imagepath'];
-            $fullname = $userfname." ".$userlname;
-            // Free result set
-            mysqli_free_result($result);
-        } else{
-            $msg = "<font color='#FF0000'><strong>Account Does Not Exsist!</strong></font>";
-            main_form();
-            exit;
-        }
-    } else{
-        echo "ERROR: Was not able to execute Query on line #152. " . mysqli_error($mysqli);
+    include "tmp/header.php";
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
     }
-    // End attempt select query execution
-    
-    include 'templates/include.tpl';
-    include "templates/style.tpl";
-    ?>
-    <body>
-    <div class='container-fluid'>
-    <?php
-    include "templates/topmenu.tpl";
-    ?>
-    
-    <!-- *****************************************************************************************************
-    *******  MAIN
-    *******************************************************************************************************-->    
-    <section>
-        <div class="row" style="height: 100vh;">
-            <div class="col-sm-2" style="background-color:#1c262f; padding-left: 0px;">
-                <?php include "templates/leftmenu.tpl"; ?>
-            </div>
-            <div class="col-10">
-                <div class="row " style="padding-top:10px;">
-                    <div class="col-12">
-    
-    <!-- *******************************************************************************************
-    **********  POPULAR PRODUCTS
-    *********************************************************************************************-->
-                        <section name="Website Options" style="padding-top:20px;">
-                            <h1>Quiz Management</h1>
-                            <center>
-                            <?php echo $msg; ?>
-                        <br>
-                        <br>
-                        <div class="card text-dark bg-light mb-1" id="boxdisplay">
-                            <div class="card-header">
-                                <font size="+2"><strong>Quiz Questions</strong></font>
-                            </div>
-                            <div class="card-body">
-                                <form action="<?php echo $PHP_SELF ?>" method="post">
-                                    <center>
-                                    <table width="600" align="center" cellpadding="0" cellspacing="10">
-                                        <tr>
-                                            <td align="left" valign="top">
-                                                <input type="text" name="quizname" size="30" value="" placeholder="Enter Quiz Name">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" valign="top">
-                                                <form action="<?php echo $PHP_SELF ?>" method="post">
-                                                    <select class="input_text" name="courseid">
-                                                        <option value="0"><<< MAKE A SELECTION >>></option>
-                                                        <?php
-                                                        $sqlb = $mysqli->query("SELECT courseid, coursename FROM $courses_tablename ORDER BY coursename ASC");
-                                                        if(!$sqlb) error_message("Error in $courses_tablename (programs) line #263");
-                                                        $sqlb->data_seek(0);
-                                                        while($rowb = $sqlb->fetch_assoc()) {
-                                                            $courseid = $rowb['courseid'];
-                                                            $coursename = $rowb['coursename'];
-                                                            
-                                                        ?>
-                                                        <option value="<?php echo $courseid ?>"><?php echo $coursename ?></option>
-                                                        <?php
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <input type="submit" name="action" value="Submit" />
-                                    </center>
-                                </form>
-                            </div>
-                        </div>
-                    </section>
-                    <br><br>
+    ?><!-- <body> -->
+    <div class="height-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2">
+                    <?php
+                    admmenu();
+                    ?>
                 </div>
-            </div>
+                <div class="col-10">
+                    <div class="row " style="padding-top:10px;">
+                        <div class="col-12">
+                            <!-- *******************************************************************************************
+                            **********  POPULAR PRODUCTS
+                            *********************************************************************************************-->
+                            <div id="boxed" style="margin-top: 10px;">
+                                <h1>Quiz Management</h1>
+                                <center>
+                                <?php echo $msg; ?>
+                                <br><br>
+                                <div class="card text-dark bg-light mb-1" id="boxdisplay">
+                                    <div class="card-header">
+                                        <font size="+2"><strong>Quiz Questions</strong></font>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="<?php echo $PHP_SELF ?>" method="post">
+                                            <div class="mb-3">
+                                                <!-- <label for="exampleFormControlInput1" class="form-label">Email address</label> -->
+                                                <input type="text" class="form-control" id="quizname" name="quizname" placeholder="Enter Quiz Name">
+                                            </div>
+
+                                            <select class="form-select mb-3" aria-label="Default select example" name="courseid">
+                                                <option value="0"><<< MAKE A SELECTION >>></option>
+                                                <?php
+                                                $sqlb = $mysqli->query("SELECT courseid, coursename FROM $courses_tablename ORDER BY coursename ASC");
+                                                // if(!$sqlb) error_message("Error in $courses_tablename (programs) line #263");
+                                                $sqlb->data_seek(0);
+                                                while($rowb = $sqlb->fetch_assoc()) {
+                                                    $courseid = $rowb['courseid'];
+                                                    $coursename = $rowb['coursename'];
+                                                    
+                                                ?>
+                                                <option value="<?php echo $courseid ?>"><?php echo $courseid." - ".$coursename ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+
+                                            <div class="mb-3">
+                                                <!-- <input type="hidden" name="courseid" value="< ?php echo $courseid ?>"> -->
+                                                <input class="btn btn-primary btn-sm" type="submit" name="action" value="Submit" />
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <!-- <div id="boxed" style="margin-top: 50px;">&nbsp;</div>                  -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>   
         </div>
     </div>
-</section>
-<?php
+
+    <?php
+    include "tmp/footer.php";
 }
 
 
@@ -460,21 +421,27 @@ function add_new(){
 //*******************************************************
 function do_add(){
     global $PHP_SELF, $mysqli, $msg;
-    global $users_tablename, $userid, $useremail, $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $isgm, $isinstructor;
-    global $programs_tablename, $progid, $progname, $enabled, $cost, $charge;
-    global $prog_det_tablename, $progdetid, $progid, $courseid, $coursecode, $coursename, $coursecredits;
-    global $courses_tablename, $courseid, $cprogid, $coursecode, $coursename, $coursedesc, $credits, $filename, $validcourse;
-    global $progcourses_tablename, $pgid, $progid, $courseid;
     global $quizzes_tablename, $quizid, $quizname, $excourseid, $instruct, $questnumber, $question, $ansone, $anstwo, $ansthree, $ansfour, $correct;
     global $quizdet_tablename, $qdetid, $quizname, $courseid;
+
+    include "tmp/globals.php";
+    dbconnect();
+    if (!$mysqli) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 	
     $quizname = $_POST['quizname'];
-    $excourseid = $_POST['courseid'];
+    $courseid = $_POST['courseid'];
 
-    $sql = $mysqli->query("INSERT INTO $quizdet_tablename VALUES(NULL, '$quizname', '$excourseid')");
-    if(!$sql) error_message("Error fetching data from $quizdet_tablename (programs) line #523");
-
-    main_form();
+    $sql = $mysqli->query("INSERT INTO $quizdet_tablename VALUES(NULL, '$quizname', '$courseid')");
+    
+    ?>
+    <script type="text/javascript">
+        <!--
+        window.top.location.href = "quizzes.php"; 
+        -->
+    </script>
+    <?php
 }
 
 
@@ -495,7 +462,7 @@ function add_course(){
     $courseid = $_POST['courseid'];
 
     $sql = $mysqli->query("SELECT * FROM $courses_tablename WHERE courseid = '$courseid'");
-    if(!$sql) error_message("Error in $courses_tablename (courses) line #338");
+    // if(!$sql) error_message("Error in $courses_tablename (courses) line #338");
     $row = $sql->fetch_assoc();	
     $coursecode = $row['coursecode'];
     $coursename = addslashes($row['coursename']);
@@ -505,7 +472,7 @@ function add_course(){
     $validcourse = $row['validcourse'];
 
     $sql = $mysqli->query("INSERT INTO $prog_det_tablename VALUES(NULL, '$progid', '$courseid', '$coursecode', '$coursename', '$credits')");
-    if(!$sql) error_message("Error fetching data from $programs_tablename (programs) line #554");
+    // if(!$sql) error_message("Error fetching data from $programs_tablename (programs) line #554");
     main_form();
 }
 
@@ -526,7 +493,7 @@ function delete_course(){
     $courseid = $_POST['courseid'];
 
     $query = mysqli_query($mysqli, "DELETE FROM $courses_tablename WHERE courseid = '$courseid'");
-    if(!$query) error_message("Error fetching data from $courses_tablename (delete_prod) line #573");
+    // if(!$query) error_message("Error fetching data from $courses_tablename (delete_prod) line #573");
 
     main_form();
 }
@@ -548,17 +515,6 @@ switch($action) {
 	break;
 	case "Done":
 		do_edit();
-	break;
-	case "View/Modify":
-		//edit_record();
-        ?>
-        <script type="text/javascript">
-            <!--
-            window.top.location.href = "quiz_edit.php?quizid=<?php echo $quizid ?>"; 
-            //window.location = "main.php"
-            -->
-        </script>
-        <?php
 	break;
 	case "Add New":
 		add_new();

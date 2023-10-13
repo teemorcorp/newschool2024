@@ -161,7 +161,7 @@ function admmenu(){
         <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Program Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="courses.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Course Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="exams.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Exam Management</span></a></li>
-        <li class="list-group-item"><a class="nav-link" href="quizzes.php"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Quiz Management</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="quizzes.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Quiz Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Staff</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Student Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Home Room Messages</span></a></li>
