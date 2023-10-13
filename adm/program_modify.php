@@ -161,7 +161,7 @@ function main_form() {
                                                             <option value="0"><<< MAKE A SELECTION >>></option>
                                                             <?php
                                                             $sqlb = $mysqli->query("SELECT * FROM $courses_tablename ORDER BY coursename ASC");
-                                                            if(!$sqlb) error_message("Error in $courses_tablename (programs) line #263");
+                                                            // if(!$sqlb) error_message("Error in $courses_tablename (programs) line #263");
                                                             $sqlb->data_seek(0);
                                                             while($rowb = $sqlb->fetch_assoc()) {
                                                                 $courseid = $rowb['courseid'];
