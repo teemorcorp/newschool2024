@@ -29,6 +29,22 @@ body {
     background-color: #f8f8f8;
 }
 
+ul.library {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+a.list{
+    text-decoration: none;
+    color: blue;
+}
+
+a.list:hover{
+    text-decoration: none;
+    color: rgb(255, 0, 0);
+}
+
 a {
     text-decoration: none;
 }
@@ -134,6 +150,26 @@ a:hover {
     max-width: 200px;
     height: 200px;
     width: 200px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.card-library{
+    outline: #c0c0c0;
+    outline-style: solid;
+    outline-width: thin;
+    background-color: #ffffff;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    max-height: 100px;
+    max-width: 230px;
+    height: 100px;
+    width: 230px;
     margin-bottom: 10px;
     margin-top: 10px;
     margin-left: 10px;

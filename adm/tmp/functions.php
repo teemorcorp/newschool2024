@@ -160,6 +160,7 @@ function admmenu(){
         ?>
         <li class="list-group-item"><a class="nav-link" href="programs.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Program Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="courses.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Course Management</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="lessons.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Lesson Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="exams.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Exam Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="quizzes.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Quiz Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Staff</span></a></li>
@@ -178,6 +179,7 @@ function admmenu(){
         <li class="list-group-item"><a class="nav-link" href="../about.php"><i class='bx bx-universal-access nav_icon'></i><span style="margin-left: 10px;">About</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="../calendar.php"><i class='bx bx-calendar nav_icon' title="Calendar"></i><span style="margin-left: 10px;">Calendar</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="../courses.php"><i class='bx bx-book-reader nav_icon' title="Courses"></i><span style="margin-left: 10px;">Courses</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="../library.php"><i class='bx bx-calendar nav_icon' title="Library"></i><span style="margin-left: 10px;">Library</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="../admissions.php"><i class='bx bxs-school nav_icon' title="Admissions"></i><span style="margin-left: 10px;">Admissions</span></a></li>
         
         <?php

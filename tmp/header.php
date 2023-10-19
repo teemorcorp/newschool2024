@@ -182,6 +182,22 @@ if(!empty($_SESSION['userid'])){
                 z-index:1000;
             }
         </style>
+
+        <script>
+            $( function() {
+                $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+                $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+            } );
+        </script>
+        <style>
+            .ui-tabs-vertical { width: 65em; }
+            .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 14em; }
+            .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+            .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+            .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
+            .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 80em;}
+        </style>
+
     </head>
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary header">

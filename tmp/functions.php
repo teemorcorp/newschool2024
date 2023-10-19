@@ -109,6 +109,7 @@ function menu(){
         <li class="list-group-item"><a class="nav-link" href="about.php"><i class='bx bx-universal-access nav_icon'></i>&nbsp;&nbsp;About</a></li>
         <li class="list-group-item"><a class="nav-link" href="calendar.php"><i class='bx bx-calendar nav_icon' title="Calendar"></i>&nbsp;&nbsp;Calendar</a></li>
         <li class="list-group-item"><a class="nav-link" href="courses.php"><i class='bx bx-book-reader nav_icon' title="Courses"></i>&nbsp;&nbsp;Courses</a></li>
+        <li class="list-group-item"><a class="nav-link" href="library.php"><i class='bx bx-calendar nav_icon' title="Library"></i>&nbsp;&nbsp;Library</a></li>
         <li class="list-group-item"><a class="nav-link" href="admissions.php"><i class='bx bxs-school nav_icon' title="Admissions"></i>&nbsp;&nbsp;Admissions</a></li>
         
         <?php
@@ -415,8 +416,10 @@ function WelcomeToDashboard(){
             <div class="col-sm-4 text-center">
                 <span style="font-size: 20px; font-weight:"><strong>IHN Bible Radio</strong></span>
                 <div id="boxoutline" style="height: 340px;">
-                    <img src="img/ihn_radio.jpg" alt="IHN Bible College" style="width: 80%;"><br>
+                    <img src="img/ihn_radio.jpg" alt="IHN Bible College" style="width: 60%;"><br>
                     <script src="//myradiostream.com/embed/ihnbible"></script>
+                    <script src="http://scripts.myradiostream.com/s24/15584/song.js"></script>
+                    <script src="http://scripts.myradiostream.com/s24/15584/status.js"></script>
                 </div>
             </div>
             <div class="col-sm-4" align="center">

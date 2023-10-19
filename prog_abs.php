@@ -128,30 +128,30 @@ function main_form() {
                                         ?>
                                         <div class="row">
                                             <div class="col-4">
-                                                <a href="bib101.php"><strong>BIB101</strong> - Old Testament Survey I<br></a>
-                                                <a href="course_cc110.php"><strong>BIB102</strong> - New Testament Survey I<br></a>
-                                                <a href="course_cc102.php"><strong>BIB103</strong> - Faith Foundations<br></a>
-                                                <a href="course_cc101.php"><strong>BIB104</strong> - Bible Study Methods I<br></a>
-                                                <a href="course_cc103.php"><strong>BIB105</strong> - Biblical World View<br></a>
-                                                <a href="course_cc104.php"><strong>BIB106</strong> - Kingdom Living<br></a>
-                                                <a href="course_cc105.php"><strong>BIB107</strong> - Knowing God's Voice<br></a>
+                                                <a href="course_study.php?id=1"><strong>BIB101</strong> - Old Testament Survey I<br></a>
+                                                <a href="course_study.php?id=2"><strong>BIB102</strong> - New Testament Survey I<br></a>
+                                                <a href="course_study.php?id=3"><strong>BIB103</strong> - Faith Foundations<br></a>
+                                                <a href="course_study.php?id=4"><strong>BIB104</strong> - Bible Study Methods I<br></a>
+                                                <a href="course_study.php?id=5"><strong>BIB105</strong> - Biblical World View<br></a>
+                                                <a href="course_study.php?id=6"><strong>BIB106</strong> - Kingdom Living<br></a>
+                                                <a href="course_study.php?id=7"><strong>BIB107</strong> - Knowing God's Voice<br></a>
                                             </div>
                                             <div class="col-4">
-                                                <a href="course_cc108.php"><strong>MIN108</strong> - Management By Objectives<br></a>
-                                                <a href="course_cc107.php"><strong>MIN109</strong> - Environmental Analysis<br></a>
-                                                <a href="course_cc106.php"><strong>BIB110</strong> - Spiritual Warfare<br></a>
-                                                <a href="course_cc111.php"><strong>MIN111</strong> - Mobilization Methodologies<br></a>
-                                                <a href="course_cc112.php"><strong>MIN112</strong> - Introduction to Evangelism<br></a>
-                                                <a href="course_cc113.php"><strong>MIN113</strong> - Spiritual Harvest<br></a>
-                                                <a href="course_cc114.php"><strong>MIN114</strong> - Holy Spirit Ministry<br></a>
+                                                <a href="course_study.php?id=16"><strong>MIN108</strong> - Management By Objectives<br></a>
+                                                <a href="course_study.php?id=10"><strong>MIN109</strong> - Environmental Analysis<br></a>
+                                                <a href="course_study.php?id=9"><strong>BIB108</strong> - Spiritual Warfare<br></a>
+                                                <a href="course_study.php?id=12"><strong>MIN111</strong> - Mobilization Methodologies<br></a>
+                                                <a href="course_study.php?id=11"><strong>MIN112</strong> - Introduction to Evangelism<br></a>
+                                                <a href="course_study.php?id=14"><strong>MIN113</strong> - Spiritual Harvest<br></a>
+                                                <a href="course_study.php?id=8"><strong>MIN114</strong> - Holy Spirit Ministry<br></a>
                                             </div>
                                             <div class="col-4">
-                                                <a href="course_cc115.php"><strong>MIN115</strong> - Multiplication Methodologies<br></a>
-                                                <a href="course_cc116.php"><strong>MIN116</strong> - Jail And Prison Ministry<br></a>
-                                                <a href="course_cc117.php"><strong>BIB117</strong> - Women: A Biblical Profile<br></a>
-                                                <a href="course_cc118.php"><strong>MIN118</strong> - Intercessory Prayer<br></a>
-                                                <a href="course_cc119.php"><strong>BIB119</strong> - Power Principles<br></a>
-                                                <a href="course_cc120.php"><strong>MIN120</strong> - Introduction to the Principles of Teaching<br></a>
+                                                <a href="course_study.php?id=22"><strong>MIN115</strong> - Multiplication Methodologies<br></a>
+                                                <a href="course_study.php?id=17"><strong>MIN116</strong> - Jail And Prison Ministry<br></a>
+                                                <a href="course_study.php?id=18"><strong>BIB117</strong> - Women: A Biblical Profile<br></a>
+                                                <a href="course_study.php?id=13"><strong>MIN118</strong> - Intercessory Prayer<br></a>
+                                                <a href="course_study.php?id=20"><strong>BIB119</strong> - Power Principles<br></a>
+                                                <a href="course_study.php?id=15"><strong>MIN120</strong> - Introduction to the Principles of Teaching<br></a>
                                             </div>
                                         </div>
                                         <?php
