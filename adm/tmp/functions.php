@@ -163,6 +163,12 @@ function admmenu(){
         <li class="list-group-item"><a class="nav-link" href="lessons.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Lesson Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="exams.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Exam Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="quizzes.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Quiz Management</span></a></li>
+        <hr style="color: #000;">
+        <li class="list-group-item"><a class="nav-link" href="course_news.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Course News</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="coming_events.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Coming Events</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="zoom_sched.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Zoome Course Schedule</span></a></li>
+        <li class="list-group-item"><a class="nav-link" href="newly_added.php"><i class='bx bx-cog nav_icon'></i><span style="margin-left: 10px;">Newly Added</span></a></li>
+        <hr style="color: #000;">
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Staff</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="students.php"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Student Management</span></a></li>
         <li class="list-group-item"><a class="nav-link" href="#"><i class='bx bx-cog nav_icon'></i> <img src="../img/undercon.gif" alt="IHN Bible College" style="width: 20px;"><span style="margin-left: 10px;">Home Room Messages</span></a></li>

@@ -368,7 +368,78 @@ function submit_app(){
     global $PHP_SELF, $mysqli, $msg;
     global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
     
-    main_form();
+    $userfname = filter_var($_POST['userfname'], FILTER_SANITIZE_EMAIL);
+    $usermname = filter_var($_POST['usermname'], FILTER_SANITIZE_EMAIL);
+    $userlname = filter_var($_POST['userlname'], FILTER_SANITIZE_EMAIL);
+    $useraddress = filter_var($_POST['useraddress'], FILTER_SANITIZE_EMAIL);
+    $usercity = filter_var($_POST['usercity'], FILTER_SANITIZE_STRING);
+    $userstate = filter_var($_POST['userstate'], FILTER_SANITIZE_STRING);
+    $useremail = filter_var($_POST['useremail'], FILTER_SANITIZE_EMAIL);
+    $userzip = filter_var($_POST['userzip'], FILTER_SANITIZE_STRING);
+    $usercountry = filter_var($_POST['usercountry'], FILTER_SANITIZE_STRING);
+    $userphone = filter_var($_POST['userphone'], FILTER_SANITIZE_STRING);
+    $highgrade = filter_var($_POST['highgrade'], FILTER_SANITIZE_STRING);
+    $dob = filter_var($_POST['dob'], FILTER_SANITIZE_STRING);
+    $usersaved = filter_var($_POST['usersaved'], FILTER_SANITIZE_STRING);
+    $baptized = filter_var($_POST['baptized'], FILTER_SANITIZE_STRING);
+    $baptismdate = filter_var($_POST['baptismdate'], FILTER_SANITIZE_STRING);
+    $profile = filter_var(addslashes($_POST['profile']), FILTER_SANITIZE_STRING);
+    // $remember = $_POST['remember'];
+
+    // Attempt select query execution
+    $sql = "SELECT * FROM $users_tablename WHERE useremail = '$useremail'";
+    if($result = mysqli_query($mysqli, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            $msg = "<br><div class='alert alert-danger' role='alert'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+            <strong>ERROR!</strong> That email address is already in use!<br>
+            </div>";
+            main_form();
+            exit;
+            // Free result set
+            mysqli_free_result($result);
+        }
+    }
+    // End attempt select query execution
+
+	if(empty($useremail)) {
+        $msg = "<br><div class='alert alert-danger' role='alert'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+        <strong>ERROR!</strong> You Must Enter A Valid Email Address!<br>
+        </div>";
+		main_form();
+		exit;
+	}
+	
+	if(empty($userfname)) {
+        $msg = "<br><div class='alert alert-danger' role='alert'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+        <strong>ERROR!</strong> You Must Enter A First Name!<br>
+        </div>";
+        main_form();
+		exit;
+	}
+	
+	if(empty($userlname)) {
+        $msg = "<br><div class='alert alert-danger' role='alert'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+        <strong>ERROR!</strong> You Must Enter A Last Name!<br>
+        </div>";
+		main_form();
+		exit;
+	}
+    
+    global $users_tablename, $userid, $useremail , $userpassword, $isadmin, $userfname, $usermname, $userlname, $useraddress, $usercity, $userstate, $userzip, $usercountry, $userphone, $suspended, $highgrade, $dob, $usersaved, $baptized, $baptismdate, $profile, $imagepath, $corecompletedate, $branchid, $role, $messages, $core_complete, $resetpwd;
+
+    // Attempt select query execution
+    $sql = $mysqli->query("INSERT INTO $users_tablename VALUES (NULL, '$useremail', '$hash', '0', '$userfname', '$usermname', '$userlname', '$useraddress', '$usercity', '$userstate', '$userzip', '$usercountry', '$userphone', '0', '$highgrade', '$dob', '0', '0', '$baptismdate', '$profile', '', '', '', '', '1', '0', '0')");
+    ?>
+    <script type="text/javascript">
+        <!--
+        window.location = "login.php"
+        -->
+    </script>
+    <?php
 }
 
 //*******************************************************

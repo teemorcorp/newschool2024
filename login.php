@@ -192,7 +192,7 @@ switch($action) {
         check_login();
     break;
     case "Register":
-        header('Location: register.php');
+        header('Location: admissions.php#applicate');
     break;
     case "Forgot":
         header('Location: lostpwd.php');
